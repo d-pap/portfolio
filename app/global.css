@@ -9,6 +9,7 @@
 
 /* Light theme colors */
 :root {
+  background-color: #f5f5f5;
   --sh-class: #2d5e9d;
   --sh-identifier: #354150;
   --sh-sign: #8996a3;

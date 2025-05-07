@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ThemeSwitch } from "./theme-switch";
-import { metaData } from "../config";
 
 const navItems = {
   "/blog": { name: "Blog" },
@@ -10,23 +9,35 @@ const navItems = {
 
 export function Navbar() {
   return (
-    <nav className="lg:mb-16 mb-12 py-5">
-      <div className="flex flex-col md:flex-row md:items-center justify-between">
-        <div className="flex items-center">
-          <Link href="/" className="text-3xl font-semibold">
-            {metaData.title}
+    <nav className="w-full py-4 bg-fuchsia-500">
+      <div className="max-w-5xl mx-auto flex items-center justify-between">
+        {/* left: logo + nav links */}
+        <div className="flex items-center space-x-8">
+          <Link
+            href="/"
+            className="text-2xl font-bold px-2 py-2 rounded-lg border border-gray-500 dark:border-gray-500 transition"
+          >
+            DP
           </Link>
-        </div>
-        <div className="flex flex-row gap-4 mt-6 md:mt-0 md:ml-auto items-center">
           {Object.entries(navItems).map(([path, { name }]) => (
             <Link
               key={path}
               href={path}
-              className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative"
+              className="text-base font-medium hover:text-neutral-800 dark:hover:text-neutral-200 transition"
             >
               {name}
             </Link>
           ))}
+        </div>
+
+        {/* right: contact button + theme switch */}
+        <div className="flex items-center space-x-4">
+          <Link
+            href="#contact"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Contact Me
+          </Link>
           <ThemeSwitch />
         </div>
       </div>

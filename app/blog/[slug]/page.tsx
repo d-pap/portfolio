@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CustomMDX } from "app/components/mdx";
 import { formatDate, getBlogPosts } from "app/lib/posts";
 import { metaData } from "app/config";
+import PageWrapper from "app/components/page-wrapper";
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -64,7 +65,7 @@ export default async function Blog({ params }) {
   }
 
   return (
-    <section>
+    <PageWrapper>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -87,17 +88,17 @@ export default async function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title mb-3 font-medium text-2xl">
+      <h1 className="title mb-3 font-bold text-2xl">
         {post.metadata.title}
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-medium">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-neutral-600 dark:text-neutral-400 inline-block">
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <CustomMDX source={post.content} />
       </article>
-    </section>
+    </PageWrapper>
   );
 }
