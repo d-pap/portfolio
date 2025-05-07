@@ -92,6 +92,8 @@ export default function RootLayout({
             </div>
           </div>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
