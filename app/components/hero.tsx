@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="w-full bg-slate-400">
+    <div className="w-full">
       {" "}
       {/* //! div needed for section background color to span full width  */}
-      <section className="max-w-3xl min-h-[80vh] mx-auto px-4 sm:px-6 py-12 md:py-32 flex items-center justify-center">
+      <section className="max-w-7xl min-h-[80vh] mx-auto px-4 sm:px-6 py-12 md:py-32 flex items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           {/* <a href={socialLinks.twitter} target="_blank">
             <Image
@@ -28,7 +28,7 @@ export default function Hero() {
           </h2>
           <Link
             href="/blog"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition mt-6"
+            className="inline-flex items-center px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 transition mt-6"
           >
             Check me out &rarr;
           </Link>

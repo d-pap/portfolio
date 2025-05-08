@@ -4,6 +4,10 @@ module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./public/**/*.svg"],
   theme: {
     extend: {
+      colors: {
+        primary: "#f5f5f5",
+        secondary: "#121212",
+      },
       typography: {
         quoteless: {
           css: {
@@ -15,4 +19,4 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/typography")],
-};
+}
