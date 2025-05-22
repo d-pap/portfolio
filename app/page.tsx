@@ -28,7 +28,6 @@ export default function Page() {
     <>
       <Hero />
 
-      {/* LATEST WORKS */}
       <div className="w-full bg-white dark:bg-gray-900">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
           <div className="text-center mb-16">
@@ -86,7 +85,7 @@ export default function Page() {
             <span className="inline-block text-sm mb-4">• Experiences</span>
             <div className="flex justify-between items-start">
               <h2 className="text-5xl font-normal max-w-md">
-                Explore My Design Journey
+                Explore My Journey
               </h2>
               <div className="max-w-md">
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -111,23 +110,25 @@ export default function Page() {
               <div className="flex flex-col md:flex-row justify-between">
                 <div className="md:w-1/3">
                   <h3 className="text-xl mb-2">
-                    Creative Minds, New York, USA
+                    Code Coach, Full Stack Developer
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    February 2022 - Present
+                    May 2024 - January 2025
                   </p>
                 </div>
                 <div className="md:w-1/3">
                   <p className="text-gray-600 dark:text-gray-300">
-                    Innovated designs, New York, Senior Product Designer
+                    Created a web platform for students to learn coding and
+                    prepare for programming competitions and technical
+                    interviews for a client.
                   </p>
                 </div>
-                <div className="md:w-1/3 flex gap-2 mt-4 md:mt-0 flex-wrap justify-end">
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                    UI/UX
+                <div className="md:w-1/3 flex flex-wrap justify-end items-center gap-2">
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                    Web Dev
                   </span>
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
-                    Branding
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                    AWS
                   </span>
                 </div>
               </div>
@@ -137,9 +138,9 @@ export default function Page() {
             <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
               <div className="flex flex-col md:flex-row justify-between">
                 <div className="md:w-1/3">
-                  <h3 className="text-xl mb-2">Innovative Designs Inc, USA</h3>
+                  <h3 className="text-xl mb-2">iLabs, Data Analyst</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    January 2020 - February 2022
+                    October 2023 - February 2024
                   </p>
                 </div>
                 <div className="md:w-1/3">
@@ -147,11 +148,11 @@ export default function Page() {
                     Led UX/UI, San Francisco . Crafting tomorrow's experiences
                   </p>
                 </div>
-                <div className="md:w-1/3 flex gap-2 mt-4 md:mt-0 flex-wrap justify-end">
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                <div className="md:w-1/3 flex flex-wrap justify-end items-center gap-2">
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
                     UI/UX
                   </span>
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
                     Branding
                   </span>
                 </div>
@@ -162,7 +163,7 @@ export default function Page() {
             <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
               <div className="flex flex-col md:flex-row justify-between">
                 <div className="md:w-1/3">
-                  <h3 className="text-xl mb-2">Visionary Creations Ltd, UK</h3>
+                  <h3 className="text-xl mb-2">UM-Dearborn, Math Tutor</h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm">
                     February 2022 - Present
                   </p>
@@ -172,11 +173,11 @@ export default function Page() {
                     Principal Designer, Berlin, Crafting tomorrow's experiences
                   </p>
                 </div>
-                <div className="md:w-1/3 flex gap-2 mt-4 md:mt-0 flex-wrap justify-end">
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                <div className="md:w-1/3 flex flex-wrap justify-end items-center gap-2">
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
                     Branding
                   </span>
-                  <span className="px-4 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
+                  <span className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm">
                     UI/UX
                   </span>
                 </div>
@@ -208,7 +209,7 @@ export default function Page() {
                   src="/final-linkedin2.PNG"
                   alt="Derek Papierski"
                   fill
-                  className="object-cover rounded-2xl shadow-xl"
+                  className="object-cover rounded-2xl shadow-xl grayscale"
                   sizes="(max-width: 768px) 100vw, 33vw"
                   priority
                 />
@@ -218,11 +219,19 @@ export default function Page() {
             <div className="md:w-2/3 space-y-6">
               <div className="prose prose-lg dark:prose-invert">
                 <p>
-                  Hi, I'm Derek Papierski, a software engineer with a passion
-                  for building user-friendly and efficient applications. I
-                  specialize in web development, data science, and artificial
+                  Hi, I'm Derek Papierski, a data scientist and software
+                  engineer who specializes in simplifying technical concepts and
+                  creating elegant solutions to complex problems. I enjoy
+                  building tools that help people - whether that means creating
+                  beautifully-designed applications, automating processes, or
+                  finding patterns in messy datasets. My sweet spot is anything
+                  that lives at the intersection of code, data, and design.
+                </p>
+                <p>
+                  I specialize in data science, web development, and artificial
                   intelligence, bringing a unique blend of technical expertise
-                  and creative problem-solving to every project.
+                  and creative problem-solving to every project. and creative
+                  problem-solving to every project.
                 </p>
                 <p>
                   With experience in both frontend and backend development, I
@@ -401,83 +410,6 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </div>
-
-      {/* OLD ABOUT ME */}
-      <div className="w-full bg-fuchsia-500">
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-          <h2 className="mb-8 text-2xl font-bold">About Me</h2>
-          <div className="flex flex-col sm:flex-row">
-            <div className="w-full sm:w-1/2 items-center justify-center flex">
-              <Image
-                src="/me-av.PNG"
-                alt="Derek Papierski"
-                width={160}
-                height={160}
-                className="rounded-full"
-              />
-            </div>
-            <div className="w-full sm:w-1/2">
-              <h2 className="text-2xl font-bold">Derek Papierski</h2>
-              <p>
-                I'm a software engineer with a passion for building
-                user-friendly and efficient applications.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  href="https://github.com/derek-papierski"
-                  className="text-sm uppercase border-gray-900 dark:border-gray-100 hover:border-gray-600 dark:hover:border-gray-400 transition-colors"
-                >
-                  GitHub
-                </Link>
-                <Link
-                  href="https://www.linkedin.com/in/derek-papierski/"
-                  className="text-sm uppercase border-gray-900 dark:border-gray-100 hover:border-gray-600 dark:hover:border-gray-400 transition-colors"
-                >
-                  LinkedIn
-                </Link>
-                <Link
-                  href="mailto:derekpap@umich.edu"
-                  className="text-sm uppercase border-gray-900 dark:border-gray-100 hover:border-gray-600 dark:hover:border-gray-400 transition-colors"
-                >
-                  Email
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            <h3>Web Development</h3>
-            <h3>Data Science</h3>
-            <h3>Machine Learning</h3>
-            <h3>AI</h3>
-          </div>
-        </section>
-      </div>
-
-      {/* CONTACT ME */}
-      <div className="w-full bg-blue-500 dark:bg-blue-900/20">
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-          <h2 className="mb-6 text-2xl font-bold">Contact Me</h2>
-          <p className="mb-6 text-lg">
-            Feel free to reach out via email or connect with me on LinkedIn. I'm
-            always open to discussing new projects and opportunities.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="mailto:derek.papierski@gmail.com"
-              className="px-6 py-3 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition flex items-center"
-            >
-              Email me
-            </a>
-            <a
-              href={socialLinks.linkedin}
-              className="px-6 py-3 bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition flex items-center"
-              target="_blank"
-            >
-              LinkedIn
-            </a>
           </div>
         </section>
       </div>
