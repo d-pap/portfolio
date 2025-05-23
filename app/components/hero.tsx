@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <div className="w-full bg-white dark:bg-gray-900">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[70vh] md:min-h-[70vh] flex items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[80vh] md:min-h-[80vh] flex items-center">
         <div className="w-full">
           <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16 items-center">
             {/* Left side content - Hidden on mobile */}
@@ -36,7 +36,7 @@ export default function Hero() {
                   </div>
                   <div className="space-y-6">
                     <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-                      Derek Papierski
+                      Data Specialist & Developer
                     </h1>
                     <p className="text-xl font-light text-gray-600 dark:text-gray-400 max-w-xl">
                       Data Scientist × Developer crafting intelligent solutions

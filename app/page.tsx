@@ -35,7 +35,10 @@ export default function Page() {
           className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32"
           id="portfolio"
         >
-          <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
+          <div
+            className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16"
+            // id="portfolio"
+          >
             {/* Section Title - Left side on desktop */}
             <div className="md:col-span-3 mb-12 md:mb-0 md:sticky md:top-24 self-start">
               <div className="space-y-4">
@@ -363,7 +366,10 @@ export default function Page() {
 
       {/* Call to Action */}
       <div className="w-full bg-white dark:bg-gray-900">
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
+        <section
+          className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32"
+          id="contact"
+        >
           <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
             {/* Section Title - Left side on desktop */}
             <div className="md:col-span-3 mb-12 md:mb-0 md:sticky md:top-24 self-start">
