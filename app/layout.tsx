@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon-book.ico",
   },
 };
 
@@ -83,9 +83,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="w-full">
-            <div className="px-4 sm:px-6">
-              <Navbar />
-            </div>
+            <Navbar />
+
             {children}
             <div className="max-w-3xl mx-auto px-4 sm:px-6 mt-16">
               <Footer />

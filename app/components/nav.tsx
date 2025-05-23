@@ -9,13 +9,12 @@ const navItems = {
 
 export function Navbar() {
   return (
-    <nav className="w-full py-4 bg-fuchsia-500">
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
-        {/* left: logo + nav links */}
-        <div className="flex items-center space-x-8">
+    <nav className="w-full py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center space-x-4 sm:space-x-8">
           <Link
             href="/"
-            className="text-2xl font-bold px-2 py-2 rounded-lg border border-gray-500 dark:border-gray-500 transition"
+            className="text-2xl font-bold px-2 py-2 border border-gray-500 dark:border-gray-500 transition"
           >
             DP
           </Link>
@@ -30,11 +29,10 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* right: contact button + theme switch */}
         <div className="flex items-center space-x-4">
           <Link
             href="#contact"
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition"
           >
             Contact Me
           </Link>
