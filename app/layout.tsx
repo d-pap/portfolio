@@ -83,9 +83,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="w-full">
-            <div className="px-4 sm:px-6 border-t-8 border-secondary dark:border-primary">
-              <Navbar />
-            </div>
+            <Navbar />
+
             {children}
             <div className="max-w-3xl mx-auto px-4 sm:px-6 mt-16">
               <Footer />
