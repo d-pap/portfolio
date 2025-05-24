@@ -272,7 +272,7 @@ export default function Page() {
                     <p className="font-bold text-gray-900 dark:text-gray-100">
                       Data Scientist & Full-Stack Developer
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300">
                       With a unique blend of analytical thinking and creative
                       problem-solving, I bridge the gap between data science and
                       web development. My journey began in mathematics and
@@ -282,7 +282,7 @@ export default function Page() {
                       intuitive web applications that make complex data
                       accessible and meaningful.
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300">
                       Today, I focus on building data-driven applications that
                       combine robust backend systems with elegant frontend
                       interfaces. Whether I'm developing machine learning
@@ -298,7 +298,7 @@ export default function Page() {
               {/* Skills and Interests */}
               <div className="grid md:grid-cols-2 gap-8 pt-8 border-t border-gray-200 dark:border-gray-800">
                 <div className="space-y-4">
-                  <h3 className="text-sm font-light flex items-center space-x-2">
+                  <h3 className="font-light flex items-center space-x-2">
                     <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]">
                       <div className="flex items-center space-x-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
@@ -308,26 +308,26 @@ export default function Page() {
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">Data Science</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">Data Science</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         Python, SQL, R, Tableau, Excel, Spark
                       </p>
                     </div>
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">Web Development</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">Web Development</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         React, Next.js, Node.js
                       </p>
                     </div>
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">Machine Learning</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">Machine Learning</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         Scikit-learn
                       </p>
                     </div>
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">Tools</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">Tools</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         AWS, Docker, Git, Linux
                       </p>
                     </div>
@@ -335,7 +335,7 @@ export default function Page() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-sm font-light flex items-center space-x-2">
+                  <h3 className="font-light flex items-center space-x-2">
                     <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]">
                       <div className="flex items-center space-x-2">
                         <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
@@ -345,14 +345,14 @@ export default function Page() {
                   </h3>
                   <div className="space-y-3">
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">Data Visualization</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">Data Visualization</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         Creating intuitive and interactive data stories
                       </p>
                     </div>
                     <div className="p-3 rounded-lg">
-                      <p className="font-light text-sm">AI Applications</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="font-light">AI Applications</p>
+                      <p className="text-gray-600 dark:text-gray-400">
                         Building practical AI solutions for real-world problems
                       </p>
                     </div>

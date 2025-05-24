@@ -117,7 +117,7 @@ export function Navbar() {
             {isMenuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-full right-0 mt-2 w-48 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg"
+                className="absolute top-full right-0 mt-2 w-48 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm text-right"
               >
                 <div className="py-1">
                   {Object.entries(navItems).map(([path, { name }]) => (
