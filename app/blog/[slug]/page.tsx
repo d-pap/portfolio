@@ -89,27 +89,28 @@ export default async function Blog({ params }) {
         }}
       />
       <h1 className="title mb-3 font-bold text-2xl">{post.metadata.title}</h1>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
         {/* Date */}
         <p className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-neutral-600 dark:text-neutral-400 inline-block">
           {formatDate(post.metadata.publishedAt)}
         </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {post.metadata.tags.split(",").map((tag) => (
-            <div
-              key={tag}
-              className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
-            >
-              <div className="flex items-center space-x-2">
-                <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                <span className="text-sm">{tag.trim()}</span>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        {post.metadata.tags.split(",").map((tag) => (
+          <div
+            key={tag}
+            className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
+          >
+            <div className="flex items-center space-x-2">
+              <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
+              <span className="text-sm">{tag.trim()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
         <CustomMDX source={post.content} />
       </article>

@@ -67,7 +67,7 @@ export default function Page() {
                           <Image
                             src={post.metadata.image || "/profile.png"}
                             alt={post.metadata.title}
-                            className="object-cover grayscale"
+                            className="object-cover"
                             fill
                             sizes="(max-width: 768px) 25vw, 20vw"
                             priority
