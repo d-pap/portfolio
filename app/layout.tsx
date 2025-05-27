@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   icons: {
-    icon: "/favicon-book.ico",
+    icon: "/favicon-greencircle.ico",
   },
 };
 
