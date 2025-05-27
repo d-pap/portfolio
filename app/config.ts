@@ -1,11 +1,9 @@
 export const metaData = {
-  baseUrl: "https://nextfolio-template.vercel.app/",
-  //!baseUrl: "https://derekpapierski.com/",
+  baseUrl: "https://derekpapierski.com/",
   title: "Derek Papierski",
   name: "Derek",
-  ogImage: "/opengraph-image.png",
-  description:
-    "Derek Papierski is a data scientist and software engineer.",
+  ogImage: "/og-image.png",
+  description: "Derek Papierski is a data scientist and software engineer.",
 };
 
 export const socialLinks = {

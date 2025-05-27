@@ -7,8 +7,6 @@ import { useState, useEffect, useRef } from "react";
 const navItems = {
   "/": { name: "Home" },
   "/blog": { name: "Blog" },
-  "/projects": { name: "Projects" },
-  "/photos": { name: "Photos" },
 };
 
 export function Navbar() {

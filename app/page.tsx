@@ -402,10 +402,10 @@ export default function Page() {
                       happy to connect.
                     </p>
                     <a
-                      href="mailto:derekpap@umich.edu"
+                      href="mailto:derek@derekpapierski.com"
                       className="inline-flex items-center text-sm text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
                     >
-                      derekpap@umich.edu →
+                      derek@derekpapierski.com →
                     </a>
                   </div>
                 </div>
