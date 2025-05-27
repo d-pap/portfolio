@@ -65,55 +65,62 @@ export default async function Blog({ params }) {
   }
 
   return (
-    <PageWrapper>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${metaData.baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${metaData.baseUrl}/blog/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: metaData.name,
-            },
-          }),
-        }}
-      />
-      <h1 className="title mb-3 font-bold text-2xl">{post.metadata.title}</h1>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
-        {/* Date */}
-        <p className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-neutral-600 dark:text-neutral-400 inline-block">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-      </div>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {post.metadata.tags.split(",").map((tag) => (
-          <div
-            key={tag}
-            className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
-          >
-            <div className="flex items-center space-x-2">
-              <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-              <span className="text-sm">{tag.trim()}</span>
-            </div>
+    <div className="w-full bg-tertiary dark:bg-tertiary">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div className="pt-24 pb-16">
+          <script
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: post.metadata.title,
+                datePublished: post.metadata.publishedAt,
+                dateModified: post.metadata.publishedAt,
+                description: post.metadata.summary,
+                image: post.metadata.image
+                  ? `${metaData.baseUrl}${post.metadata.image}`
+                  : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+                url: `${metaData.baseUrl}/blog/${post.slug}`,
+                author: {
+                  "@type": "Person",
+                  name: metaData.name,
+                },
+              }),
+            }}
+          />
+          <h1 className="title mb-3 font-bold text-2xl">
+            {post.metadata.title}
+          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
+            {/* Date */}
+            <p className="text-gray-500 dark:text-gray-400 tabular-nums">
+              {formatDate(post.metadata.publishedAt)}
+            </p>
           </div>
-        ))}
-      </div>
 
-      <article className="prose prose-quoteless prose-neutral dark:prose-invert">
-        <CustomMDX source={post.content} />
-      </article>
-    </PageWrapper>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {post.metadata.tags.split(",").map((tag) => (
+              <div
+                key={tag}
+                className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">{tag.trim()}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="pb-16">
+          <article className="prose prose-quoteless prose-neutral dark:prose-invert">
+            <CustomMDX source={post.content} />
+          </article>
+        </div>
+      </div>
+    </div>
   );
 }

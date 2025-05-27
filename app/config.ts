@@ -2,7 +2,7 @@ export const metaData = {
   baseUrl: "https://derekpapierski.com/",
   title: "Derek Papierski",
   name: "Derek",
-  ogImage: "/opengraph-image.png",
+  ogImage: "/og-image.png",
   description: "Derek Papierski is a data scientist and software engineer.",
 };
 

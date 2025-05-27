@@ -86,9 +86,8 @@ export default function RootLayout({
             <Navbar />
 
             {children}
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 mt-16">
-              <Footer />
-            </div>
+
+            <Footer />
           </div>
         </ThemeProvider>
         <Analytics />

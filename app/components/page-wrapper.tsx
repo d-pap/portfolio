@@ -9,7 +9,7 @@ interface PageWrapperProps {
 export default function PageWrapper({
   children,
   className = "",
-  backgroundColor = "bg-white dark:bg-black",
+  backgroundColor = "bg-tertiary dark:bg-tertiary",
 }: PageWrapperProps) {
   return (
     <div className={`w-full ${backgroundColor} pt-24 pb-12 md:pt-28 md:pb-16`}>

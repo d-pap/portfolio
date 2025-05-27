@@ -7,8 +7,6 @@ import { useState, useEffect, useRef } from "react";
 const navItems = {
   "/": { name: "Home" },
   "/blog": { name: "Blog" },
-  "/projects": { name: "Projects" },
-  "/photos": { name: "Photos" },
 };
 
 export function Navbar() {
@@ -72,7 +70,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`w-full py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm transition-transform duration-300 ${
+      className={`w-full py-4 fixed top-0 left-0 right-0 z-50 bg-tertiary/80 dark:bg-tertiary/80 backdrop-blur-sm transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -80,7 +78,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-lg font-light text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
+          className="text-lg font-light text-gray-900 dark:text-gray-100"
         >
           derekpapierski
         </Link>
@@ -92,7 +90,7 @@ export function Navbar() {
             <button
               ref={buttonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="group p-2 "
+              className="group p-2"
               aria-label="Toggle menu"
             >
               <svg
@@ -117,14 +115,14 @@ export function Navbar() {
             {isMenuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-full right-0 mt-2 w-48 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm text-right"
+                className="absolute top-full right-0 mt-2 w-48 bg-tertiary dark:bg-tertiary rounded-lg border border-gray-200 dark:border-gray-800"
               >
                 <div className="py-1">
                   {Object.entries(navItems).map(([path, { name }]) => (
                     <Link
                       key={path}
                       href={path}
-                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-secondary dark:hover:bg-secondary transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {name}
