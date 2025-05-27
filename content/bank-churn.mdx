@@ -1,0 +1,115 @@
+---
+title: "How to Keep Valuable Clients: A Predictive Model for Bank Customer Churn"
+publishedAt: "2024-08-21"
+summary: "?????"
+tags: "???, ?c??, ???c"
+image: "/profile.png"
+---
+
+## Summary
+
+Banks typically spend **5 times more** acquiring new customers than retaining existing ones. For this project, I analyzed a dataset of 10,000 customer records from a multinational bank to uncover what causes customers to leave and built a predictive model to identify those most at risk of leaving. This gives banks a practical tool to proactively retain customers before they churn.
+
+[View the full code on GitHub →](https://github.com/d-pap/bank-churn)
+
+---
+
+## Insights: What Drives Customer Churn?
+
+Analyzing the data revealed several clear insights, each with actionable business implications:
+
+### 1. Women leave significantly more often
+
+- Finding: women customers left about 10% more often than men
+- Why it matters: this hints at service gaps in service, product fit, or communication
+- Action: short surveys with departing female clients, then fix the themes that surface (e.g. branch experience, mobile-app design, product fit)
+
+### 2. Older customers (51-60 years old) leave at higher rates
+
+- Finding: churn spikes to nearly 30 % for customers approaching retirement
+- Why it matters: older customers often hold more significant balances and represent substantial lifetime value
+- Action: tailored retirement planning services and personal customer service
+
+### 3. Low credit scores and inactivity often go together
+
+- Finding: customers with poor scores who have not logged in for 30 days are 1.5x more likely to leave than the average account holder
+- Why this matters: early identification can prompt effective interventions
+- Action: proactive credit improvement services and automatic engagement nudges
+
+### 4. Two products is the ideal customer sweet spot
+
+- Finding: customers who own exactly two products churn the least. Those with 3+ bounce back up
+- Why this matters: suggests there's a specific product combination or threshold for customer satisfaction
+- Action: rather than push every user toward a third cross-sell, concentrate on one-product holders and test offers that nudge them toward a second product first
+
+---
+
+## Potential Business Impact: The Dollars and Cents
+
+To help see why predictive churn modeling matters, let’s consider a simplified, realistic scenario:
+
+Step-by-step breakdown:
+
+- Total customers: 50,000
+- Typical annual churn rate: 20%, meaning about 10,000 customers leave annually.
+- Revenue lost: each churned customer represents approximately \$200 in lost profit per year. This means annual losses of about \$2,000,000 (10,000 customers x \$200 each).
+
+Without predictive modeling:
+
+- Banks often rely on broad, untargeted retention campaigns.
+- Calling all 50,000 customers (at roughly \$20 per contact) would cost \$1,000,000, and historically retains only around 5% of those contacted, saving just 500 customers (500 x \$200 = \$100,000). This method leads to large net losses (spend \$1 million to save \$100,000).
+
+With predictive modeling:
+
+- My Random Forest model accurately identifies about 46% of likely churners.
+- If the model flags the top 15% of the customer base (7,500 customers) as "high-risk" within this group:
+  - 3,450 customers (46%) are actual churners.
+  - 4,050 customers are false positives (customers incorrectly flagged as likely churners).
+- Targeted outreach to 7,500 customers would cost \$150,000 (7,500 x \$20 average cost per customer).
+- If targeted outreach retains 15% of true churners, we save 518 customers (3,450 x 15%).
+- These 518 saved customers preserve \$103,600 in immediate profit (518 x \$200).
+- Initially, this seems slightly unprofitable (\$150,000 spent, \$103,600 saved = -\$46,400 net).
+- However, acquiring new customers typically costs banks \$500 per customer. Retaining these 518 customers avoids future customer acquisition costs totaling \$259,000 (518 x \$500).
+- Thus, the total net impact is positive: \$259,000 (acquisition savings) - \$46,400 (immediate loss) = \$212,600 total net benefit.
+
+Bottom line:
+
+Using predictive modeling saves significantly more money in the long run. Banks can spend less overall while retaining more valuable customers.
+
+---
+
+## Technical Snapshot: How the Model Works (and Why Recall Matters)
+
+The final model was built using Python, pandas, scikit-learn, and matplotlib/seaborn for visualization. I chose a Random Forest classifier after testing multiple models (logistic regression, SVM, etc.) due to its strong balance between accuracy and interpretability.
+
+Model Performance:
+
+- Accuracy: ~85%
+- Recall for churners: ~46%
+- Precision: ~69%
+- AUC (Area Under ROC Curve): 0.71
+
+Why prioritize recall?
+
+Accuracy alone is misleading: simply predicting "no churn" would yield 80% accuracy due to class imbalance (80% retained vs. 20% churned). Recall specifically measures how effectively the model identifies the customers who actually churn. Although 46% might seem moderate, it's significantly better than random guessing (20%). Our targeted list drastically improves efficiency, making every retention call nearly three times as likely to reach a genuine churn risk (69% vs. 20%).
+
+Why not higher recall?
+
+Increasing recall further would mean flagging many more customers—leading to excessive outreach costs with diminishing returns. The selected model provides a practical balance, offering actionable insights at reasonable costs. Future improvements, such as additional features or more advanced techniques (e.g., Gradient Boosting), could increase recall further.
+
+---
+
+## What You Can Do With This
+
+- Use the model to score current customers on churn risk
+- Integrate it into CRM tools for real-time alerts
+- Monitor the effect of retention campaigns on flagged customers
+- Track model drift over time and retrain quarterly
+
+---
+
+## View Code & Further Details
+
+The complete project code and detailed analysis notebook are available on my [GitHub](https://github.com/d-pap/bank-churn)
+
+For further discussions or feedback on this approach, feel free to reach out. I’d love to connect!
