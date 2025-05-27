@@ -17,11 +17,12 @@ export default async function Footer() {
             </h3>
             <div className="space-y-3">
               <Link
-                href="/#portfolio"
+                href="/"
                 className="block text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
               >
-                Portfolio
+                Home
               </Link>
+
               <Link
                 href="/blog"
                 className="block text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
