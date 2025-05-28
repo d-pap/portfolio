@@ -1,0 +1,80 @@
+---
+title: "How to Keep Valuable Clients: A Predictive Model for Bank Customer Churn"
+publishedAt: "2024-08-21"
+summary: "Using machine learning to help banks reduce churn and cut acquisition costs by targeting retention efforts more effectively."
+tags: "Data Analysis, Predictive Modeling, ML"
+image: "/bull-market.png"
+category: "Project"
+---
+
+<Image src="/bank.jpg" alt="bank image" width={640} height={500} />
+
+[https://github.com/d-pap/bank-churn](https://github.com/d-pap/bank-churn/blob/main/bankchurn-report.ipynb)
+
+Technical walk-through: [https://medium.com/@dpapcodes](https://medium.com/@dpapcodes/investigating-why-customers-leave-a-bank-47b41278e36c)
+
+### Purpose
+
+Banks typically spend **5 times more** acquiring new customers than retaining existing ones. For this project, I analyzed a dataset of 10,000 customer records from a multinational bank to uncover what causes customers to leave and built a predictive model to identify those most at risk of leaving. This gives banks a practical tool to proactively retain customers before they churn.
+
+### Insights
+
+My analysis revealed four clear signals of customer churn risk:
+
+1.  Women customers churn ~10% more often (possible gaps in product fit or service).
+2.  Older customers (51-60) churn at nearly 30% (key demographic approaching retirement).
+3.  Inactive customers with poor credit scores churn ~50% more frequently.
+4.  Customers with exactly two products churn least, highlighting a retention "sweet spot."
+
+<Callout emoji="💡">
+To see how I got this, check out my [GitHub](https://github.com/d-pap/bank-churn/blob/main/bankchurn-report.ipynb) or [technical walk-through](https://medium.com/@dpapcodes/investigating-why-customers-leave-a-bank-47b41278e36c).
+
+</Callout>
+
+### Potential Impact
+
+To see how predictive modeling translates directly into savings, let's consider a simplified, realistic scenario:
+
+**Baseline.** Say the bank has 50,000 customers. About 20% churn each year, so 10,000 leave. Each lost customer costs roughly \$200 in yearly profit, so churn wipes out about \$2 million a year.
+
+**Current approach (no model).** The bank calls everyone. A phone-or-email pushis estimated to cost about \$20 per customer. Assuming it persuades roughly 5% of would-be churners to stay—about 500 people, we get:
+
+- Cost: 50,000 x \$20 per customer = **\$1 million spent**
+- Profit saved: 500 customers x \$200 = **\$100,000 profit saved**
+- Net result: \$100,000 - \$1,000,000 = **-\$900,000 loss**
+
+**Targeted outreach (using the model).** My model flags the riskiest 15% of the base (7,500 people). If outreach keeps 15% of the true churners, 518 customers stay (3,450 x 15%).
+
+- Cost: 7,500 x \$20 = **\$150,000 spent**
+- Profit saved: 518 customers x \$200 = **\$103,600 profit saved** (still a slight upfront loss)
+- Immediate net = \$103,600 - \$150,000 = **\$46,400 loss**
+
+Retaining those 518 customers also avoids the estimated $500 acquisition cost each would require later. Therefore:
+
+- Additional savings: 518 x \$500 = **\$259,000 saved**
+- Total net gain: **\$259,000 – \$46,400 = +\$212,600 overall gain**
+
+**Bottom line:** Predictive modeling turns a \$900,000 loss into a \$200,000 gain while bothering only a fraction of the customer base.
+
+### Tools
+
+- Python, pandas, scikit-learn, matplotlib/seaborn for visualization
+
+### Behind the Scenes
+
+I tested several machine learning models and selected the Random Forest model because it balanced accuracy, interpretability, and business relevance.
+
+**Model performance:**
+
+- **Accuracy:** 85% (overall predictions correct)
+- **Recall (key metric here):** 46% (model identifies ~half of true churners)
+
+**Why prioritize recall?**
+
+Accuracy alone is misleading: simply predicting "no churn" would yield 80% accuracy due to class imbalance (80% retained vs. 20% churned). Recall specifically measures how effectively the model identifies the customers **who actually churn**.
+
+Although 46% might seem moderate, it's significantly better than random guessing (20%). Our targeted list drastically improves efficiency, making every retention call nearly three times as likely to reach a genuine churn risk (69% vs. 20%).
+
+### Want More Details?
+
+If you are curious about the technical details and insights, you can [view my full analysis on GitHub](https://github.com/d-pap/bank-churn/blob/main/bankchurn-report.ipynb) or [my in-depth technical report on Medium](https://medium.com/@dpapcodes/investigating-why-customers-leave-a-bank-47b41278e36c).
