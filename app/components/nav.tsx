@@ -73,7 +73,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm transition-transform duration-300 ${
+      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -118,14 +118,14 @@ export function Navbar() {
             {isMenuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg"
+                className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-black "
               >
                 <div className="py-1">
                   {Object.entries(navItems).map(([path, { name }]) => (
                     <Link
                       key={path}
                       href={path}
-                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {name}

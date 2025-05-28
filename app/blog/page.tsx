@@ -11,7 +11,7 @@ export default function BlogPosts() {
   let allBlogs = getBlogPosts();
 
   return (
-    <div className="w-full bg-white dark:bg-gray-900">
+    <div className="w-full bg-white dark:bg-black">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 md:pt-28">
         {/* Blog Posts Grid */}
         <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16 pb-24 md:pb-32">

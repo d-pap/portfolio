@@ -30,7 +30,7 @@ export default function Page() {
       <Hero />
 
       {/* Latest Works Section */}
-      <div className="w-full bg-white dark:bg-gray-900">
+      <div className="w-full bg-white dark:bg-black">
         <section
           className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32"
           id="portfolio"
@@ -98,7 +98,7 @@ export default function Page() {
               <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
                 <Link
                   href="/blog"
-                  className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-[#2D6960] transition-colors"
+                  className="inline-flex items-center text-sm text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
                 >
                   View all projects
                   <svg
@@ -122,7 +122,7 @@ export default function Page() {
       </div>
 
       {/* Experiences Section */}
-      <div className="w-full bg-white dark:bg-gray-900">
+      <div className="w-full bg-white dark:bg-black">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
           <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
             {/* Section Title - Left side on desktop */}
@@ -235,7 +235,7 @@ export default function Page() {
       </div>
 
       {/* About Me Section */}
-      <div className="w-full bg-white dark:bg-gray-900">
+      <div className="w-full bg-white dark:bg-black">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
           <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
             {/* Section Title - Left side on desktop */}
@@ -381,7 +381,7 @@ export default function Page() {
       </div>
 
       {/* Call to Action */}
-      <div className="w-full bg-white dark:bg-gray-900">
+      <div className="w-full bg-white dark:bg-black">
         <section
           className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32"
           id="contact"
