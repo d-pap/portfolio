@@ -43,6 +43,51 @@ html {
   @apply text-[#000000] dark:text-[#FFFFFF];
 }
 
+/* Enhanced heading styles with decorative underlines */
+.prose h1 {
+  @apply text-2xl font-bold mt-16 mb-12 relative;
+}
+
+.prose h2 {
+  @apply text-xl font-semibold mt-16 mb-12 pb-4 relative;
+}
+
+.prose h2::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-16 h-0.5 bg-[#2D6960] rounded-full opacity-60;
+}
+
+.prose h3 {
+  @apply text-lg font-semibold mt-12 mb-8 relative;
+}
+
+.prose h4 {
+  @apply text-base font-semibold mt-10 mb-6 relative;
+}
+
+/* Enhanced paragraph styles */
+.prose p {
+  @apply text-base leading-relaxed mb-6 text-gray-800 dark:text-gray-200;
+}
+
+/* Enhanced blockquote styles */
+.prose blockquote {
+  @apply pl-6 border-l-4 border-[#2D6960] my-8 italic text-gray-700 dark:text-gray-300;
+}
+
+/* Code block styles */
+.prose pre {
+  @apply bg-[#F7F7F7] dark:bg-[#181818] rounded-lg overflow-x-auto p-4 my-6;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded-md bg-[#F0F0F0] dark:bg-[#282828] text-sm font-mono;
+}
+
+.prose pre code {
+  @apply p-0 bg-transparent;
+}
+
 .prose .anchor {
   @apply absolute invisible no-underline;
   margin-left: -1em;
@@ -57,11 +102,7 @@ html {
 }
 
 .prose a {
-  @apply transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em] font-normal text-[#000000] dark:text-[#FFFFFF];
-}
-
-.prose a:hover {
-  @apply dark:decoration-neutral-400 decoration-neutral-600;
+  @apply transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em] font-normal text-[#2D6960] dark:text-[#2D6960] hover:text-[#1A4840] dark:hover:text-[#1A4840];
 }
 
 .prose .anchor:after {
@@ -73,54 +114,22 @@ html {
   @apply visible;
 }
 
-.prose pre {
-  @apply bg-[#F7F7F7] dark:bg-[#181818] rounded-lg overflow-x-auto;
+/* Table styles */
+.prose table {
+  @apply w-full my-8 border-collapse;
 }
 
-.prose code {
-  @apply px-1 py-0.5 rounded-lg;
+.prose table th {
+  @apply bg-gray-50 dark:bg-gray-800 px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100;
 }
 
-.prose pre code {
-  @apply p-0;
-  border: initial;
-  line-height: 1.5;
+.prose table td {
+  @apply px-4 py-3 text-sm border-t border-gray-200 dark:border-gray-700;
 }
 
-.prose code span {
-  @apply font-medium;
-}
-
+/* Image styles */
 .prose img {
-  /* Don't apply styles to next/image */
-  @apply m-0;
-}
-
-.prose h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-medium !important;
-}
-
-.prose strong {
-  @apply font-medium;
-}
-
-.prose > :first-child {
-  /* Override removing top margin, causing layout shift */
-  margin-top: 1.25em !important;
-  margin-bottom: 1.25em !important;
-}
-
-pre::-webkit-scrollbar {
-  display: none;
-}
-
-pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  @apply rounded-lg shadow-md my-8;
 }
 
 /* Remove Safari input shadow on mobile */

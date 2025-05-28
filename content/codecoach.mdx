@@ -12,11 +12,11 @@ image: "/cc-logo.png"
 
 [www.github.com/d-pap/codecoach](https://github.com/d-pap/codecoach)
 
-### Purpose
+## Purpose
 
 LeetCode is great for interviews but weak on ICPC problems and on-the-spot feedback. My ACM club wanted one place where students could solve past contest questions, run code in the browser, and get real help from an AI mentor. So three of us spent eight months turning that wish list into Code Coach.
 
-### Outcomes
+## Outcomes
 
 **200+ users** across two semesters; average weekly return rate 48 %.
 
@@ -26,7 +26,7 @@ LeetCode is great for interviews but weak on ICPC problems and on-the-spot feedb
 
 AI-powered Resume builder used by **62 students**; exported 120 tailored resume PDFs.
 
-### What the product does
+## Features
 
 Problem sets – ICPC archives plus LeetCode-style practice.
 
@@ -38,111 +38,33 @@ Resume builder – one click from form data to job-specific PDF using the same L
 
 Progress tracking – execution history, success rates, best runtimes.
 
-### Tooling
+## Tooling
 
-React + MUI component library,
+**Frontend.** React with MUI components and React Query for caching. I designed every screen and wired all state flows.
 
-AWS (API Gateway, Lambda + Node.js, Cognito, CloudWatch),
+**Authentication.** AWS Cognito handles email and social sign-in and controls access to compute-intensive features.
 
-MongoDB,
+**API layer.** AWS API Gateway routes to Node.js Lambdas. Payloads are typed, requests are throttled, and functions are sized for cold-start budgets.
 
-Judge0 for code execution,
+**Data.** MongoDB Atlas stores problems, submissions, and per-user AI token counts.
 
-UM-GPT (custom UMich instance) for LLM
+**Compiler sandbox.** Judge0 CE is called from Lambda to run code safely in multiple languages.
 
-<Table
-  data={{
-    headers: ["Layer", "Stack", "Notes"],
-    rows: [
-      [
-        "Frontend",
-        "React, MUI, React Query",
-        "I designed every screen and state flow.",
-      ],
-      [
-        "Auth",
-        "AWS Cognito",
-        "Email + social sign-in; protects compute budget.",
-      ],
-      [
-        "API",
-        "AWS API Gateway → AWS Lambda (Node.js)",
-        "Typed payloads, throttling, cold-start budgeting.",
-      ],
-      ["Data", "MongoDB Atlas", "Problems, submissions, AI token counts."],
-      ["Compiler", "Judge0 CE", "Called from Lambda; language sandboxing."],
-      [
-        "AI",
-        "GPT-4o via UM-GPT (custom UMich instance)",
-        "Fine-tuned on ICPC Q&A; prompt rules enforce hint-first replies.",
-      ],
-    ],
-  }}
-/>
+**AI assistant.** GPT-4o served through UM-GPT (University of Michigan instance). Fine-tuned on ICPC Q&A with prompt rules that force hint-first answers.
 
-### My role
+**Dev-ops extras.** GitHub Actions for CI, CloudWatch for logs, and React Testing Library for component tests round out the stack and keep quality high.
 
-I owned the architecture, UI, and every data path from browser click to AWS Lambda and back.
-
-### What I learned
-
-Design for budget – cold starts and token limits bite fast; caching and warm-ups matter.
-
-Guide, don’t spoil – prompt rules that drip-feed hints keep engagement high.
-
-UX ≠ Dribbble shots – clear error paths and loading states won more praise than colors.
-
-### Behind the scenes
-
-#### Landing Page
-
-<Image
-  src="/cc-landing-full.png"
-  alt="Code Coach image"
-  width={640}
-  height={500}
-/>
-
-#### Home
-
-<Image
-  src="/cc-home-full.png"
-  alt="Code Coach image"
-  width={640}
-  height={500}
-/>
-
-#### Problems Page
-
-<Image
-  src="/cc-comp-probs-full.png"
-  alt="Code Coach image"
-  width={640}
-  height={500}
-/>
-
-#### Compiler
-
-<Image src="/cc-compiler.png" alt="Code Coach image" width={640} height={500} />
-
-#### AI Chat
-
-<Image src="/cc-aichat.png" alt="Code Coach image" width={640} height={500} />
-
-#### Resume Builder
-
-<Image
-  src="/cc-resume-full.png"
-  alt="Code Coach image"
-  width={640}
-  height={500}
-/>
+## Behind the scenes
 
 <ImageGrid
-  columns={1}
+  columns={2}
   images={[
+    { src: "/cc-landing.png", alt: "Photo1", href: "#" },
+    { src: "/cc-landing-full.png", alt: "Photo1", href: "#" },
     { src: "/cc-home-full.png", alt: "Photo1", href: "#" },
-    { src: "/photos/photo2.jpg", alt: "Photo2", href: "#" },
-    { src: "/photos/photo3.jpg", alt: "Photo3" },
+    { src: "/cc-comp-probs-full.png", alt: "Photo1", href: "#" },
+    { src: "/cc-compiler.png", alt: "Photo1", href: "#" },
+    { src: "/cc-aichat.png", alt: "Photo2", href: "#" },
+    { src: "/cc-resume-full.png", alt: "Photo3" },
   ]}
 />
