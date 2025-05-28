@@ -40,6 +40,12 @@ export function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
+      // Always show header when at the top
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+        return;
+      }
+
       // Show header when scrolling up
       if (currentScrollY < lastScrollY) {
         setIsVisible(true);
@@ -47,15 +53,12 @@ export function Navbar() {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
           if (currentScrollY > 100) {
-            // Only hide if we're not near the top
             setIsVisible(false);
           }
         }, 2000);
       } else {
-        // Hide when scrolling down, but only if we're not at the top
-        if (currentScrollY > 100) {
-          setIsVisible(false);
-        }
+        // Hide when scrolling down
+        setIsVisible(false);
       }
 
       setLastScrollY(currentScrollY);
@@ -70,11 +73,11 @@ export function Navbar() {
 
   return (
     <nav
-      className={`w-full py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm transition-transform duration-300 ${
+      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-full">
         {/* Logo */}
         <Link
           href="/"
@@ -90,7 +93,7 @@ export function Navbar() {
             <button
               ref={buttonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="group p-2 "
+              className="group p-2"
               aria-label="Toggle menu"
             >
               <svg
@@ -115,14 +118,14 @@ export function Navbar() {
             {isMenuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-full right-0 mt-2 w-48 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm text-right"
+                className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-black "
               >
                 <div className="py-1">
                   {Object.entries(navItems).map(([path, { name }]) => (
                     <Link
                       key={path}
                       href={path}
-                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {name}

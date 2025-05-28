@@ -4,11 +4,11 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="w-full bg-white dark:bg-gray-900">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[80vh] md:min-h-[90vh] flex items-center">
-        <div className="w-full max-w-3xl">
+    <div className="w-full bg-white dark:bg-black">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 min-h-[calc(100vh-4rem)] flex items-center">
+        <div className="w-full max-w-3xl pt-16 md:pt-0">
           {/* Main content */}
-          <div className="space-y-24">
+          <div className="space-y-16 md:space-y-24">
             {/* Name and Title */}
             <div>
               <div className="inline-flex items-center space-x-2 text-sm mb-8">
@@ -20,10 +20,10 @@ export default function Hero() {
                 </div>
               </div>
               <div className="space-y-6">
-                <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+                <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
                   Data Specialist & Developer
                 </h1>
-                <p className="text-xl font-light text-gray-600 dark:text-gray-400 max-w-xl">
+                <p className="text-lg md:text-xl font-light text-gray-600 dark:text-gray-400 max-w-xl">
                   Data Scientist × Developer crafting intelligent solutions at
                   the intersection of data science and software development.
                 </p>

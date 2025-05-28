@@ -91,13 +91,13 @@ export default async function Blog({ params }) {
       <h1 className="title mb-3 font-bold text-2xl">{post.metadata.title}</h1>
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
         {/* Date */}
-        <p className="text-sm px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-neutral-600 dark:text-neutral-400 inline-block">
+        <p className="text-sm inline-block">
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>
 
       {/* Tags */}
-      <div className="flex flex-wrap gap-2 mb-8">
+      <div className="flex flex-wrap gap-2 mb-8 mt-4">
         {post.metadata.tags.split(",").map((tag) => (
           <div
             key={tag}
