@@ -253,26 +253,26 @@ export default function Page() {
 
             {/* About Content - Right side */}
             <div className="md:col-span-8 md:col-start-5 space-y-12">
-              {/* Profile Image and Stats */}
+              {/* Profile Image and Bio */}
               <div className="grid md:grid-cols-12 gap-8 items-start">
-                <div className="md:col-span-5">
-                  <div className="relative aspect-[4/5] w-full max-w-[280px] sm:max-w-[320px] md:max-w-none mx-auto">
+                <div className="md:col-span-4">
+                  <div className="relative aspect-[4/5] w-full max-w-[200px] sm:max-w-[220px] md:max-w-none mx-auto">
                     <Image
                       src="/final-linkedin2.PNG"
                       alt="Derek Papierski"
                       fill
-                      className="object-cover rounded-lg shadow-xl grayscale"
-                      sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 33vw"
+                      className="object-cover rounded-lg shadow-lg grayscale"
+                      sizes="(max-width: 768px) 200px, (max-width: 1024px) 220px, 25vw"
                       priority
                     />
                   </div>
                 </div>
-                <div className="md:col-span-7 space-y-6">
+                <div className="md:col-span-8 space-y-6">
                   <div className="prose prose-lg dark:prose-invert">
-                    <p className="font-bold text-gray-900 dark:text-gray-100">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
                       Data Scientist & Full-Stack Developer
-                    </p>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                       With a unique blend of analytical thinking and creative
                       problem-solving, I bridge the gap between data science and
                       web development. My journey began in mathematics and
@@ -282,7 +282,7 @@ export default function Page() {
                       intuitive web applications that make complex data
                       accessible and meaningful.
                     </p>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                       Today, I focus on building data-driven applications that
                       combine robust backend systems with elegant frontend
                       interfaces. Whether I'm developing machine learning
@@ -295,66 +295,82 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Skills and Interests */}
-              <div className="grid md:grid-cols-2 gap-8 pt-8 border-t border-gray-200 dark:border-gray-800">
-                <div className="space-y-4">
-                  <h3 className="font-light flex items-center space-x-2">
-                    <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]">
-                      <div className="flex items-center space-x-2">
-                        <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                        <span>Technical Expertise</span>
+              {/* Skills and Expertise */}
+              <div className="pt-8 border-t border-gray-200 dark:border-gray-800">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                      Technical Skills
+                    </h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Data Science & Analytics
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Python, SQL, R, Tableau, Excel, Apache Spark
+                        </p>
                       </div>
-                    </div>
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">Data Science</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Python, SQL, R, Tableau, Excel, Spark
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">Web Development</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        React, Next.js, Node.js
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">Machine Learning</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Scikit-learn
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">Tools</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        AWS, Docker, Git, Linux
-                      </p>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Web Development
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          React, Next.js, Node.js, TypeScript, JavaScript
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Machine Learning & AI
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Scikit-learn, TensorFlow, PyTorch, Statistical
+                          Modeling
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Tools & Infrastructure
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          AWS, Docker, Git, Linux, CI/CD
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-4">
-                  <h3 className="font-light flex items-center space-x-2">
-                    <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]">
-                      <div className="flex items-center space-x-2">
-                        <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                        <span>Interests & Focus</span>
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                      Areas of Focus
+                    </h3>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Data Visualization
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Creating intuitive and interactive data stories that
+                          make complex information accessible
+                        </p>
                       </div>
-                    </div>
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">Data Visualization</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Creating intuitive and interactive data stories
-                      </p>
-                    </div>
-                    <div className="p-3 rounded-lg">
-                      <p className="font-light">AI Applications</p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Building practical AI solutions for real-world problems
-                      </p>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          AI Applications
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Building practical AI solutions that solve real-world
+                          problems and drive business value
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          Full-Stack Development
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          Developing end-to-end applications that seamlessly
+                          integrate data science with user experience
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
