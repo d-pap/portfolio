@@ -63,11 +63,11 @@ export default function Page() {
                   >
                     <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
                       <div className="col-span-2">
-                        <div className="aspect-square relative overflow-hidden rounded bg-gray-100 dark:bg-gray-800">
+                        <div className="aspect-square relative overflow-hidden rounded bg-white dark:bg-white">
                           <Image
                             src={post.metadata.image || "/profile.png"}
                             alt={post.metadata.title}
-                            className="object-cover"
+                            className="object-contain"
                             fill
                             sizes="(max-width: 768px) 25vw, 20vw"
                             priority
