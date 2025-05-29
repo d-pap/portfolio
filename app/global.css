@@ -67,7 +67,7 @@ html {
 
 /* Enhanced paragraph styles */
 .prose p {
-  @apply text-base leading-relaxed mb-6 text-gray-800 dark:text-gray-200;
+  @apply text-sm leading-relaxed mb-6 text-gray-800 dark:text-gray-200;
 }
 
 /* Enhanced blockquote styles */

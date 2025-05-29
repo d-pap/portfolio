@@ -73,7 +73,7 @@ export function Navbar() {
 
   return (
     <nav
-      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm transition-transform duration-300 ${
+      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm transition-transform duration-300 border-b border-gray-800 dark:border-gray-800 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -81,7 +81,7 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-lg font-light text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
+          className=" text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
         >
           derekpapierski
         </Link>

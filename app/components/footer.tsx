@@ -7,7 +7,7 @@ export default async function Footer() {
   const posts = await getBlogPosts();
 
   return (
-    <footer className="w-full bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800">
+    <footer className="w-full bg-white dark:bg-black border-t border-gray-800 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           {/* Quick Links */}
@@ -95,7 +95,7 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-xs text-gray-900 dark:text-gray-100">
+        <div className="mt-12 pt-8 border-t border-gray-800 dark:border-gray-800 text-center text-xs text-gray-900 dark:text-gray-100">
           <p>
             © {new Date().getFullYear()} Derek Papierski. Built with Next.js and
             Tailwind CSS.

@@ -46,7 +46,7 @@ export default function Page() {
                   <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
                   <span>Works</span>
                 </div>
-                <h2 className="text-2xl font-light">
+                <h2 className="text-xl font-light">
                   Selected projects I've worked on
                 </h2>
               </div>
@@ -75,14 +75,12 @@ export default function Page() {
                         </div>
                       </div>
                       <div className="col-span-6">
-                        <h3 className="text-lg font-light mb-2">
-                          {post.metadata.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        <h3 className="mb-4">{post.metadata.title}</h3>
+                        {/* <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                           {formatDate(post.metadata.publishedAt)}
-                        </p>
+                        </p> */}
                         {post.metadata.summary && (
-                          <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                          <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">
                             {post.metadata.summary}
                           </p>
                         )}
@@ -141,7 +139,7 @@ export default function Page() {
                   <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
                   <span>Experience</span>
                 </div>
-                <h2 className="text-2xl font-light">What I've done</h2>
+                <h2 className="text-xl font-light">What I've done</h2>
               </div>
             </div>
 
@@ -157,13 +155,11 @@ export default function Page() {
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg font-light">
-                        Full Stack Developer
-                      </h3>
-                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-3">
+                      <h3 className="text-lg">Full Stack Developer</h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         Code Coach
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
                         Created an AI-powered learning platform for ACM students
                         to solve coding problems and prepare for programming
                         competitions and technical interviews.
@@ -198,11 +194,11 @@ export default function Page() {
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg font-light">Data Analyst</h3>
-                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-3">
+                      <h3 className="text-lg">Data Analyst</h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         iLabs, Center of Innovative Research
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
                         Analyzed data from the Center of Innovative Research to
                         provide insights and recommendations for the center.
                       </p>
@@ -236,11 +232,11 @@ export default function Page() {
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg font-light">Math Tutor</h3>
-                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-3">
+                      <h3 className="text-lg">Math Tutor</h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         UM-Dearborn
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
                         Tutored students in linear algebra, calculus, and
                         statistics.
                       </p>
@@ -278,7 +274,7 @@ export default function Page() {
                   <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
                   <span>About</span>
                 </div>
-                <h2 className="text-2xl font-light">
+                <h2 className="text-xl font-light">
                   The story behind the code
                 </h2>
               </div>
@@ -302,10 +298,10 @@ export default function Page() {
                 </div>
                 <div className="md:col-span-8 space-y-6">
                   <div className="prose prose-lg dark:prose-invert">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                       Data Analyst & Full-Stack Developer
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className=" text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
                       I’m a data-focused technologist with dual majors in
                       Computer Science and Data Science. I specialize in
                       extracting actionable insights from complex datasets, but
@@ -314,10 +310,10 @@ export default function Page() {
                       is the desire to make technology more accessible and
                       impactful.
                     </p>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
                       "Why both data science and software engineering?”
                     </p>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
                       Data doesn’t exist in a vacuum—it needs infrastructure,
                       tools, and systems to create real-world impact. My
                       background allows me to collaborate seamlessly with
@@ -428,7 +424,7 @@ export default function Page() {
                   <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
                   <span>Connect</span>
                 </div>
-                <h2 className="text-2xl font-light">Let's chat about tech</h2>
+                <h2 className="text-xl font-light">Let's chat about tech</h2>
               </div>
             </div>
 

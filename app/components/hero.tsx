@@ -24,7 +24,7 @@ export default function Hero() {
             {/* Center - Main message */}
             <div className="flex-1 flex items-center py-8 md:py-12">
               <div className="max-w-sm">
-                <p className="text-sm sm:text-base leading-relaxed text-gray-700 dark:text-gray-300 uppercase tracking-wide font-medium">
+                <p className="text-sm font-medium leading-relaxed text-gray-700 dark:text-gray-300 uppercase tracking-wide">
                   I turn complexity into clarity through data science and
                   elegant code.
                 </p>
@@ -33,7 +33,7 @@ export default function Hero() {
 
             {/* Bottom - Contact info */}
             <div className="space-y-3 pb-4 sm:pb-8 md:pb-12">
-              <p className="text-sm uppercase tracking-wide font-medium text-gray-600 dark:text-gray-400">
+              <p className="text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400 font-medium">
                 Michigan, USA
               </p>
               <Link
