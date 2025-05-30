@@ -50,18 +50,18 @@ export default function BlogPosts() {
                     <article className="py-6 md:py-8 border-t border-gray-200 dark:border-gray-800 first:border-t-0">
                       <div className="space-y-4">
                         {/* Post Date */}
-                        <p className="text-sm text-gray-600 dark:text-gray-400 tabular-nums">
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
                           {formatDate(post.metadata.publishedAt, false)}
                         </p>
 
                         {/* Post Title */}
-                        <h3 className="text-xl md:text-2xl font-light group-hover:text-[#2D6960] transition-colors">
+                        <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
                           {post.metadata.title}
                         </h3>
 
                         {/* Post Summary */}
                         {post.metadata.summary && (
-                          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                             {post.metadata.summary}
                           </p>
                         )}
@@ -72,7 +72,7 @@ export default function BlogPosts() {
                             {post.metadata.tags.split(",").map((tag, index) => (
                               <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-sm group-hover:bg-[#D8E5E3] transition-colors"
+                                className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors"
                               >
                                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                                 {tag.trim()}

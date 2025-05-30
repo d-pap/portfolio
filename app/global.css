@@ -159,3 +159,13 @@ table {
 .title {
   text-wrap: balance;
 }
+
+/* font size for unordered list */
+.prose ul {
+  @apply text-sm;
+}
+
+/* font size for ordered list */
+.prose ol {
+  @apply text-sm;
+}
