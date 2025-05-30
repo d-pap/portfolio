@@ -88,10 +88,12 @@ export default async function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title mb-3 font-bold text-2xl">{post.metadata.title}</h1>
+      <h1 className="title mb-4 font-bold text-xl md:text-2xl">
+        {post.metadata.title}
+      </h1>
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
         {/* Date */}
-        <p className="text-sm inline-block">
+        <p className="text-xs md:text-sm inline-block">
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>
@@ -101,11 +103,11 @@ export default async function Blog({ params }) {
         {post.metadata.tags.split(",").map((tag) => (
           <div
             key={tag}
-            className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
+            className="px-2 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
           >
             <div className="flex items-center space-x-2">
-              <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-              <span className="text-sm">{tag.trim()}</span>
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960]"></span>
+              <span className="text-xs md:text-sm">{tag.trim()}</span>
             </div>
           </div>
         ))}

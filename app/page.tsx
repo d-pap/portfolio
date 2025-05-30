@@ -75,22 +75,27 @@ export default function Page() {
                         </div>
                       </div>
                       <div className="col-span-6">
-                        <h3 className="mb-4">{post.metadata.title}</h3>
-                        {/* <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                          {formatDate(post.metadata.publishedAt)}
-                        </p> */}
+                        {/* Post Title */}
+                        <h3 className="text-base mb-4 group-hover:text-[#2D6960] transition-colors">
+                          {post.metadata.title}
+                        </h3>
+
+                        {/* Post Summary */}
                         {post.metadata.summary && (
-                          <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-sm">
+                          <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
                             {post.metadata.summary}
                           </p>
                         )}
+
+                        {/* Tags */}
                         {post.metadata.tags && (
                           <div className="flex flex-wrap gap-2">
                             {post.metadata.tags.split(",").map((tag, index) => (
                               <span
                                 key={index}
-                                className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full"
+                                className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors"
                               >
+                                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                                 {tag.trim()}
                               </span>
                             ))}
@@ -139,7 +144,9 @@ export default function Page() {
                   <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
                   <span>Experience</span>
                 </div>
-                <h2 className="text-xl font-light">What I've done</h2>
+                <h2 className="text-xl font-light">
+                  My journey into tech and data
+                </h2>
               </div>
             </div>
 
@@ -150,35 +157,39 @@ export default function Page() {
                 <div className="group">
                   <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
                     <div className="col-span-2">
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                         May 2024 - January 2025
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg">Full Stack Developer</h3>
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        Full Stack Developer
+                      </h3>
                       <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         Code Coach
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
                         Created an AI-powered learning platform for ACM students
                         to solve coding problems and prepare for programming
                         competitions and technical interviews.
                       </p>
+
+                      {/* Skills */}
                       <div className="flex flex-wrap gap-2">
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          AWS
-                        </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           React
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          Next.js
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          AWS
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          AI
-                        </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          Python
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          LLMs
                         </span>
                       </div>
                     </div>
@@ -189,34 +200,48 @@ export default function Page() {
                 <div className="group">
                   <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
                     <div className="col-span-2">
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                         October 2023 - February 2024
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg">Data Analyst</h3>
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        Data Analyst
+                      </h3>
                       <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         iLabs, Center of Innovative Research
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
-                        Analyzed data from the Center of Innovative Research to
-                        provide insights and recommendations for the center.
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Gathered and analyzed University of Michigan-Dearborn
+                        student data to provide insights about student
+                        engagement and made recommendations to university
+                        stakeholders.
                       </p>
+
+                      {/* Skills */}
                       <div className="flex flex-wrap gap-2">
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Python
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           SQL
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Tableau
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Excel
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          Statistics
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          SPSS
                         </span>
                       </div>
                     </div>
@@ -227,31 +252,38 @@ export default function Page() {
                 <div className="group">
                   <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
                     <div className="col-span-2">
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                         February 2023 - April 2024
                       </p>
                     </div>
                     <div className="col-span-6">
-                      <h3 className="text-lg">Math Tutor</h3>
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        Math Tutor
+                      </h3>
                       <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
                         UM-Dearborn
                       </h4>
-                      <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm">
-                        Tutored students in linear algebra, calculus, and
-                        statistics.
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Tutored first and second year students in linear
+                        algebra, calculus, and statistics to help them succeed.
                       </p>
+
+                      {/* Skills */}
                       <div className="flex flex-wrap gap-2">
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Linear Algebra
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Calculus
                         </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Statistics
-                        </span>
-                        <span className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full">
-                          Teaching
                         </span>
                       </div>
                     </div>
@@ -328,40 +360,40 @@ export default function Page() {
               <div className="pt-8 border-t border-gray-200 dark:border-gray-800">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-6">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    <h3 className="text-base md:text-lg font-medium text-gray-900 dark:text-gray-100">
                       Technical Skills
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Data Science & Analytics
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Python, SQL, R, Tableau, Excel, Apache Spark
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Web Development
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           React, Next.js, Node.js, TypeScript, JavaScript
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Machine Learning & AI
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Scikit-learn, TensorFlow, PyTorch, Statistical
                           Modeling
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Tools & Infrastructure
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           AWS, Docker, Git, Linux, CI/CD
                         </p>
                       </div>
@@ -369,34 +401,34 @@ export default function Page() {
                   </div>
 
                   <div className="space-y-6">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    <h3 className="text-base md:text-lg font-medium text-gray-900 dark:text-gray-100">
                       Areas of Focus
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Data Visualization
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Creating intuitive and interactive data stories that
                           make complex information accessible
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Communication
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Working with non-technical stakeholders to understand
                           their needs and simplify complex data into actionable
                           insights
                         </p>
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                        <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
                           Full-Stack Development
                         </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Developing end-to-end applications that seamlessly
                           integrate data science with user experience
                         </p>
@@ -437,12 +469,12 @@ export default function Page() {
                     <div className="inline-flex items-center space-x-2 text-sm mb-4">
                       <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] group-hover:bg-[#D8E5E3] transition-colors">
                         <div className="flex items-center space-x-2">
-                          <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                          <span>Email</span>
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960]"></span>
+                          <span className="text-xs md:text-sm">Email</span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
                       Whether you want to discuss a potential project, share
                       ideas about data science, or just talk tech, I'm always
                       happy to connect.
@@ -462,12 +494,12 @@ export default function Page() {
                     <div className="inline-flex items-center space-x-2 text-sm mb-4">
                       <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] group-hover:bg-[#D8E5E3] transition-colors">
                         <div className="flex items-center space-x-2">
-                          <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                          <span>Blog</span>
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960]"></span>
+                          <span className="text-xs md:text-sm">Blog</span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
                       I write about my experiences in data science, web
                       development, and the intersection of both. Check out my
                       latest thoughts and learnings.
@@ -487,12 +519,12 @@ export default function Page() {
                     <div className="inline-flex items-center space-x-2 text-sm mb-4">
                       <div className="px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] group-hover:bg-[#D8E5E3] transition-colors">
                         <div className="flex items-center space-x-2">
-                          <span className="inline-block h-2 w-2 rounded-full bg-[#2D6960]"></span>
-                          <span>Social</span>
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960]"></span>
+                          <span className="text-xs md:text-sm">Social</span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
                       Follow my journey and connect with me on other platforms.
                       I regularly share updates and insights about my work.
                     </p>
