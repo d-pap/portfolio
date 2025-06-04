@@ -20,11 +20,12 @@ module.exports = {
 
     extend: {
       colors: {
-        primary: "#f5f5f5",
-        secondary: "#121212",
-        brand: "#2D6960", // Your main color
-        brandLight: "#E7F0EE", // Light variant
-        brandDark: "#1A4840", // Dark variant for hovers
+        whitebg: "#fff9ea",
+        blackbg: "#121212",
+        primary: "#193322", // main color 232323
+        primaryLight: "#c6ddce", // Light variant
+        primaryDark: "#1A4840", // Dark variant for hovers
+        primaryHover: "#dceae1", // Light variant for hovers
       },
       typography: {
         quoteless: {

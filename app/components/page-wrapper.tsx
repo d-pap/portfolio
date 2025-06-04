@@ -9,11 +9,16 @@ interface PageWrapperProps {
 export default function PageWrapper({
   children,
   className = "",
-  backgroundColor = "bg-white dark:bg-black",
+  backgroundColor = "bg-whitebg dark:bg-blackbg",
 }: PageWrapperProps) {
   return (
-    <div className={`w-full ${backgroundColor} pt-24 pb-12 md:pt-28 md:pb-16`}>
-      <div className={`max-w-3xl mx-auto px-4 sm:px-6 ${className}`}>
+    <div
+      className={`w-full ${backgroundColor}`}
+      style={{ paddingTop: "110px" }}
+    >
+      <div
+        className={`max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16 ${className}`}
+      >
         {children}
       </div>
     </div>

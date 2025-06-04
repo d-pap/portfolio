@@ -1,118 +1,82 @@
 import { socialLinks } from "app/config";
 import Image from "next/image";
 import Link from "next/link";
+import { EB_Garamond } from "next/font/google";
+
+const garamond = EB_Garamond({ subsets: ["latin"] });
 
 export default function Hero() {
   return (
-    <div className="w-full bg-white dark:bg-black">
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-6 min-h-screen flex items-stretch relative">
-        <div className="w-full grid md:grid-cols-12 gap-8 py-20 sm:py-24 md:py-16">
+    <div className="w-full bg-whitebg dark:bg-blackbg min-h-screen flex flex-col">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 relative flex flex-col flex-grow">
+        {/* Main hero content */}
+        <div
+          className="w-full grid lg:grid-cols-12 gap-8 lg:gap-16 flex-grow"
+          style={{ paddingTop: "174px" }}
+        >
           {/* Left side - Main content */}
-          <div className="md:col-span-7 flex flex-col justify-between min-h-[80vh] md:min-h-[85vh]">
-            {/* Top - Name and title */}
-            <div className="space-y-6 pt-4 sm:pt-8 md:pt-12">
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-none text-gray-900 dark:text-gray-100">
-                Derek
-                <br />
-                Papierski
-              </h1>
-              <p className="text-sm sm:text-base font-medium tracking-wider uppercase text-gray-600 dark:text-gray-400">
-                Data Analysis & Development
-              </p>
-            </div>
-
-            {/* Center - Main message */}
-            <div className="flex-1 flex items-center py-8 md:py-12">
-              <div className="max-w-sm">
-                <p className="text-sm font-medium leading-relaxed text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-                  I turn complexity into clarity through data science and
-                  elegant code.
-                </p>
-              </div>
-            </div>
-
-            {/* Bottom - Contact info */}
-            <div className="space-y-3 pb-4 sm:pb-8 md:pb-12">
-              <p className="text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400 font-medium">
-                Michigan, USA
-              </p>
-              <Link
-                href="mailto:derek@derekpapierski.com"
-                className="block text-sm text-gray-600 dark:text-gray-400 hover:text-[#2D6960] transition-colors"
+          <div
+            className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1"
+            style={{ paddingTop: "18px" }}
+          >
+            <div className="space-y-6">
+              <h1
+                className="tracking-tight leading-none text-gray-900 dark:text-gray-100 font-normal text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+                style={{ lineHeight: "1.1" }}
               >
-                derek@derekpapierski.com
-              </Link>
+                I'm Derek Papierski, a data scientist & developer based in
+                Michigan.{" "}
+                <span className="underline decoration-2 underline-offset-4">
+                  Available
+                </span>{" "}
+                for freelance & collaborations.
+              </h1>
             </div>
           </div>
 
-          {/* Right side - Visual element positioned at bottom (hidden on mobile) */}
-          <div className="hidden md:block md:col-span-5 relative">
-            <div className="absolute bottom-0 right-0 md:bottom-8 md:right-0">
-              {/* Geometric pattern */}
-              <div className="w-64 h-72 lg:w-72 lg:h-80 relative">
-                {/* Grid pattern background */}
-                <div className="absolute inset-0 opacity-8 dark:opacity-15">
-                  <div
-                    className="w-full h-full"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at 2px 2px, #2D6960 1px, transparent 0)`,
-                      backgroundSize: "8px 8px",
-                    }}
-                  ></div>
-                </div>
-
-                {/* Overlapping geometric shapes */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-40 h-52">
-                    {/* Large rectangle */}
-                    <div className="absolute inset-0 border-2 border-[#2D6960] opacity-25"></div>
-
-                    {/* Offset rectangle */}
-                    <div className="absolute inset-0 border-2 border-[#2D6960] opacity-45 translate-x-3 translate-y-3"></div>
-
-                    {/* Inner shapes */}
-                    <div className="absolute top-6 left-6 w-12 h-12 bg-[#2D6960] opacity-15"></div>
-                    <div className="absolute bottom-6 right-6 w-8 h-8 border-2 border-[#2D6960] opacity-35"></div>
-
-                    {/* Dots pattern */}
-                    <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 bg-[#2D6960] rounded-full opacity-50"></div>
-                    <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-[#2D6960] rounded-full opacity-70"></div>
-                    <div className="absolute top-2/3 left-2/3 w-2 h-2 border border-[#2D6960] rounded-full opacity-40"></div>
+          {/* Right side - Image */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end items-start order-1 lg:order-2">
+            <div
+              className="relative rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 w-full max-w-md lg:max-w-none"
+              style={{
+                aspectRatio: "606/564",
+                maxWidth: "606px",
+              }}
+            >
+              {/* Placeholder for now - will be replaced with chosen image */}
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-primaryLight/30">
+                <div className="text-center text-gray-600 dark:text-gray-400">
+                  <div className="text-4xl sm:text-5xl lg:text-6xl mb-4">
+                    🦅
                   </div>
-                </div>
-
-                {/* Data visualization lines */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg
-                    className="w-full h-full opacity-20"
-                    viewBox="0 0 200 250"
-                  >
-                    <path
-                      d="M20 40 Q100 20 180 60 T180 130 Q100 150 20 110 T20 210"
-                      stroke="#2D6960"
-                      strokeWidth="1"
-                      fill="none"
-                      opacity="0.5"
-                    />
-                    <path
-                      d="M30 70 L170 110 L30 140 L170 180"
-                      stroke="#2D6960"
-                      strokeWidth="0.5"
-                      fill="none"
-                      opacity="0.3"
-                    />
-                  </svg>
+                  <p className="text-xs sm:text-sm">
+                    Placeholder for hero image
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 hidden md:block">
-          <div className="flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-600">
-            <div className="w-px h-6 bg-gray-300 dark:bg-gray-700"></div>
-            <div className="w-0.5 h-0.5 bg-[#2D6960] rounded-full animate-pulse"></div>
+        {/* Bottom section with contact info */}
+        <div className="py-12 md:py-16">
+          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8 text-sm text-gray-600 dark:text-gray-400">
+            <div>
+              <p className="uppercase tracking-wide font-medium mb-2">
+                Michigan, USA
+              </p>
+              <Link
+                href="mailto:derek@derekpapierski.com"
+                className="hover:text-primary transition-colors"
+              >
+                derek@derekpapierski.com
+              </Link>
+            </div>
+            <div className="sm:text-right">
+              <p className="uppercase tracking-wide font-medium">
+                Currently available for new projects
+              </p>
+            </div>
           </div>
         </div>
       </section>

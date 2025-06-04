@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { CustomMDX } from "app/components/mdx";
 import { formatDate, getBlogPosts } from "app/lib/posts";
 import { metaData } from "app/config";
-import PageWrapper from "app/components/page-wrapper";
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -65,57 +64,80 @@ export default async function Blog({ params }) {
   }
 
   return (
-    <PageWrapper>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${metaData.baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${metaData.baseUrl}/blog/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: metaData.name,
-            },
-          }),
-        }}
-      />
-      <h1 className="title mb-4 font-bold text-xl md:text-2xl">
-        {post.metadata.title}
-      </h1>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2 mb-2">
-        {/* Date */}
-        <p className="text-xs md:text-sm inline-block">
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-      </div>
+    <div
+      className="w-full bg-whitebg dark:bg-blackbg"
+      style={{ paddingTop: "174px" }}
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-24 md:pb-32">
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post.metadata.title,
+              datePublished: post.metadata.publishedAt,
+              dateModified: post.metadata.publishedAt,
+              description: post.metadata.summary,
+              image: post.metadata.image
+                ? `${metaData.baseUrl}${post.metadata.image}`
+                : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+              url: `${metaData.baseUrl}/blog/${post.slug}`,
+              author: {
+                "@type": "Person",
+                name: metaData.name,
+              },
+            }),
+          }}
+        />
 
-      {/* Tags */}
-      <div className="flex flex-wrap gap-2 mb-8 mt-4">
-        {post.metadata.tags.split(",").map((tag) => (
-          <div
-            key={tag}
-            className="px-2 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960]"
+        {/* Article Header */}
+        <header className="mb-12">
+          {/* Date */}
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+            {formatDate(post.metadata.publishedAt)}
+          </p>
+
+          {/* Title */}
+          <h1
+            className="font-medium text-gray-900 dark:text-gray-100 mb-6 leading-tight text-3xl sm:text-4xl lg:text-5xl"
+            style={{ fontSize: "clamp(2rem, 4vw, 45.063px)" }}
           >
-            <div className="flex items-center space-x-2">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960]"></span>
-              <span className="text-xs md:text-sm">{tag.trim()}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+            {post.metadata.title}
+          </h1>
 
-      <article className="prose prose-quoteless prose-neutral dark:prose-invert">
-        <CustomMDX source={post.content} />
-      </article>
-    </PageWrapper>
+          {/* Summary */}
+          {post.metadata.summary && (
+            <p
+              className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 text-lg sm:text-xl"
+              style={{ fontSize: "clamp(1.125rem, 2.5vw, 20px)" }}
+            >
+              {post.metadata.summary}
+            </p>
+          )}
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {post.metadata.tags.split(",").map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-2 bg-primaryLight text-primary rounded-lg"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary"></span>
+                  <span className="text-sm font-medium">{tag.trim()}</span>
+                </div>
+              </span>
+            ))}
+          </div>
+        </header>
+
+        {/* Article Content */}
+        <article className="prose prose-quoteless prose-neutral dark:prose-invert max-w-none">
+          <CustomMDX source={post.content} />
+        </article>
+      </div>
+    </div>
   );
 }

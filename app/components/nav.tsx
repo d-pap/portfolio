@@ -5,8 +5,10 @@ import { ThemeSwitch } from "./theme-switch";
 import { useState, useEffect, useRef } from "react";
 
 const navItems = {
-  "/": { name: "Home" },
-  "/blog": { name: "Blog" },
+  "/": { name: "Work" },
+  "/#about": { name: "About" },
+  "/#contact": { name: "Contact" },
+  "/blog": { name: "Other" },
 };
 
 export function Navbar() {
@@ -73,23 +75,38 @@ export function Navbar() {
 
   return (
     <nav
-      className={`w-full h-16 py-4 fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm transition-transform duration-300 border-b border-gray-800 dark:border-gray-800 ${
+      className={`w-full fixed top-0 left-0 right-0 z-50 bg-whitebg/80 dark:bg-blackbg/80 backdrop-blur-sm transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
+      style={{ height: "110px" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-full">
         {/* Logo */}
         <Link
           href="/"
-          className=" text-gray-900 dark:text-gray-100 hover:text-[#2D6960] dark:hover:text-[#2D6960] transition-colors"
+          className="text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary transition-colors font-medium"
         >
           derekpapierski
         </Link>
 
+        {/* Desktop Navigation Links - Hidden on mobile */}
+        <div className="hidden lg:flex items-center" style={{ gap: "27.35px" }}>
+          {Object.entries(navItems).map(([path, { name }]) => (
+            <Link
+              key={path}
+              href={path}
+              className="text-gray-900 dark:text-gray-100 hover:text-primary dark:hover:text-primary transition-colors"
+              style={{ fontSize: "24.867px" }}
+            >
+              {name}
+            </Link>
+          ))}
+        </div>
+
         {/* Right side controls */}
         <div className="flex items-center space-x-6">
-          {/* Menu Button */}
-          <div className="relative">
+          {/* Mobile Menu Button - Only visible on mobile */}
+          <div className="relative lg:hidden">
             <button
               ref={buttonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -114,18 +131,18 @@ export function Navbar() {
               </svg>
             </button>
 
-            {/* Dropdown Menu */}
+            {/* Mobile Dropdown Menu */}
             {isMenuOpen && (
               <div
                 ref={menuRef}
-                className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-black "
+                className="absolute top-full right-0 mt-2 w-48 bg-whitebg dark:bg-blackbg border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg"
               >
                 <div className="py-1">
                   {Object.entries(navItems).map(([path, { name }]) => (
                     <Link
                       key={path}
                       href={path}
-                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {name}

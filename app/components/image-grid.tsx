@@ -113,7 +113,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
   return (
     <div
       ref={modalRef}
-      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-blackbg bg-opacity-90 z-50 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -123,20 +123,20 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
       <div className="absolute top-4 right-4 flex gap-2 z-10">
         <button
           onClick={resetZoom}
-          className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
+          className="bg-whitebg bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
         >
           Reset
         </button>
         <button
           onClick={onClose}
-          className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
+          className="bg-whitebg bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
         >
           ✕
         </button>
       </div>
 
       {/* Zoom indicator */}
-      <div className="absolute top-4 left-4 bg-white bg-opacity-20 text-white px-3 py-2 rounded-md text-sm">
+      <div className="absolute top-4 left-4 bg-whitebg bg-opacity-20 text-white px-3 py-2 rounded-md text-sm">
         {Math.round(scale * 100)}%
       </div>
 
@@ -166,7 +166,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
       </div>
 
       {/* Instructions */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-20 text-white px-4 py-2 rounded-md text-sm text-center">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-whitebg bg-opacity-20 text-white px-4 py-2 rounded-md text-sm text-center">
         <div>Scroll to zoom • Double-click to toggle zoom • Drag to pan</div>
       </div>
     </div>
