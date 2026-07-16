@@ -404,26 +404,28 @@ export default function Page() {
                 <div className="md:col-span-8 space-y-6">
                   <div className="prose prose-lg dark:prose-invert">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                      Data Analyst & Full-Stack Developer
+                      Software developer, AI engineer, and designer
                     </h3>
-                    <p className=" text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      I’m a data-focused technologist with dual majors in
-                      Computer Science and Data Science. I specialize in
-                      extracting actionable insights from complex datasets, but
-                      I also love building tools and applications that turn
-                      those insights into real-world solutions. What drives me
-                      is the desire to make technology more accessible and
-                      impactful.
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
+                      I build AI products end to end at Michigan Medicine: the
+                      retrieval service behind an AI health coach, the mobile
+                      app it lives in, and the interface people use to talk to
+                      it. Before this I worked in data analysis, which still
+                      shapes how I approach problems — measure first, then
+                      build.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      "Why both data science and software engineering?”
+                      I care as much about how software feels as how it works.
+                      The projects I take on tend to involve both: rebuilding
+                      an app's design system and redesigning a nonprofit's
+                      website are design problems and engineering problems at
+                      the same time, and I like owning both halves.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      Data doesn’t exist in a vacuum—it needs infrastructure,
-                      tools, and systems to create real-world impact. My
-                      background allows me to collaborate seamlessly with
-                      engineers, design scalable solutions, and ensure insights
-                      translate into action.
+                      A lot of my current work is evaluation. Shipping a
+                      medical chatbot is one thing; knowing it's good is
+                      another. I spend much of my time on that second problem —
+                      from retrieval metrics to multi-turn conversation evals.
                     </p>
                   </div>
                 </div>
@@ -439,35 +441,38 @@ export default function Page() {
                     <div className="space-y-4">
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Data Science & Analytics
+                          AI / LLM Systems
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Python, SQL, R, Tableau, Excel, Apache Spark
+                          RAG, LangGraph, LangChain, pgvector, hybrid
+                          retrieval, prompt engineering
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Web Development
+                          Evaluation
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          React, Next.js, Node.js, TypeScript, JavaScript
+                          Retrieval metrics, LLM-as-judge, multi-turn evals,
+                          DeepEval, promptfoo
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Machine Learning & AI
+                          Web & App Development
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Scikit-learn, TensorFlow, PyTorch, Statistical
-                          Modeling
+                          TypeScript, React, React Native, Expo, Next.js,
+                          Astro, Python, FastAPI
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Tools & Infrastructure
+                          Design & Infrastructure
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          AWS, Docker, Git, Linux, CI/CD
+                          UI/UX, design systems, Figma, PostgreSQL, Docker,
+                          CI/CD
                         </p>
                       </div>
                     </div>
@@ -480,30 +485,31 @@ export default function Page() {
                     <div className="space-y-4">
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Data Visualization
+                          AI Products
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Creating intuitive and interactive data stories that
-                          make complex information accessible
+                          Building LLM-powered features that are grounded,
+                          safe, and actually useful — retrieval, memory, and
+                          personalization
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Communication
+                          Evaluation
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Working with non-technical stakeholders to understand
-                          their needs and simplify complex data into actionable
-                          insights
+                          Measuring AI systems honestly, from retrieval metrics
+                          to multi-turn conversation quality for a consumer
+                          medical chatbot
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Full-Stack Development
+                          Design Engineering
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Developing end-to-end applications that seamlessly
-                          integrate data science with user experience
+                          Design systems, accessible interfaces, and the craft
+                          details that make software feel considered
                         </p>
                       </div>
                     </div>
@@ -548,9 +554,10 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      Whether you want to discuss a potential project, share
-                      ideas about data science, or just talk tech, I'm always
-                      happy to connect.
+                      Whether you want to talk about a role, a freelance
+                      project, or AI systems in general, I'm happy to connect.
+                      I also take on select freelance web design and build
+                      work.
                     </p>
                     <a
                       href="mailto:derek@derekpapierski.com"
@@ -573,9 +580,8 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      I write about my experiences in data science, web
-                      development, and the intersection of both. Check out my
-                      latest thoughts and learnings.
+                      I write about what I'm building — AI systems,
+                      evaluation, and web development.
                     </p>
                     <Link
                       href="/blog"
