@@ -58,11 +58,13 @@ export function getBlogPosts() {
 }
 
 export function getFeaturedPosts() {
+  const orderOf = (metadata: Metadata) => {
+    const n = Number(metadata.order);
+    return metadata.order && Number.isFinite(n) ? n : 99;
+  };
   return getBlogPosts()
     .filter((post) => post.metadata.featured === "true")
-    .sort(
-      (a, b) => Number(a.metadata.order ?? 99) - Number(b.metadata.order ?? 99)
-    );
+    .sort((a, b) => orderOf(a.metadata) - orderOf(b.metadata));
 }
 
 export function formatDate(date: string, includeRelative = false) {

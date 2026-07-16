@@ -34,4 +34,5 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.tsdocs/SPROUT_RAG_SYSTEM_DOCUMENTATION.md
+next-env.d.ts
+*SPROUT_RAG_SYSTEM_DOCUMENTATION*.md
