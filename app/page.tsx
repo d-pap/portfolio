@@ -1,19 +1,11 @@
 import Image from "next/image";
 import { socialLinks } from "./config";
 import Link from "next/link";
-import { getBlogPosts, formatDate } from "./lib/posts";
+import { getFeaturedPosts } from "./lib/posts";
 import Hero from "./components/hero";
 
 export default function Page() {
-  // Get the latest blog posts for the featured section
-  const featuredPosts = getBlogPosts()
-    .sort((a, b) => {
-      if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
-        return -1;
-      }
-      return 1;
-    })
-    .slice(0, 4); // Get the 4 most recent posts
+  const featuredPosts = getFeaturedPosts();
 
   return (
     <>
@@ -37,7 +29,7 @@ export default function Page() {
                   <span>Works</span>
                 </div>
                 <h2 className="text-xl font-light">
-                  Selected projects I've worked on
+                  Products, systems, and sites I've built
                 </h2>
               </div>
             </div>
@@ -45,7 +37,7 @@ export default function Page() {
             {/* Project List - Right side on desktop */}
             <div className="md:col-span-8 md:col-start-5">
               <div className="space-y-12">
-                {featuredPosts.slice(0, 3).map((post) => (
+                {featuredPosts.map((post) => (
                   <Link
                     key={post.slug}
                     href={`/blog/${post.slug}`}
