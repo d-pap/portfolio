@@ -127,7 +127,7 @@ export default function Page() {
                   <span>Experience</span>
                 </div>
                 <h2 className="text-xl font-light">
-                  My journey into tech and data
+                  Where I've worked
                 </h2>
               </div>
             </div>
@@ -135,6 +135,110 @@ export default function Page() {
             {/* Experience List - Right side on desktop */}
             <div className="md:col-span-8 md:col-start-5">
               <div className="space-y-12">
+                {/* App Developer */}
+                <div className="group">
+                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
+                    <div className="col-span-2">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                        September 2025 - Present
+                      </p>
+                    </div>
+                    <div className="col-span-6">
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        App Developer
+                      </h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
+                        Michigan Medicine
+                      </h4>
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        I own the RENEW scleroderma app — framework and React
+                        upgrades, a token-based design system and UI redesign,
+                        security hardening, and App Store and Play Store
+                        releases.
+                      </p>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Mobile
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          React Native
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Expo
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          TypeScript
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          UI/UX
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+                {/* AI Engineer */}
+                <div className="group">
+                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
+                    <div className="col-span-2">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                        June 2025 - Present
+                      </p>
+                    </div>
+                    <div className="col-span-6">
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        AI Engineer
+                      </h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
+                        Michigan Medicine
+                      </h4>
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Designed and built Sprout, the RAG service behind
+                        RENEW's AI health coach — hybrid retrieval, a
+                        personalization memory layer, and the evaluation
+                        systems that measure it.
+                      </p>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          RAG
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Python
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          FastAPI
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          LangGraph
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Evals
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
                 {/* Full Stack Developer */}
                 <div className="group">
                   <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
@@ -163,15 +267,15 @@ export default function Page() {
                       <div className="flex flex-wrap gap-2">
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          AI
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           React
                         </span>
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           AWS
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          LLMs
                         </span>
                       </div>
                     </div>
@@ -197,14 +301,16 @@ export default function Page() {
 
                       {/* Job Description */}
                       <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Gathered and analyzed University of Michigan-Dearborn
-                        student data to provide insights about student
-                        engagement and made recommendations to university
-                        stakeholders.
+                        Analyzed student engagement data and reported
+                        recommendations to university stakeholders.
                       </p>
 
                       {/* Skills */}
                       <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Data Analysis
+                        </span>
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Python
@@ -212,60 +318,6 @@ export default function Page() {
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           SQL
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Tableau
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Excel
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          SPSS
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                {/* Math Tutor */}
-                <div className="group">
-                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
-                    <div className="col-span-2">
-                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                        February 2023 - April 2024
-                      </p>
-                    </div>
-                    <div className="col-span-6">
-                      {/* Job Title */}
-                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
-                        Math Tutor
-                      </h3>
-                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
-                        UM-Dearborn
-                      </h4>
-
-                      {/* Job Description */}
-                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Tutored first and second year students in linear
-                        algebra, calculus, and statistics to help them succeed.
-                      </p>
-
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-2">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Linear Algebra
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Calculus
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Statistics
                         </span>
                       </div>
                     </div>
