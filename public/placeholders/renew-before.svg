@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#F3F4F6"/>
+  <rect x="8" y="8" width="1184" height="884" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="12 10"/>
+  <text x="600" y="435" text-anchor="middle" font-family="system-ui, sans-serif" font-size="40" fill="#6B7280">RENEW v2 — before</text>
+  <text x="600" y="495" text-anchor="middle" font-family="system-ui, sans-serif" font-size="26" fill="#9CA3AF">screenshot coming soon</text>
+</svg>
