@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { socialLinks } from "./config";
 import Link from "next/link";
-import { projects } from "./projects/project-data";
 import { getBlogPosts, formatDate } from "./lib/posts";
 import Hero from "./components/hero";
 
@@ -15,15 +14,6 @@ export default function Page() {
       return 1;
     })
     .slice(0, 4); // Get the 4 most recent posts
-
-  // Debug log to check post metadata
-  console.log(
-    "Featured Posts Metadata:",
-    featuredPosts.map((post) => ({
-      title: post.metadata.title,
-      image: post.metadata.image,
-    }))
-  );
 
   return (
     <>

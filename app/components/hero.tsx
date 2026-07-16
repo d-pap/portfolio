@@ -1,4 +1,3 @@
-import { socialLinks } from "app/config";
 import Image from "next/image";
 import Link from "next/link";
 
