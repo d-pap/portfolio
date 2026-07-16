@@ -1,0 +1,49 @@
+---
+title: "Stitches Doll Project — Website Rebuild"
+publishedAt: "2026-07-14"
+summary: "A freelance rebuild of stitchesdollproject.org — replacing a 2016 desktop-only site with a fast, accessible Astro site the client can edit herself. Currently in the design phase."
+tags: "Web Design, Astro, TypeScript, CMS"
+image: "/placeholders/stitches-hero.svg"
+category: "Project"
+featured: true
+order: 3
+---
+
+<Image src="/placeholders/stitches-hero.svg" alt="Stitches homepage design" width={640} height={480} />
+
+[The current site](https://stitchesdollproject.org) — still the old design until this project ships.
+
+## Purpose
+
+The STITCHES Doll Project, founded in 1999, preserves the stories of women affected by HIV/AIDS, domestic violence, bleeding disorders, and other serious issues. Each woman makes a doll that answers one question: *"If your doll could talk, what would she say?"* The dolls travel as a national exhibit.
+
+The website was built in 2016 with a desktop website builder: 105 hand-made pages, 1,261 images, image-based navigation buttons, no mobile layout, and no HTTPS. I'm rebuilding it from the ground up as a freelance project — design and build.
+
+## Where it stands
+
+The content migration is done and the project is in the design phase. So far:
+
+- ~550 doll records extracted from the old static HTML with a custom Python pipeline, now living as structured, schema-validated content.
+- A working Astro build with a page for every doll, gallery and program pages, and an interactive map of where dolls come from.
+- 87 redirects mapped from old URLs so nothing breaks at cutover.
+- A git-based CMS configured so the founder can edit content through simple forms — no code, no hosting bill.
+
+## Design direction
+
+Two candidate directions, to be presented to the client as live previews rather than static mockups: a "handstitched" theme built around red-thread accents drawn from the dolls themselves, and a minimal gallery treatment that puts the photography first. Both are storytelling-first and accessibility-minded.
+
+## Before / After
+
+<BeforeAfter
+  before={{ src: "/placeholders/stitches-before.svg", alt: "stitchesdollproject.org 2016 site" }}
+  after={{ src: "/placeholders/stitches-after.svg", alt: "New Stitches design, in progress" }}
+  caption="The after side arrives when the design round finishes."
+/>
+
+## Tooling
+
+Astro, TypeScript, hand-written CSS with design tokens, content collections with Zod validation, Pages CMS, Leaflet with OpenStreetMap, Cloudflare Pages. Hosting cost: about $0/month.
+
+## Behind the Scenes
+
+The old site had no export, no database, and no source files — just rendered HTML. The migration pipeline parses every page, extracts each doll's photo, story, and origin, and writes them into structured JSON. Getting 550 records out of 105 hand-built pages was the least glamorous and most valuable part of the project.
