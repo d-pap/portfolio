@@ -1,0 +1,55 @@
+---
+title: "RENEW — Modernizing a Clinical Research App"
+publishedAt: "2026-07-16"
+summary: "Taking over a React Native app used in a Michigan Medicine scleroderma study — framework upgrades, a token-based design system, security hardening, and a full UI redesign."
+tags: "Mobile, React Native, Expo, TypeScript, UI/UX"
+image: "/placeholders/renew-hero.svg"
+category: "Project"
+featured: true
+order: 1
+---
+
+<Image src="/placeholders/renew-hero.svg" alt="RENEW app overview" width={640} height={480} />
+
+[Download on the App Store](https://apps.apple.com/us/app/renew-scleroderma/id1579955473)
+
+The codebase is private (Michigan Medicine), so there's no public repo to link.
+
+## Purpose
+
+RENEW is a mobile app for people living with scleroderma, built for a Michigan Medicine research study on fatigue self-management. Participants set wellness goals, track daily progress, work through educational modules, and talk with an AI health coach.
+
+I joined the project in June 2025 to build the retrieval system behind the AI chat ([separate write-up](/blog/rag-api)). In September 2025 I also took over the app itself: modernizing the codebase, redesigning the interface, and handling maintenance and releases.
+
+## Outcomes
+
+- Upgraded the app from Expo SDK 51 to 57, React 18 to 19, and React Native 0.74 to 0.86.
+- Replaced ad-hoc styling with a token-based design system: typed color, spacing, type, and motion tokens, WCAG AA-checked contrast, and capped Dynamic Type scaling.
+- Replaced magic-link login with rate-limited, bcrypt-hashed 6-digit email codes, and unified auth checks across 18+ API endpoints.
+- Ships on the iOS App Store and Google Play, with releases handled end to end.
+
+## Before / After
+
+<BeforeAfter
+  before={{ src: "/placeholders/renew-before.svg", alt: "RENEW v2 home screen" }}
+  after={{ src: "/placeholders/renew-after.svg", alt: "RENEW v3 home screen" }}
+  caption="The v2 to v3 redesign."
+/>
+
+The redesign swapped stock modals for native bottom sheets, spinners for skeleton loaders, and Material 2-era components for platform-native ones, with haptics and motion tuned per screen.
+
+## Features
+
+- **Goals and tracking** — create wellness goals, log daily progress, and review stats and timelines on a progress screen.
+- **Educational modules** — ten modules on pacing, relaxation, nutrition, movement, and sleep, with audio and video content.
+- **AI health coach** — three conversation modes (set goals, modify goals, open chat) with resumable threads and cited sources.
+
+<Image src="/placeholders/renew-chat.svg" alt="RENEW AI chat with citations" width={640} height={480} />
+
+## Tooling
+
+React Native, Expo, TypeScript, React Navigation, TanStack Query, Zustand, Jest with React Native Testing Library. The backend is a PHP API with MySQL on Michigan Medicine servers. Builds go through EAS; iOS releases through App Store Connect and Android through the university's signing process.
+
+## Behind the Scenes
+
+Working inside a health system means no push-button deploys. I wrote backend deploy scripts with a read-only preview mode and timestamped backups, so every production change can be dry-run first and rolled back with one command. The framework upgrades were staged the same way: one SDK jump at a time, with patch-package fixes where the ecosystem lagged behind.
