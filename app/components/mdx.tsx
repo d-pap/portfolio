@@ -7,6 +7,7 @@ import { TweetComponent } from "./tweet";
 import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
+import { BeforeAfter } from "./before-after";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
@@ -109,6 +110,7 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   ImageGrid,
+  BeforeAfter,
   a: CustomLink,
   StaticTweet: TweetComponent,
   Caption: CaptionComponent,
