@@ -8,6 +8,8 @@ type Metadata = {
   tags: string;
   image?: string;
   category?: string;
+  featured?: string;
+  order?: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -53,6 +55,14 @@ function getMDXData(dir: string) {
 
 export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), "content"));
+}
+
+export function getFeaturedPosts() {
+  return getBlogPosts()
+    .filter((post) => post.metadata.featured === "true")
+    .sort(
+      (a, b) => Number(a.metadata.order ?? 99) - Number(b.metadata.order ?? 99)
+    );
 }
 
 export function formatDate(date: string, includeRelative = false) {
