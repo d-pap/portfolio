@@ -329,6 +329,45 @@ export default function Page() {
         </section>
       </div>
 
+      {/* Research Section */}
+      <div className="w-full bg-white dark:bg-black">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
+          <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
+            <div className="md:col-span-3 mb-12 md:mb-0 md:sticky md:top-24 self-start">
+              <div className="space-y-4">
+                <div className="inline-flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
+                  <span>Research</span>
+                </div>
+                <h2 className="text-xl font-light">Published work</h2>
+              </div>
+            </div>
+            <div className="md:col-span-8 md:col-start-5">
+              <div className="py-6 border-t border-gray-200 dark:border-gray-800">
+                <p className="text-sm md:text-base text-gray-900 dark:text-gray-100 leading-relaxed mb-4">
+                  Shah N, Buis L, Papierski D, Castellanos A, Mlakha M, Murphy
+                  S.{" "}
+                  <a
+                    href="https://doi.org/10.2196/79302"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-[#2D6960] transition-colors"
+                  >
+                    A Beginner&apos;s Guide to Applying Large Language Models
+                    in Behavioral Interventions.
+                  </a>{" "}
+                  <em>JMIR mHealth and uHealth.</em> 2026;14:e79302.
+                </p>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                  This paper documents the approach behind the LLM work in
+                  RENEW.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       {/* About Me Section */}
       <div className="w-full bg-white dark:bg-black">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
