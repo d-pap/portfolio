@@ -1,0 +1,51 @@
+---
+title: "Sprout — A RAG Service for a Medical Chatbot"
+publishedAt: "2026-07-15"
+summary: "Designing, building, and evaluating the retrieval-augmented generation API behind RENEW's AI health coach — hybrid retrieval, a personalization memory layer, and five evaluation systems."
+tags: "RAG, Python, FastAPI, LangGraph, Evals"
+image: "/placeholders/rag-hero.svg"
+category: "Project"
+featured: true
+order: 2
+---
+
+<Image src="/placeholders/rag-hero.svg" alt="Sprout architecture diagram" width={640} height={480} />
+
+Sprout powers the AI chat in the [RENEW scleroderma app](/blog/renew-app). The codebase is private (Michigan Medicine). The approach is documented in a peer-reviewed paper: [JMIR mHealth and uHealth, 2026;14:e79302](https://doi.org/10.2196/79302).
+
+## Purpose
+
+RENEW's AI health coach answers questions from people managing a chronic illness. Answers have to be grounded in vetted clinical and patient-education content, written in plain language, and stay inside coaching boundaries — no diagnoses, no medical advice beyond the source material. I was hired in June 2025 to design and build the retrieval system that makes that possible.
+
+## Outcomes
+
+- A LangGraph pipeline in production behind the app's chat: classify the message, retrieve if needed, generate with citations, or respond directly for non-clinical turns.
+- Hybrid retrieval over a corpus of ~112 clinical and patient-education documents: dense vectors (pgvector) and sparse keyword search fused with Reciprocal Rank Fusion, then listwise LLM reranking with a relevance threshold.
+- A personalization layer beyond plain RAG: per-user clinical, conversation, and check-in summaries, plus a coaching-hypothesis engine that forms and corrects hypotheses about each user across sessions.
+- Five evaluation systems (below) — the part of this work I now spend most of my time on.
+
+## Features
+
+- **Retrieval** — markdown-aware chunking that keeps section headers with each chunk; query rewriting at the classification stage; checksum-deduped ingestion tagged into six clinical domains.
+- **Safety** — role-locked system prompt, instruction-injection resistance for retrieved documents, behavioral-only coaching boundaries, and reading-level enforcement targeting an 8th-grade score.
+- **Memory** — conversation history via a Postgres checkpointer, with per-user summaries injected by intent.
+
+## Evaluation
+
+How do you know a medical chatbot is actually good? One metric can't answer that, so Sprout has five evaluation systems:
+
+1. **Retrieval metrics** — human-verified gold labels; Recall@k, Precision@k, MRR, nDCG, and AP with 95% bootstrap confidence intervals, plus threshold sweeps to tune retrieval parameters.
+2. **Blinded pairwise judging** — an LLM judge compares responses with and without personalization context, blinded to which is which, scoring naturalness and persona fit.
+3. **Multi-turn scenario evals** — scripted multi-session conversations run through the real session-end summarization and hypothesis passes, scoring whether the system's picture of the user converges on the truth without contamination.
+4. **Memory bake-offs** — the custom hypothesis system benchmarked against LangMem and mem0.
+5. **Clinical-accuracy evals** — a DeepEval suite (RAG triad, safety-gated rubrics, a custom reading-level metric) plus a promptfoo suite judged by a different model family than the one generating, to avoid self-evaluation bias.
+
+<Image src="/placeholders/rag-evals.svg" alt="Sprout evaluation results" width={640} height={480} />
+
+## Tooling
+
+Python 3.13, FastAPI, LangGraph and LangChain, PostgreSQL with pgvector, Docker Compose, systemd on a university Linux server, DeepEval, promptfoo. Models are served through UM-GPT, the university's OpenAI-compatible gateway.
+
+## Behind the Scenes
+
+The hybrid search shipped with a fix I had to write myself: the library's Reciprocal Rank Fusion ranked the dense leg incorrectly, so Sprout carries a corrected implementation. And the judge-model choice matters more than it looks — early evals judged by the same model family that generated the answers scored consistently higher than evals judged by a different family, which is exactly the bias the literature warns about.
