@@ -23,9 +23,9 @@ export default function Hero() {
             <div className="flex-1 flex items-center py-8 md:py-12">
               <div className="max-w-sm">
                 <p className="text-sm font-medium leading-relaxed text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-                  I build, design, and evaluate AI products — currently an
-                  LLM-powered health app used in clinical research at Michigan
-                  Medicine.
+                  I build, design, and evaluate AI products. Right now
+                  that's an LLM-powered health app used in clinical research
+                  at Michigan Medicine.
                 </p>
               </div>
             </div>

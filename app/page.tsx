@@ -154,7 +154,7 @@ export default function Page() {
 
                       {/* Job Description */}
                       <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                        I own the RENEW scleroderma app — framework and React
+                        I own the RENEW scleroderma app: framework and React
                         upgrades, a token-based design system and UI redesign,
                         security hardening, and App Store and Play Store
                         releases.
@@ -207,9 +207,9 @@ export default function Page() {
                       {/* Job Description */}
                       <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
                         Designed and built Sprout, the RAG service behind
-                        RENEW's AI health coach — hybrid retrieval, a
-                        personalization memory layer, and the evaluation
-                        systems that measure it.
+                        RENEW's AI health coach. It handles hybrid retrieval
+                        and a personalization memory layer, and I built five
+                        evaluation systems to test it.
                       </p>
 
                       {/* Skills */}
@@ -407,25 +407,25 @@ export default function Page() {
                       Software developer, AI engineer, and designer
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      I build AI products end to end at Michigan Medicine: the
-                      retrieval service behind an AI health coach, the mobile
-                      app it lives in, and the interface people use to talk to
-                      it. Before this I worked in data analysis, which still
-                      shapes how I approach problems — measure first, then
-                      build.
+                      I build AI products at Michigan Medicine: the retrieval
+                      service behind an AI health coach, the mobile app it
+                      lives in, and the interface people use to talk to it.
+                      Before this I worked in data analysis, and that habit
+                      stuck. I like to measure things before I build them.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      I care as much about how software feels as how it works.
-                      The projects I take on tend to involve both: rebuilding
-                      an app's design system and redesigning a nonprofit's
-                      website are design problems and engineering problems at
-                      the same time, and I like owning both halves.
+                      I care a lot about how software looks and feels, so
+                      most of my projects mix design work with engineering.
+                      Rebuilding an app's design system or redesigning a
+                      nonprofit's website takes both, and I like doing both
+                      halves myself.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      A lot of my current work is evaluation. Shipping a
-                      medical chatbot is one thing; knowing it's good is
-                      another. I spend much of my time on that second problem —
-                      from retrieval metrics to multi-turn conversation evals.
+                      A lot of my current work is evaluation. Our chatbot
+                      answers medical questions, so we have to prove the
+                      answers are good. Much of my time goes into that:
+                      retrieval metrics, LLM judges, and multi-turn
+                      conversation evals.
                     </p>
                   </div>
                 </div>
@@ -489,7 +489,7 @@ export default function Page() {
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
                           Building LLM-powered features that are grounded,
-                          safe, and actually useful — retrieval, memory, and
+                          safe, and useful: retrieval, memory, and
                           personalization
                         </p>
                       </div>
@@ -498,9 +498,9 @@ export default function Page() {
                           Evaluation
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Measuring AI systems honestly, from retrieval metrics
-                          to multi-turn conversation quality for a consumer
-                          medical chatbot
+                          Measuring how well AI systems actually work, from
+                          retrieval metrics to multi-turn conversation
+                          quality for a medical chatbot
                         </p>
                       </div>
                       <div>
@@ -508,8 +508,8 @@ export default function Page() {
                           Design Engineering
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Design systems, accessible interfaces, and the craft
-                          details that make software feel considered
+                          Design systems, accessible interfaces, and the
+                          small details that make software feel polished
                         </p>
                       </div>
                     </div>
@@ -554,10 +554,9 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      Whether you want to talk about a role, a freelance
-                      project, or AI systems in general, I'm happy to connect.
-                      I also take on select freelance web design and build
-                      work.
+                      If you want to talk about a role, a freelance project,
+                      or AI systems in general, send me an email. I also
+                      take on freelance web design and build work.
                     </p>
                     <a
                       href="mailto:derek@derekpapierski.com"
@@ -580,8 +579,8 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      I write about what I'm building — AI systems,
-                      evaluation, and web development.
+                      I write about what I'm building: AI systems, evals,
+                      and web development.
                     </p>
                     <Link
                       href="/blog"
@@ -604,8 +603,7 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      Follow my journey and connect with me on other platforms.
-                      I regularly share updates and insights about my work.
+                      You can also find me on GitHub and LinkedIn.
                     </p>
                     <div className="flex gap-4">
                       <a
