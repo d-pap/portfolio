@@ -36,3 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 *SPROUT_RAG_SYSTEM_DOCUMENTATION*.md
+
+# project docs (specs/plans) stay local
+docs/
