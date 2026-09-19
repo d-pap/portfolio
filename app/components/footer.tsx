@@ -97,8 +97,7 @@ export default async function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-800 dark:border-gray-800 text-center text-xs text-gray-900 dark:text-gray-100">
           <p>
-            © {new Date().getFullYear()} Derek Papierski. Built with Next.js and
-            Tailwind CSS.
+            © {new Date().getFullYear()} Derek Papierski
           </p>
         </div>
       </div>

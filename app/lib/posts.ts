@@ -8,6 +8,8 @@ type Metadata = {
   tags: string;
   image?: string;
   category?: string;
+  featured?: string;
+  order?: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -53,6 +55,16 @@ function getMDXData(dir: string) {
 
 export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), "content"));
+}
+
+export function getFeaturedPosts() {
+  const orderOf = (metadata: Metadata) => {
+    const n = Number(metadata.order);
+    return metadata.order && Number.isFinite(n) ? n : 99;
+  };
+  return getBlogPosts()
+    .filter((post) => post.metadata.featured === "true")
+    .sort((a, b) => orderOf(a.metadata) - orderOf(b.metadata));
 }
 
 export function formatDate(date: string, includeRelative = false) {

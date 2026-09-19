@@ -17,7 +17,7 @@ interface ImageModalProps {
   onClose: () => void;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
+export const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
