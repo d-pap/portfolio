@@ -1,29 +1,11 @@
 import Image from "next/image";
 import { socialLinks } from "./config";
 import Link from "next/link";
-import { projects } from "./projects/project-data";
-import { getBlogPosts, formatDate } from "./lib/posts";
+import { getFeaturedPosts } from "./lib/posts";
 import Hero from "./components/hero";
 
 export default function Page() {
-  // Get the latest blog posts for the featured section
-  const featuredPosts = getBlogPosts()
-    .sort((a, b) => {
-      if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
-        return -1;
-      }
-      return 1;
-    })
-    .slice(0, 4); // Get the 4 most recent posts
-
-  // Debug log to check post metadata
-  console.log(
-    "Featured Posts Metadata:",
-    featuredPosts.map((post) => ({
-      title: post.metadata.title,
-      image: post.metadata.image,
-    }))
-  );
+  const featuredPosts = getFeaturedPosts();
 
   return (
     <>
@@ -47,7 +29,7 @@ export default function Page() {
                   <span>Works</span>
                 </div>
                 <h2 className="text-xl font-light">
-                  Selected projects I've worked on
+                  Products, systems, and sites I've built
                 </h2>
               </div>
             </div>
@@ -55,7 +37,7 @@ export default function Page() {
             {/* Project List - Right side on desktop */}
             <div className="md:col-span-8 md:col-start-5">
               <div className="space-y-12">
-                {featuredPosts.slice(0, 3).map((post) => (
+                {featuredPosts.map((post) => (
                   <Link
                     key={post.slug}
                     href={`/blog/${post.slug}`}
@@ -145,7 +127,7 @@ export default function Page() {
                   <span>Experience</span>
                 </div>
                 <h2 className="text-xl font-light">
-                  My journey into tech and data
+                  Where I've worked
                 </h2>
               </div>
             </div>
@@ -153,6 +135,110 @@ export default function Page() {
             {/* Experience List - Right side on desktop */}
             <div className="md:col-span-8 md:col-start-5">
               <div className="space-y-12">
+                {/* App Developer */}
+                <div className="group">
+                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
+                    <div className="col-span-2">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                        September 2025 - Present
+                      </p>
+                    </div>
+                    <div className="col-span-6">
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        App Developer
+                      </h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
+                        Michigan Medicine
+                      </h4>
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        I own the RENEW scleroderma app: framework and React
+                        upgrades, a token-based design system and UI redesign,
+                        security hardening, and App Store and Play Store
+                        releases.
+                      </p>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Mobile
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          React Native
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Expo
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          TypeScript
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          UI/UX
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+                {/* AI Engineer */}
+                <div className="group">
+                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
+                    <div className="col-span-2">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                        June 2025 - Present
+                      </p>
+                    </div>
+                    <div className="col-span-6">
+                      {/* Job Title */}
+                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
+                        AI Engineer
+                      </h3>
+                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
+                        Michigan Medicine
+                      </h4>
+
+                      {/* Job Description */}
+                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Designed and built Sprout, the RAG service behind
+                        RENEW's AI health coach. It handles hybrid retrieval
+                        and a personalization memory layer, and I built five
+                        evaluation systems to test it.
+                      </p>
+
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          RAG
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Python
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          FastAPI
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          LangGraph
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Evals
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
                 {/* Full Stack Developer */}
                 <div className="group">
                   <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
@@ -181,15 +267,15 @@ export default function Page() {
                       <div className="flex flex-wrap gap-2">
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          AI
+                        </span>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           React
                         </span>
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           AWS
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          LLMs
                         </span>
                       </div>
                     </div>
@@ -215,14 +301,16 @@ export default function Page() {
 
                       {/* Job Description */}
                       <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Gathered and analyzed University of Michigan-Dearborn
-                        student data to provide insights about student
-                        engagement and made recommendations to university
-                        stakeholders.
+                        Analyzed student engagement data and reported
+                        recommendations to university stakeholders.
                       </p>
 
                       {/* Skills */}
                       <div className="flex flex-wrap gap-2">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
+                          Data Analysis
+                        </span>
                         <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           Python
@@ -231,64 +319,49 @@ export default function Page() {
                           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
                           SQL
                         </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Tableau
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Excel
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          SPSS
-                        </span>
                       </div>
                     </div>
                   </article>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
 
-                {/* Math Tutor */}
-                <div className="group">
-                  <article className="grid grid-cols-8 gap-4 items-start py-6 border-t border-gray-200 dark:border-gray-800">
-                    <div className="col-span-2">
-                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                        February 2023 - April 2024
-                      </p>
-                    </div>
-                    <div className="col-span-6">
-                      {/* Job Title */}
-                      <h3 className="text-base group-hover:text-[#2D6960] transition-colors">
-                        Math Tutor
-                      </h3>
-                      <h4 className="text-base text-gray-600 dark:text-gray-400 mb-4">
-                        UM-Dearborn
-                      </h4>
-
-                      {/* Job Description */}
-                      <p className="text-xs md:text-sm mb-8 text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Tutored first and second year students in linear
-                        algebra, calculus, and statistics to help them succeed.
-                      </p>
-
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-2">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Linear Algebra
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Calculus
-                        </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E7F0EE] text-[#2D6960] text-xs group-hover:bg-[#D8E5E3] transition-colors">
-                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#2D6960] mr-2"></span>
-                          Statistics
-                        </span>
-                      </div>
-                    </div>
-                  </article>
+      {/* Research Section */}
+      <div className="w-full bg-white dark:bg-black">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24 md:py-32">
+          <div className="md:grid md:grid-cols-12 md:gap-x-8 lg:gap-x-16">
+            <div className="md:col-span-3 mb-12 md:mb-0 md:sticky md:top-24 self-start">
+              <div className="space-y-4">
+                <div className="inline-flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+                  <span className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700"></span>
+                  <span>Research</span>
                 </div>
+                <h2 className="text-xl font-light">Published work</h2>
+              </div>
+            </div>
+            <div className="md:col-span-8 md:col-start-5">
+              <div className="py-6 border-t border-gray-200 dark:border-gray-800">
+                <p className="text-sm md:text-base text-gray-900 dark:text-gray-100 leading-relaxed mb-4">
+                  Shah N, Buis L, Papierski D, Castellanos A, Mlakha M, Murphy
+                  S.{" "}
+                  <a
+                    href="https://doi.org/10.2196/79302"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-4 hover:text-[#2D6960] transition-colors"
+                  >
+                    A Beginner&apos;s Guide to Applying Large Language Models
+                    in Behavioral Interventions.
+                  </a>{" "}
+                  <em>JMIR mHealth and uHealth.</em> 2026;14:e79302.
+                </p>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                  This paper documents the approach behind the LLM work in
+                  RENEW.
+                </p>
               </div>
             </div>
           </div>
@@ -331,26 +404,28 @@ export default function Page() {
                 <div className="md:col-span-8 space-y-6">
                   <div className="prose prose-lg dark:prose-invert">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                      Data Analyst & Full-Stack Developer
+                      Software developer, AI engineer, and designer
                     </h3>
-                    <p className=" text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      I’m a data-focused technologist with dual majors in
-                      Computer Science and Data Science. I specialize in
-                      extracting actionable insights from complex datasets, but
-                      I also love building tools and applications that turn
-                      those insights into real-world solutions. What drives me
-                      is the desire to make technology more accessible and
-                      impactful.
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
+                      I build AI products at Michigan Medicine: the retrieval
+                      service behind an AI health coach, the mobile app it
+                      lives in, and the interface people use to talk to it.
+                      Before this I worked in data analysis, and that habit
+                      stuck. I like to measure things before I build them.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      "Why both data science and software engineering?”
+                      I care a lot about how software looks and feels, so
+                      most of my projects mix design work with engineering.
+                      Rebuilding an app's design system or redesigning a
+                      nonprofit's website takes both, and I like doing both
+                      halves myself.
                     </p>
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                      Data doesn’t exist in a vacuum—it needs infrastructure,
-                      tools, and systems to create real-world impact. My
-                      background allows me to collaborate seamlessly with
-                      engineers, design scalable solutions, and ensure insights
-                      translate into action.
+                      A lot of my current work is evaluation. Our chatbot
+                      answers medical questions, so we have to prove the
+                      answers are good. Much of my time goes into that:
+                      retrieval metrics, LLM judges, and multi-turn
+                      conversation evals.
                     </p>
                   </div>
                 </div>
@@ -366,35 +441,38 @@ export default function Page() {
                     <div className="space-y-4">
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Data Science & Analytics
+                          AI / LLM Systems
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Python, SQL, R, Tableau, Excel, Apache Spark
+                          RAG, LangGraph, LangChain, pgvector, hybrid
+                          retrieval, prompt engineering
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Web Development
+                          Evaluation
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          React, Next.js, Node.js, TypeScript, JavaScript
+                          Retrieval metrics, LLM-as-judge, multi-turn evals,
+                          DeepEval, promptfoo
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Machine Learning & AI
+                          Web & App Development
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Scikit-learn, TensorFlow, PyTorch, Statistical
-                          Modeling
+                          TypeScript, React, React Native, Expo, Next.js,
+                          Astro, Python, FastAPI
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Tools & Infrastructure
+                          Design & Infrastructure
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          AWS, Docker, Git, Linux, CI/CD
+                          UI/UX, design systems, Figma, PostgreSQL, Docker,
+                          CI/CD
                         </p>
                       </div>
                     </div>
@@ -407,30 +485,31 @@ export default function Page() {
                     <div className="space-y-4">
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Data Visualization
+                          AI Products
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Creating intuitive and interactive data stories that
-                          make complex information accessible
+                          Building LLM-powered features that are grounded,
+                          safe, and useful: retrieval, memory, and
+                          personalization
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Communication
+                          Evaluation
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Working with non-technical stakeholders to understand
-                          their needs and simplify complex data into actionable
-                          insights
+                          Measuring how well AI systems actually work, from
+                          retrieval metrics to multi-turn conversation
+                          quality for a medical chatbot
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-medium md:text-base text-gray-900 dark:text-gray-100 mb-2">
-                          Full-Stack Development
+                          Design Engineering
                         </h4>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
-                          Developing end-to-end applications that seamlessly
-                          integrate data science with user experience
+                          Design systems, accessible interfaces, and the
+                          small details that make software feel polished
                         </p>
                       </div>
                     </div>
@@ -475,9 +554,9 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      Whether you want to discuss a potential project, share
-                      ideas about data science, or just talk tech, I'm always
-                      happy to connect.
+                      If you want to talk about a role, a freelance project,
+                      or AI systems in general, send me an email. I also
+                      take on freelance web design and build work.
                     </p>
                     <a
                       href="mailto:derek@derekpapierski.com"
@@ -500,9 +579,8 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      I write about my experiences in data science, web
-                      development, and the intersection of both. Check out my
-                      latest thoughts and learnings.
+                      I write about what I'm building: AI systems, evals,
+                      and web development.
                     </p>
                     <Link
                       href="/blog"
@@ -525,8 +603,7 @@ export default function Page() {
                       </div>
                     </div>
                     <p className="text-gray-600 dark:text-gray-300 mb-4 text-xs md:text-sm">
-                      Follow my journey and connect with me on other platforms.
-                      I regularly share updates and insights about my work.
+                      You can also find me on GitHub and LinkedIn.
                     </p>
                     <div className="flex gap-4">
                       <a

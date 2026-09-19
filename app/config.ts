@@ -3,13 +3,12 @@ export const metaData = {
   title: "Derek Papierski",
   name: "Derek",
   ogImage: "/og-image.png",
-  description: "Derek Papierski is a data scientist and software engineer.",
+  description:
+    "Derek Papierski is a software developer and AI engineer. He builds, designs, and evaluates AI products.",
 };
 
 export const socialLinks = {
-  twitter: "https://x.com/",
   github: "https://github.com/d-pap",
-  instagram: "https://www.instagram.com/",
   linkedin: "https://www.linkedin.com/in/derekpapierski/",
   email: "mailto:derek@derekpapierski.com",
 };

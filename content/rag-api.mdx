@@ -1,0 +1,65 @@
+---
+title: "Sprout: The RAG Service Behind a Medical Chatbot"
+publishedAt: "2026-07-15"
+summary: "The retrieval-augmented generation API behind RENEW's AI health coach, with hybrid retrieval, a personalization memory layer, and five evaluation systems."
+tags: "RAG, Python, FastAPI, LangGraph, Evals"
+image: "/placeholders/rag-hero.svg"
+category: "Project"
+featured: true
+order: 2
+---
+
+<Image src="/placeholders/rag-hero.svg" alt="Sprout architecture diagram" width={640} height={480} />
+
+Sprout powers the AI chat in the [RENEW scleroderma app](/blog/renew-app). The codebase is private (Michigan Medicine), but the approach is documented in a peer-reviewed paper: [JMIR mHealth and uHealth, 2026;14:e79302](https://doi.org/10.2196/79302).
+
+## Purpose
+
+RENEW's AI health coach answers questions from people managing a chronic illness. Answers have to be grounded in vetted clinical and patient-education content, written in plain language, and kept inside coaching boundaries (no diagnoses, no medical advice beyond the source material). I was hired in June 2025 to design and build the retrieval system that makes this possible.
+
+## Outcomes
+
+A LangGraph pipeline runs in production behind the app's chat. It classifies each message, retrieves documents when needed, and generates an answer with citations, or responds directly for non-clinical turns.
+
+Retrieval is hybrid: dense vectors (pgvector) and sparse keyword search over a corpus of **~112** clinical and patient-education documents, fused with Reciprocal Rank Fusion and then reranked by an LLM with a relevance threshold.
+
+Personalization goes beyond plain RAG. Each user gets clinical, conversation, and check-in summaries, plus a coaching-hypothesis engine that forms and corrects guesses about them across sessions.
+
+Five evaluation systems test all of the above (details below).
+
+## Features
+
+Retrieval – markdown-aware chunking that keeps section headers attached to each chunk, query rewriting at the classification stage, and checksum-deduped ingestion tagged into six clinical domains. The hybrid search also shipped with a fix I wrote myself: the library's Reciprocal Rank Fusion ranked the dense leg incorrectly, so Sprout carries a corrected implementation.
+
+Safety – a role-locked system prompt, instruction-injection resistance for retrieved documents, behavioral-only coaching boundaries, and reading-level enforcement targeting an 8th-grade score.
+
+Memory – conversation history through a Postgres checkpointer, with per-user summaries injected based on intent.
+
+## Evaluation
+
+How do you know a medical chatbot is actually good? One metric can't answer that, so Sprout has five evaluation systems:
+
+Retrieval metrics – human-verified gold labels, then Recall@k, Precision@k, MRR, nDCG, and AP with **95%** bootstrap confidence intervals, plus threshold sweeps to tune retrieval parameters.
+
+Blinded pairwise judging – an LLM judge compares responses with and without personalization context, blinded to which is which, and scores naturalness and persona fit.
+
+Multi-turn scenario evals – scripted multi-session conversations run through the real session-end summarization and hypothesis passes, scored on whether the system's picture of the user converges on the truth without contamination.
+
+Memory bake-offs – the custom hypothesis system benchmarked against LangMem and mem0.
+
+Clinical-accuracy evals – a DeepEval suite (RAG triad, safety-gated rubrics, a custom reading-level metric) plus a promptfoo suite. The judge model comes from a different family than the generator, because early evals where the same family judged itself scored consistently higher.
+
+## Tooling
+
+Python 3.13, FastAPI, LangGraph and LangChain, PostgreSQL with pgvector, Docker Compose, systemd on a university Linux server, DeepEval, promptfoo. Models are served through UM-GPT, the university's OpenAI-compatible gateway.
+
+## Behind the Scenes
+
+<ImageGrid
+  columns={2}
+  images={[
+    { src: "/placeholders/rag-evals.svg", alt: "Sprout evaluation results" },
+    { src: "/placeholders/rag-bts-pipeline.svg", alt: "Sprout pipeline diagram" },
+    { src: "/placeholders/rag-bts-memory.svg", alt: "Sprout memory summaries" },
+  ]}
+/>
