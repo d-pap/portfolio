@@ -7,6 +7,7 @@ import { TweetComponent } from "./tweet";
 import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
+import { ProjectFigure } from "./project-figure";
 import { BeforeAfter } from "./before-after";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
@@ -110,6 +111,7 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   ImageGrid,
+  ProjectFigure,
   BeforeAfter,
   a: CustomLink,
   StaticTweet: TweetComponent,
@@ -127,6 +129,10 @@ export function CustomMDX(props) {
       {...props}
       components={{ ...components, ...(props.components || {}) }}
       options={{
+        // These MDX files are maintained in this repository. Their image grids
+        // use array/object props; keep the dangerous-expression guard enabled.
+        blockJS: false,
+        blockDangerousJS: true,
         mdxOptions: {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],

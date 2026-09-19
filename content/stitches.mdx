@@ -1,59 +1,54 @@
 ---
-title: "Rebuilding the Stitches Doll Project Website"
+title: "The Stitches Doll Project"
+shortTitle: "stitches"
 publishedAt: "2026-07-14"
-summary: "A freelance rebuild of stitchesdollproject.org, replacing a 2016 desktop-only site with a fast, accessible Astro site the client can edit herself. Currently in the design phase."
+summary: "A new home for a nonprofit's collection of handmade dolls and the stories behind them."
 tags: "Web Design, Astro, TypeScript, CMS"
-image: "/placeholders/stitches-hero.svg"
+image: "/projects/stitches-home.webp"
 category: "Project"
 featured: true
 order: 3
+role: "Design & development"
+period: "2026 — present"
+status: "In development"
+stack: "Astro, TypeScript, CSS, Pages CMS, Cloudflare Pages"
+context: "Freelance · Stitches Doll Project"
 ---
 
-<Image src="/placeholders/stitches-hero.svg" alt="Stitches homepage design" width={640} height={480} />
+## overview
 
-[The current site](https://stitchesdollproject.org) is still the old design until this project ships.
+The Stitches Doll Project began in 1999 as a way for women affected by HIV/AIDS to tell their stories through handmade dolls. The collection grew to include experiences of violence, bleeding disorders, and other challenges.
 
-## Purpose
+I'm rebuilding the website for the project's founder, Kathy. I handle the design, development, and migration from the old site.
 
-The STITCHES Doll Project, founded in 1999, preserves the stories of women affected by HIV/AIDS, domestic violence, bleeding disorders, and other serious issues. Each woman makes a doll that answers one question: *"If your doll could talk, what would she say?"* The dolls travel as a national exhibit.
+## rebuilding the archive
 
-The website was built in 2016 with a desktop website builder: 105 hand-made pages, 1,261 images, image-based navigation buttons, no mobile layout, and no HTTPS. There's no database or source files behind it, only rendered HTML. I'm rebuilding it from the ground up as a freelance project, handling both the design and the build.
+The original site was a collection of static HTML pages. I wrote a Python pipeline to extract the doll records and turn them into structured content with schema validation.
 
-## Where it stands
+Then came the work that a parser can't settle: matching photographs to the right dolls, separating shared entries, and reviewing which images need retaking. I built local review tools to make those decisions easier.
 
-The content migration is done and the project is in the design phase. So far:
 
-About **550** doll records extracted from the old static HTML with a custom Python pipeline, now living as structured, schema-validated content.
+<ProjectFigure src="/projects/stitches-before.webp" alt="The original Stitches homepage" width={1440} height={1080} kind="screen" caption="Before · original website (archive)" />
 
-A working Astro build with a page for every doll, gallery and program pages, and an interactive map of where dolls come from.
+<ProjectFigure src="/projects/stitches-home.webp" alt="The redesigned Stitches homepage" width={1440} height={1080} kind="screen" caption="After · homepage development preview, September 2026" />
 
-**87** redirects mapped from old URLs so nothing breaks at cutover.
+## designing for reading
 
-A git-based CMS set up so the founder can edit content through simple forms, with no code and no hosting bill.
+The stories are the reason to visit. The gallery lets people filter a collection and read it in rows, with longer stories expandable in place. Each doll also has a detail page.
 
-## Design direction
+The selected filters stay with you as you move between dolls. Returning to the gallery restores your place, so reading a collection doesn't mean repeatedly starting over.
 
-I'm preparing two design directions to show the client as live previews instead of static mockups: a "handstitched" theme built around red-thread accents drawn from the dolls themselves, and a minimal gallery treatment that puts the photography first. Both keep the focus on the women's stories and on accessibility.
+The visual direction is warm and handmade, with the dolls' own photographs doing most of the work.
 
-## Before / After
 
-<BeforeAfter
-  before={{ src: "/placeholders/stitches-before.svg", alt: "stitchesdollproject.org 2016 site" }}
-  after={{ src: "/placeholders/stitches-after.svg", alt: "New Stitches design, in progress" }}
-  caption="The after side arrives when the design round finishes."
-/>
+<ProjectFigure src="/projects/stitches-gallery.webp" alt="Stitches gallery with collection filters and stories in rows" width={1440} height={1080} kind="screen" caption="Reading a collection · development preview" />
 
-## Tooling
+<ProjectFigure src="/projects/stitches-detail.webp" alt="A doll detail page and its story" width={1440} height={1080} kind="screen" caption="An individual story · development preview" />
 
-Astro, TypeScript, hand-written CSS with design tokens, content collections with Zod validation, Pages CMS, Leaflet with OpenStreetMap, Cloudflare Pages. Hosting cost: about $0/month.
+<ProjectFigure src="/projects/stitches-mobile.webp" alt="Stitches homepage on a phone" width={780} height={2100} kind="phone" caption="The homepage on mobile · development preview" />
 
-## Behind the Scenes
+## implementation
 
-<ImageGrid
-  columns={2}
-  images={[
-    { src: "/placeholders/stitches-map.svg", alt: "Interactive doll map" },
-    { src: "/placeholders/stitches-bts-old.svg", alt: "A page from the 2016 site" },
-    { src: "/placeholders/stitches-bts-doll.svg", alt: "New doll page" },
-  ]}
-/>
+Astro generates the site from typed content collections. Pages CMS gives Kathy an editing interface, and Cloudflare Pages hosts the build.
+
+I've also mapped redirects from the old pages for the eventual move. The rebuild is still in development; the existing public site hasn't been replaced yet.

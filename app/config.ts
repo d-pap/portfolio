@@ -4,7 +4,7 @@ export const metaData = {
   name: "Derek",
   ogImage: "/og-image.png",
   description:
-    "Derek Papierski is a software developer and AI engineer. He builds, designs, and evaluates AI products.",
+    "AI & software engineer in Michigan. Building and evaluating AI systems for health research, with work in app development and interface design.",
 };
 
 export const socialLinks = {

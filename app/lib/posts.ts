@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-type Metadata = {
+export type Metadata = {
   title: string;
   publishedAt: string;
   summary: string;
@@ -10,6 +10,14 @@ type Metadata = {
   category?: string;
   featured?: string;
   order?: string;
+  shortTitle?: string;
+  role?: string;
+  period?: string;
+  status?: string;
+  stack?: string;
+  context?: string;
+  website?: string;
+  repository?: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -55,6 +63,14 @@ function getMDXData(dir: string) {
 
 export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), "content"));
+}
+
+export function getProjects() {
+  return getBlogPosts().sort((a, b) => {
+    const aOrder = Number(a.metadata.order || 99);
+    const bOrder = Number(b.metadata.order || 99);
+    return aOrder - bOrder || a.slug.localeCompare(b.slug);
+  });
 }
 
 export function getFeaturedPosts() {

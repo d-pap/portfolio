@@ -46,7 +46,6 @@ export const metadata: Metadata = {
   },
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
   children,
@@ -82,10 +81,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="w-full">
+          <div className="site-frame">
+            <a className="skip-link" href="#main">skip to content</a>
             <Navbar />
 
-            {children}
+            <main id="main">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

@@ -1,217 +1,120 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
+import "./image-grid.css";
+
+interface GalleryImage {
+  src: string;
+  alt: string;
+  href?: string;
+}
 
 interface ImageGridProps {
-  images: {
-    src: string;
-    alt: string;
-    href?: string;
-  }[];
-  columns?: 2 | 3 | 4; // Accepts 2, 3, or 4 columns
+  images: GalleryImage[];
+  columns?: 2 | 3 | 4;
 }
 
 interface ImageModalProps {
-  image: { src: string; alt: string } | null;
+  image: GalleryImage | null;
   onClose: () => void;
+  onPrevious?: () => void;
+  onNext?: () => void;
+  position?: string;
 }
 
-export const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
-  const [scale, setScale] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const modalRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+function ImageViewer({ image, onClose, onPrevious, onNext, position }: ImageModalProps & { image: GalleryImage }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const captionId = useId();
+  const callbacks = useRef({ onClose, onPrevious, onNext });
+  callbacks.current = { onClose, onPrevious, onNext };
 
   useEffect(() => {
-    if (image) {
-      // Reset zoom and position when new image opens
-      setScale(1);
-      setPosition({ x: 0, y: 0 });
-    }
-  }, [image]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialog.showModal();
+    function keyboard(event: KeyboardEvent) {
+      if (event.key === "ArrowLeft" && callbacks.current.onPrevious) {
+        event.preventDefault();
+        callbacks.current.onPrevious();
       }
-    };
-
-    if (image) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
+      if (event.key === "ArrowRight" && callbacks.current.onNext) {
+        event.preventDefault();
+        callbacks.current.onNext();
+      }
     }
-
+    dialog.addEventListener("keydown", keyboard);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
+      dialog.removeEventListener("keydown", keyboard);
+      dialog.close();
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
     };
-  }, [image, onClose]);
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    const newScale = Math.max(0.5, Math.min(5, scale + delta));
-    setScale(newScale);
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (
-      e.target === imageRef.current ||
-      imageRef.current?.contains(e.target as Node)
-    ) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.clientX - position.x,
-        y: e.clientY - position.y,
-      });
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleImageClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // Double click to zoom
-    if (e.detail === 2) {
-      if (scale === 1) {
-        setScale(2);
-      } else {
-        setScale(1);
-        setPosition({ x: 0, y: 0 });
-      }
-    }
-  };
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === modalRef.current) {
-      onClose();
-    }
-  };
-
-  const resetZoom = () => {
-    setScale(1);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  if (!image) return null;
+  }, []);
 
   return (
-    <div
-      ref={modalRef}
-      className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
-      onClick={handleBackdropClick}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+    <dialog
+      ref={dialogRef}
+      className="project-image-dialog not-prose"
+      aria-label="Project image viewer"
+      aria-describedby={captionId}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
     >
-      {/* Controls */}
-      <div className="absolute top-4 right-4 flex gap-2 z-10">
-        <button
-          onClick={resetZoom}
-          className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
-        >
-          Reset
-        </button>
-        <button
-          onClick={onClose}
-          className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 py-2 rounded-md text-sm transition-colors"
-        >
-          ✕
-        </button>
+      <div className="project-image-viewer">
+        <div className="project-image-toolbar">
+          <span className="project-image-position" aria-live="polite">{position ?? "image detail"}</span>
+          <button type="button" autoFocus onClick={onClose} aria-label="Close image viewer">close <span aria-hidden="true">×</span></button>
+        </div>
+        <figure>
+          <Image src={image.src} alt={image.alt} width={1600} height={1000} sizes="(max-width: 768px) 94vw, 90vw" priority className="project-image-expanded" />
+          <figcaption id={captionId}>{image.alt}</figcaption>
+          <a className="image-original-link" href={image.src} target="_blank" rel="noreferrer">open full size <span aria-hidden="true">↗</span></a>
+        </figure>
+        {(onPrevious || onNext) && (
+          <div className="project-image-navigation">
+            <button type="button" onClick={onPrevious} disabled={!onPrevious} aria-label="Previous image"><span aria-hidden="true">←</span> previous</button>
+            <button type="button" onClick={onNext} disabled={!onNext} aria-label="Next image">next <span aria-hidden="true">→</span></button>
+          </div>
+        )}
       </div>
-
-      {/* Zoom indicator */}
-      <div className="absolute top-4 left-4 bg-white bg-opacity-20 text-white px-3 py-2 rounded-md text-sm">
-        {Math.round(scale * 100)}%
-      </div>
-
-      {/* Image container */}
-      <div
-        ref={imageRef}
-        className="relative max-w-full max-h-full cursor-grab active:cursor-grabbing"
-        style={{
-          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-          transformOrigin: "center center",
-          transition: isDragging ? "none" : "transform 0.1s ease-out",
-        }}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        onClick={handleImageClick}
-      >
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={1200}
-          height={800}
-          className="object-contain max-w-[90vw] max-h-[90vh] select-none"
-          sizes="90vw"
-          priority
-          draggable={false}
-        />
-      </div>
-
-      {/* Instructions */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-20 text-white px-4 py-2 rounded-md text-sm text-center">
-        <div>Scroll to zoom • Double-click to toggle zoom • Drag to pan</div>
-      </div>
-    </div>
+    </dialog>
   );
-};
+}
 
-export const ImageGrid: React.FC<ImageGridProps> = ({
-  images,
-  columns = 3,
-}) => {
-  const [selectedImage, setSelectedImage] = useState<{
-    src: string;
-    alt: string;
-  } | null>(null);
+export function ImageModal(props: ImageModalProps) {
+  return props.image ? <ImageViewer {...props} image={props.image} /> : null;
+}
 
-  const gridClass = {
-    2: "grid-cols-2 sm:grid-cols-2",
-    3: "grid-cols-2 sm:grid-cols-3",
-    4: "grid-cols-2 sm:grid-cols-4",
-  }[columns];
+export function ImageGrid({ images, columns = 3 }: ImageGridProps) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const selectedImage = selected === null ? null : images[selected];
 
   return (
-    <section>
-      <div className={`grid ${gridClass} gap-4 my-8`}>
+    <div className="project-gallery not-prose">
+      <div className="project-image-grid" style={{ "--image-columns": columns } as CSSProperties}>
         {images.map((image, index) => (
-          <div
-            key={index}
-            className="relative aspect-square cursor-pointer hover:opacity-90 transition-opacity"
-            onClick={() => setSelectedImage(image)}
-          >
-            <Image
-              alt={image.alt}
-              src={image.src}
-              fill
-              sizes="(max-width: 768px) 50vw, 33vw"
-              priority
-              className="rounded-lg object-contain"
-            />
-          </div>
+          <button key={`${image.src}-${index}`} type="button" className="project-image-thumbnail" onClick={() => setSelected(index)} aria-label={`Enlarge image: ${image.alt}`} aria-haspopup="dialog">
+            <Image alt={image.alt} src={image.src} fill sizes={`(max-width: 640px) 50vw, ${Math.round(70 / columns)}vw`} className="project-image-preview" />
+            <span className="project-image-expand" aria-hidden="true">↗</span>
+          </button>
         ))}
       </div>
       <ImageModal
-        image={selectedImage}
-        onClose={() => setSelectedImage(null)}
+        image={selectedImage ?? null}
+        onClose={() => setSelected(null)}
+        onPrevious={selected !== null && selected > 0 ? () => setSelected(selected - 1) : undefined}
+        onNext={selected !== null && selected < images.length - 1 ? () => setSelected(selected + 1) : undefined}
+        position={selected !== null ? `${selected + 1} / ${images.length}` : undefined}
       />
-    </section>
+    </div>
   );
-};
+}

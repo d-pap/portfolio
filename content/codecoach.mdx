@@ -1,72 +1,44 @@
 ---
-title: "Code Coach Learning Platform"
+title: "Code Coach"
+shortTitle: "code coach"
 publishedAt: "2024-08-20"
-summary: "LeetCode-style coding platform with real-time code execution and an AI assistant that helps users solve problems and prepare for technical interviews."
+summary: "A coding practice platform built with two classmates for our university's ACM chapter."
 tags: "React, Web development, AI"
-image: "/cc-logo.png"
+image: "/projects/cc-compiler.webp"
 featured: true
 order: 4
+role: "Frontend & full-stack development"
+period: "2024 — 2025"
+status: "Completed student project"
+stack: "React, MUI, AWS Lambda, API Gateway, MongoDB, Judge0"
+context: "University of Michigan–Dearborn"
+repository: "https://github.com/d-pap/codecoach"
 ---
 
-<Image src="/cc-compiler.png" alt="Code Coach image" width={640} height={500} />
+## overview
 
-[www.umcodecoach.netlify.app](https://umcodecoach.netlify.app)
+Two classmates and I built Code Coach as our senior design project for the University of Michigan–Dearborn ACM chapter. It brings contest problems, an in-browser editor, code execution, and AI help into one place.
 
-[www.github.com/d-pap/codecoach](https://github.com/d-pap/codecoach)
+I worked on the interface and the application flows connecting it to the backend.
 
-## Purpose
 
-LeetCode is great for interviews but weak on ICPC problems and on-the-spot feedback. My ACM club wanted one place where students could solve past contest questions, run code in the browser, and get real help from an AI mentor. So three of us spent eight months turning that wish list into Code Coach.
+<ProjectFigure src="/projects/cc-home-screen.webp" alt="Code Coach practice and interview preparation home page" width={1440} height={930} kind="screen" />
 
-## Outcomes
+## the workspace
 
-**200+ users** across two semesters; average weekly return rate 48 %.
+Students can browse ICPC and interview practice problems, write and run a solution, and ask for help alongside their code. The assistant receives the problem and the student's solution so its feedback has context.
 
-**3000+ code runs** with language-level timing and memory stats stored for leaderboards.
+We also built an interview-preparation area with a resume builder.
 
-**15% faster solve rate** after we shipped the AI hint system (club survey, n = 41).
 
-AI-powered Resume builder used by **62 students**; exported 120 tailored resume PDFs.
+<ProjectFigure src="/projects/cc-compiler.webp" alt="Problem-solving workspace with code editor" width={1440} height={930} kind="screen" />
 
-## Features
+<ProjectFigure src="/projects/cc-aichat.webp" alt="AI assistance alongside the coding problem" width={1440} height={930} kind="screen" />
 
-Problem sets – ICPC archives plus LeetCode-style practice.
+<ProjectFigure src="/projects/cc-resume-screen.webp" alt="Code Coach resume builder" width={1440} height={930} kind="screen" />
 
-In-browser compiler – Python, C++, Java; full Judge0 output in < 5 s.
+## implementation
 
-AI assistant – context-aware hints, step-by-step reasoning, gated full answers.
+The frontend uses React and MUI. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 handles code execution.
 
-Resume builder – one click from form data to job-specific PDF using the same LLM.
-
-Progress tracking – execution history, success rates, best runtimes.
-
-## Tooling
-
-**Frontend.** React with MUI components and React Query for caching. I designed every screen and wired all state flows.
-
-**Authentication.** AWS Cognito handles email and social sign-in and controls access to compute-intensive features.
-
-**API layer.** AWS API Gateway routes to Node.js Lambdas. Payloads are typed, requests are throttled, and functions are sized for cold-start budgets.
-
-**Data.** MongoDB Atlas stores problems, submissions, and per-user AI token counts.
-
-**Compiler sandbox.** Judge0 CE is called from Lambda to run code safely in multiple languages.
-
-**AI assistant.** GPT-4o served through UM-GPT (University of Michigan instance). Fine-tuned on ICPC Q&A with prompt rules that force hint-first answers.
-
-**Dev-ops extras.** GitHub Actions for CI, CloudWatch for logs, and React Testing Library for component tests round out the stack and keep quality high.
-
-## Behind the scenes
-
-<ImageGrid
-  columns={2}
-  images={[
-    { src: "/cc-landing.png", alt: "Photo1", href: "#" },
-    { src: "/cc-landing-full.png", alt: "Photo1", href: "#" },
-    { src: "/cc-home-full.png", alt: "Photo1", href: "#" },
-    { src: "/cc-comp-probs-full.png", alt: "Photo1", href: "#" },
-    { src: "/cc-compiler.png", alt: "Photo1", href: "#" },
-    { src: "/cc-aichat.png", alt: "Photo2", href: "#" },
-    { src: "/cc-resume-full.png", alt: "Photo3" },
-  ]}
-/>
+The AI integration uses the university's U-M Maizey service. The [repository](https://github.com/d-pap/codecoach) includes the project setup and architecture.
