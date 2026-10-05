@@ -1,29 +1,26 @@
 # Derek’s portfolio
 
-Next.js App Router, React, TypeScript, and Tailwind CSS. Case studies are local MDX files in `content/`.
+Next.js App Router, React, TypeScript, and plain CSS. Content is local MDX and JSON in `content/`.
 
 ## Development
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
-```
-
-```sh
+pnpm test                 # node --test, no extra dependencies (Node ≥ 22.18)
 pnpm exec tsc --noEmit
 pnpm build
 ```
 
-Next’s Inter font is downloaded during the build and served locally to visitors. The build needs network access on its first run. Stop the development server before building; both commands write to `.next/`. For a separate preview alongside an existing server, use `NEXT_DIST_DIR=.next-preview pnpm dev --port 3001`; use the same environment variable for its build and start commands.
+Fragment Mono is downloaded during the build and served locally. `pnpm dev` and `pnpm build` both write to `.next/`; to build or preview alongside a running dev server, set `NEXT_DIST_DIR` (e.g. `NEXT_DIST_DIR=.next-build pnpm build`).
 
-## Content and layout
+## Content
 
-- `/`: short introduction and the complete work grid. Inline notes contain experience, areas of focus, and tools.
-- `/work/[slug]`: project preview, facts, and case study. The project identity stays in the desktop sidebar; each `##` heading and its content sit in the main column. `ProjectFigure` components show large, vertically stacked images.
-- `/work` and `/blog` redirect home. Existing `/blog/[slug]` links redirect to `/work/[slug]`.
+- `content/home.mdx`: the intro. Each `<Claim n={k}>` needs one `<Note n={k} thumb meta text>` with its evidence inside (`RoutingDiagram`, `EvalChecks`, `EvidenceMedia`). The build fails if a claim and note don't pair up.
+- `content/<slug>.mdx`: one entry per project or role. YAML frontmatter is validated at build time (`app/lib/entries.ts`); errors name the file. `index: main` entries need a `hero` and appear as wide figures on the home page; `index: earlier` entries are text rows; `hidden` entries only have a page. Text before the first `##` is the two-column lede. Use `<Figure>` for media.
+- `content/reading.json`: `[{ "title", "author", "isbn"?, "year"?, "notes"? }]`. Covers come from Open Library by ISBN. With an empty list, `/reading` is hidden.
+- Recordings: add `recording: /projects/<name>.mp4` under `hero` (H.264, about 2–3 MB, 1440px wide). The first frame image is the poster.
 
-Each case study has a title, summary, role, period, status, context, stack, and optional website/repository links in frontmatter. `order` controls the home-page sequence; every project appears. Keep the publication date separate from the project’s period. Use `##` headings for all body sections.
+## Design
 
-Project previews live in `app/components/project-art.tsx`; shared styles live in `app/global.css`. Screenshots are in `public/projects/`. They are real interfaces: Stitches is a development preview; the RENEW and Sprout screenshots are dated in the case studies. The analysis covers use actual notebook charts.
-
-Inline notes support hover, keyboard focus, click/tap, outside dismissal, and Escape. Image galleries use a keyboard-accessible dialog. Motion respects `prefers-reduced-motion`.
+The spec lives in `docs/` (kept local, not committed). Tokens are in `app/styles/tokens.css`; the text face is one token (`--font-text`). Motion is limited to the citation thread, the figure-to-hero view transition, recordings, and the reading highlight; all respect `prefers-reduced-motion`.

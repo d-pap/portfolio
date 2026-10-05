@@ -31,3 +31,7 @@ a:hover .link-arrow { transform: translate(2px, -2px); }
 
 @view-transition { navigation: auto; }
 ::view-transition-group(*) { animation-duration: 450ms; animation-timing-function: var(--ease-in-out); }
+
+.empty-page { padding-block: 96px; }
+.empty-page h1 { font-size: 24px; font-weight: 400; margin: 12px 0; }
+.empty-page p:not(.label) { color: var(--muted); margin-bottom: 16px; }

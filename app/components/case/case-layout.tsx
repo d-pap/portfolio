@@ -36,7 +36,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
       )}
 
       <div className="case-body">
-        <aside className="case-id">
+        <div className="case-id">
           <h1 className="case-title">{entry.title}</h1>
           <p className="label case-subtitle">{entry.area} · {entry.context}</p>
           {(links.length > 0 || note) && (
@@ -47,7 +47,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
               {note && <li className="case-links-note">{note}</li>}
             </ul>
           )}
-        </aside>
+        </div>
 
         <div className="case-main">
           {lede && <div className="case-lede"><CustomMDX source={lede} /></div>}

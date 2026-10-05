@@ -11,7 +11,7 @@
   background: var(--tint-current);
   view-transition-name: var(--vt);
 }
-.case-hero-caption { position: absolute; right: 14px; bottom: 12px; }
+.case-hero-caption { color: var(--ink); position: absolute; right: 14px; bottom: 12px; }
 .case-hero-text { height: 56vh; min-height: 360px; display: grid; place-items: center; }
 .case-wordmark { font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
 
