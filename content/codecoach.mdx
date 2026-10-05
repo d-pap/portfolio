@@ -22,30 +22,20 @@ hero:
   caption: the problem-solving workspace
 ---
 
-## overview
+Two classmates and I built Code Coach as our senior design project for the University of Michigan–Dearborn ACM chapter. It brings contest problems, an in-browser editor, code execution, and AI help into one place. I worked on the interface and the application flows that connect it to the backend.
 
-Two classmates and I built Code Coach as our senior design project for the University of Michigan–Dearborn ACM chapter. It brings contest problems, an in-browser editor, code execution, and AI help into one place.
-
-I worked on the interface and the application flows connecting it to the backend.
-
-
-<ProjectFigure src="/projects/cc-home-screen.webp" alt="Code Coach practice and interview preparation home page" width={1440} height={930} kind="screen" />
+<Figure src="/projects/cc-home-screen.webp" alt="Code Coach practice and interview preparation home page" width={1440} height={930} caption="practice home" />
 
 ## the workspace
 
-Students can browse ICPC and interview practice problems, write and run a solution, and ask for help alongside their code. The assistant receives the problem and the student's solution so its feedback has context.
+Students browse ICPC and interview practice problems, write and run a solution, and ask for help next to their code. The assistant receives the problem and the student's solution, so its feedback has context. We also built an interview-preparation area with a resume builder.
 
-We also built an interview-preparation area with a resume builder.
+<Figure src="/projects/cc-compiler.webp" alt="The problem-solving workspace with a code editor" width={1440} height={930} caption="the workspace" />
 
+<Figure src="/projects/cc-aichat.webp" alt="AI help next to the coding problem" width={1440} height={930} caption="help with context from the problem and the code" />
 
-<ProjectFigure src="/projects/cc-compiler.webp" alt="Problem-solving workspace with code editor" width={1440} height={930} kind="screen" />
-
-<ProjectFigure src="/projects/cc-aichat.webp" alt="AI assistance alongside the coding problem" width={1440} height={930} kind="screen" />
-
-<ProjectFigure src="/projects/cc-resume-screen.webp" alt="Code Coach resume builder" width={1440} height={930} kind="screen" />
+<Figure src="/projects/cc-resume-screen.webp" alt="The Code Coach resume builder" width={1440} height={930} caption="resume builder" />
 
 ## implementation
 
-The frontend uses React and MUI. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 handles code execution.
-
-The AI integration uses the university's U-M Maizey service. The [repository](https://github.com/d-pap/codecoach) includes the project setup and architecture.
+The frontend uses React and MUI. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 runs the code. The AI help uses the university's U-M Maizey service.

@@ -21,40 +21,26 @@ hero:
   caption: homepage, development preview · september 2026
 ---
 
-## overview
-
-The Stitches Doll Project began in 1999 as a way for women affected by HIV/AIDS to tell their stories through handmade dolls. The collection grew to include experiences of violence, bleeding disorders, and other challenges.
-
-I'm rebuilding the website for the project's founder, Kathy. I handle the design, development, and migration from the old site.
+The Stitches Doll Project began in 1999 as a way for women affected by HIV/AIDS to tell their stories through handmade dolls. The collection grew to include experiences of violence, bleeding disorders, and other challenges. I'm rebuilding the website for the project's founder, Kathy: the design, the development, and the migration from the old site.
 
 ## rebuilding the archive
 
-The original site was a collection of static HTML pages. I wrote a Python pipeline to extract the doll records and turn them into structured content with schema validation.
+The original site was a set of static HTML pages. I wrote a Python pipeline to extract the doll records into structured content with schema validation. Matching photographs to the right dolls and separating shared entries took review rather than parsing, so I built local tools for those decisions.
 
-Then came the work that a parser can't settle: matching photographs to the right dolls, separating shared entries, and reviewing which images need retaking. I built local review tools to make those decisions easier.
+<Figure src="/projects/stitches-before.webp" alt="The original Stitches homepage" width={1440} height={1080} caption="before · the original site, archived" />
 
-
-<ProjectFigure src="/projects/stitches-before.webp" alt="The original Stitches homepage" width={1440} height={1080} kind="screen" caption="Before · original website (archive)" />
-
-<ProjectFigure src="/projects/stitches-home.webp" alt="The redesigned Stitches homepage" width={1440} height={1080} kind="screen" caption="After · homepage development preview, September 2026" />
+<Figure src="/projects/stitches-home.webp" alt="The redesigned Stitches homepage" width={1440} height={1080} caption="after · homepage, development preview, september 2026" />
 
 ## designing for reading
 
-The stories are the reason to visit. The gallery lets people filter a collection and read it in rows, with longer stories expandable in place. Each doll also has a detail page.
+The stories are the reason to visit. The gallery filters the collection and shows stories in rows, with longer stories expanding in place. Each doll also has its own page. The visual direction is warm and handmade, and the dolls' photographs do most of the work.
 
-The selected filters stay with you as you move between dolls. Returning to the gallery restores your place, so reading a collection doesn't mean repeatedly starting over.
+<Figure src="/projects/stitches-gallery.webp" alt="The Stitches gallery with collection filters and stories in rows" width={1440} height={1080} caption="reading a collection · development preview" />
 
-The visual direction is warm and handmade, with the dolls' own photographs doing most of the work.
+<Figure src="/projects/stitches-detail.webp" alt="A doll's page and its story" width={1440} height={1080} caption="one story · development preview" />
 
-
-<ProjectFigure src="/projects/stitches-gallery.webp" alt="Stitches gallery with collection filters and stories in rows" width={1440} height={1080} kind="screen" caption="Reading a collection · development preview" />
-
-<ProjectFigure src="/projects/stitches-detail.webp" alt="A doll detail page and its story" width={1440} height={1080} kind="screen" caption="An individual story · development preview" />
-
-<ProjectFigure src="/projects/stitches-mobile.webp" alt="Stitches homepage on a phone" width={780} height={2100} kind="phone" caption="The homepage on mobile · development preview" />
+<Figure src="/projects/stitches-mobile.webp" alt="The Stitches homepage on a phone" width={780} height={2100} kind="phone" caption="the homepage on a phone · development preview" />
 
 ## implementation
 
-Astro generates the site from typed content collections. Pages CMS gives Kathy an editing interface, and Cloudflare Pages hosts the build.
-
-I've also mapped redirects from the old pages for the eventual move. The rebuild is still in development; the existing public site hasn't been replaced yet.
+Astro builds the site from typed content collections. Pages CMS gives Kathy an editing interface, and Cloudflare Pages hosts it. Redirects from the old pages are mapped for the move. The rebuild is in development; the public site hasn't been replaced yet.

@@ -15,29 +15,6 @@ order: 1
 kind: analysis
 ---
 
-## overview
+I used a dataset of 10,000 bank customers to find which characteristics were associated with churn, then trained a model to predict it. Inactive customers and customers aged 41–70 left more often; customers with two products left less often.
 
-I used a dataset of 10,000 bank customers to explore which characteristics were associated with churn, then trained a model to predict it.
-
-The question was practical: could a bank use this information to decide where to focus retention efforts?
-
-## the analysis
-
-I compared churn across age, activity, credit score, and number of products. In this dataset, customers aged 41–70 and inactive customers were more likely to leave, while customers with two products churned less often.
-
-Those patterns describe the dataset. They don't establish why an individual customer leaves.
-
-
-<ProjectFigure src="/projects/bank-churn-by-age.png" alt="Churn rate by age group in the bank dataset" width={567} height={455} kind="chart" />
-
-## the model
-
-I compared several models and selected a random forest. The original analysis reported about 85% accuracy and 46% recall for customers who churned.
-
-Recall matters here because most customers stayed. A model that always predicted “stays” would already get roughly 80% accuracy, while missing every customer who left.
-
-The model could support a retention experiment. Whether it actually helps a bank retain customers would need to be measured through outreach, rather than inferred from classification scores.
-
-## the notebook
-
-The [full analysis](https://github.com/d-pap/bank-churn/blob/main/bankchurn-report.ipynb) includes data exploration, model comparisons, and results. I used Python, pandas, and scikit-learn, with Matplotlib and Seaborn for charts.
+A random forest reached about 85% accuracy and 46% recall on customers who left. Recall is the number that matters here, because a model that always predicts "stays" is already about 80% accurate.

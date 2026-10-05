@@ -22,35 +22,34 @@ hero:
   caption: the coach's first screen · april 2026
 ---
 
-## overview
-
-Sprout is an AI health coach inside [RENEW](/work/renew-app). It helps people work through wellness goals and the day-to-day challenges of living with scleroderma.
-
-I joined Michigan Medicine in June 2025 to build the system behind those conversations. My work spans retrieval, conversation memory, the API, and evaluation.
+Sprout is an AI health coach inside [RENEW](/work/renew-app). It helps people with scleroderma work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 to build the system behind those conversations: retrieval, conversation memory, the API, and evaluation.
 
 ## the system
 
-A LangGraph pipeline decides whether a message needs supporting information, retrieves relevant sources, and generates a reply. For questions that need evidence, it searches clinical and patient-education material and includes citations. Other turns can stay conversational.
+Each message is classified first. Questions that need evidence go through search over clinical and patient-education material, and the reply cites its sources. Other turns stay conversational.
 
-I combined vector search with keyword search, followed by reranking. During implementation, I found and corrected a ranking issue in the library's Reciprocal Rank Fusion implementation.
+Search combines vector and keyword retrieval, then reranks the results before the reply is written.
 
-The coach also uses clinical and conversation summaries to carry context between sessions. I'm testing how well that memory handles corrections and whether inferred patterns actually improve later replies.
+<Figure caption="how a message moves through sprout">
+  <RoutingDiagram />
+</Figure>
+
+## memory
+
+The coach carries context between sessions through clinical and conversation summaries. I'm testing how well that memory handles corrections, and whether patterns it infers improve later replies.
 
 ## evaluation
 
-I build evaluations around specific questions: did the system retrieve useful sources? Does the reply answer the question? Did a summary invent or lose a fact? Does a correction survive into the next conversation?
+Each evaluation is built around a specific question. The current work uses DeepEval, fixed conversation cases, and comparisons with and without different sources of context. I read the saved responses alongside the scores, because an automated judge can miss problems.
 
-The current work uses DeepEval, fixed conversation cases, and comparisons with and without different sources of context. I inspect the saved responses alongside the scores; an automated judge can miss problems or flag the wrong thing.
+<Figure caption="what the evaluations check">
+  <EvalChecks />
+</Figure>
 
-The research is ongoing. In particular, we are still testing what retrieval and longer-term memory contribute to the coaching experience.
+The research is ongoing. We are still testing what retrieval and longer-term memory add to the coaching.
 
 ## implementation
 
 The API runs on FastAPI with PostgreSQL and pgvector. LangGraph manages the conversation flow, and model requests go through the university's gateway. I maintain the service on a university Linux server.
 
-The code is private to Michigan Medicine.
-
-## the interface
-
-
-<ProjectFigure src="/projects/sprout-chat.webp" alt="Sprout welcome screen inside RENEW" width={832} height={1800} kind="phone" caption="An earlier interface · April 2026" />
+<Figure src="/projects/sprout-chat.webp" alt="Sprout's welcome screen inside RENEW" width={832} height={1800} kind="phone" caption="the interface · april 2026" />

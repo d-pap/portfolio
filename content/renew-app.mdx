@@ -24,37 +24,26 @@ hero:
   caption: learning modules and a lesson · 2026
 ---
 
-## overview
+RENEW helps people living with scleroderma set wellness goals, track how they're feeling, and work through lessons on fatigue self-management. It includes [Sprout](/work/rag-api), the AI health coach I work on. I took over the app in September 2025: the React Native app, its PHP backend, the research admin portal, and releases.
 
-RENEW helps people living with scleroderma set wellness goals, track how they're feeling, and work through lessons on fatigue self-management. It also includes [Sprout](/work/rag-api), the AI health coach I work on.
+## the redesign
 
-I took over the app in September 2025. My work covers the React Native app, its PHP backend, the research admin portal, and releases.
+I upgraded the React Native and Expo codebase and replaced one-off styling with shared components and typed design tokens. Spacing, type, color, and motion now come from one system instead of per-screen values.
 
-## what I've changed
+I'm redesigning the daily check-in, goals, learning modules, and profile on that system.
 
-I upgraded the React Native and Expo codebase and replaced one-off styling with shared components and typed design tokens. That gives the app consistent spacing, typography, color, and motion without adjusting every screen separately.
+<Figure src="/projects/renew-modules.webp" alt="Learning modules in RENEW" width={830} height={1800} kind="phone" caption="learning modules · may 2026" />
 
-I've been redesigning the daily check-in, goals, learning modules, and profile. The details matter here: keeping unfinished goals easy to find, returning people to the lesson they were reading, and making an edited check-in feel immediate.
+<Figure src="/projects/renew-module-detail.webp" alt="A RENEW lesson with expandable activities" width={830} height={1800} kind="phone" caption="a lesson · july 2026" />
 
-I also replaced the magic-link login flow with email codes and consolidated authentication checks across the API.
-
-
-<ProjectFigure src="/projects/renew-modules.webp" alt="Learning modules in RENEW" width={830} height={1800} kind="phone" caption="Learning modules · May 2026" />
-
-<ProjectFigure src="/projects/renew-module-detail.webp" alt="A RENEW lesson with expandable activities" width={830} height={1800} kind="phone" caption="Lesson content and activities · July 2026" />
-
-<ProjectFigure src="/projects/renew-new-goal.webp" alt="New goal form in RENEW" width={830} height={1800} kind="phone" caption="Setting a goal · June 2026" />
+<Figure src="/projects/renew-new-goal.webp" alt="Setting a new goal in RENEW" width={830} height={1800} kind="phone" caption="setting a goal · june 2026" />
 
 ## the research tools
 
-The team needs to manage the study as well as support participants. I built a workflow in the admin portal for importing assessment data, reviewing generated clinical summaries, and saving them for the health coach to use.
-
-The researcher maps each upload to participants explicitly. That keeps the mapping visible and reviewable before a summary is saved.
+The study team manages participants as well as supporting them. I built an admin-portal workflow for importing assessment data, reviewing generated clinical summaries, and saving them for the health coach to use. The researcher maps each upload to participants explicitly, so the mapping can be reviewed before a summary is saved.
 
 ## implementation
 
-The app uses React Native, Expo, TypeScript, TanStack Query, and Zustand. The backend is PHP and MySQL on Michigan Medicine servers. I use Jest and React Native Testing Library for app tests, and EAS for mobile builds.
+The app uses React Native, Expo, TypeScript, TanStack Query, and Zustand. The backend is PHP and MySQL on Michigan Medicine servers. I replaced the magic-link login with email codes and consolidated authentication checks across the API.
 
-For server changes, I wrote deployment scripts with a preview mode and timestamped backups. App changes move through development and TestFlight; the redesign is ongoing, and the public release doesn't yet include every screen described here.
-
-The source code is private. [RENEW is available on the App Store](https://apps.apple.com/us/app/renew-scleroderma/id1579955473).
+Changes move through development and TestFlight. The redesign is ongoing, and the public release doesn't include every screen shown here.

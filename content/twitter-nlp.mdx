@@ -15,27 +15,6 @@ order: 2
 kind: analysis
 ---
 
-## overview
+I analyzed about 61,000 tweets about CS:GO and other games to compare player sentiment and find recurring complaints, framed as a hypothetical marketing brief for Valve. Cheating, streaming, and cosmetic items stood out as topics worth investigating.
 
-I analyzed roughly 61,000 tweets about CS:GO and other games, looking at player sentiment and recurring complaints.
-
-I framed the project as a hypothetical marketing brief for Valve: what could the company learn from people talking about its games and competitors?
-
-## the analysis
-
-I compared sentiment across games and looked more closely at the topics behind those labels. Cheating complaints, streaming, and cosmetic items stood out as subjects worth investigating.
-
-I used those observations to suggest marketing experiments. They were proposals from an analysis, not campaigns I ran or measured.
-
-
-<ProjectFigure src="/nlp-bar.png" alt="Negative sentiment across games in the analyzed tweets" width={562} height={550} kind="chart" />
-
-## the model
-
-I compared logistic regression, gradient boosting, and a multilayer perceptron. The MLP had the highest accuracy in the original analysis, at 94.7%.
-
-That score describes the classification experiment. It doesn't tell us whether an ad would work, and applying the model to a different audience or time period would require more evaluation.
-
-The [notebook](https://github.com/d-pap/NLP-sentiment-analysis) contains the preprocessing, model comparisons, and exploratory analysis.
-
-<ProjectFigure src="/nlp-model.png" alt="Model comparison from the sentiment analysis notebook" width={547} height={413} kind="chart" />
+A multilayer perceptron classified sentiment with 94.7% accuracy in the original analysis. That score describes the classifier; whether a campaign based on it would work would need its own test.

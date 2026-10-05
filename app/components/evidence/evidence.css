@@ -1,0 +1,23 @@
+.routing { width: 100%; height: auto; overflow: visible; }
+.routing text { font: 12px var(--font-mono); fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+.routing .r-sub { font-size: 11px; fill: var(--muted); }
+.routing .r-box { fill: var(--paper); stroke: var(--line); stroke-width: 1; }
+.routing .r-box-acc { stroke: var(--accent); }
+.routing .r-line { fill: none; stroke: var(--faint); stroke-width: 1.2; }
+.routing .r-acc { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+
+/* In a margin note the evidence path draws in order when the note opens. */
+.routing[data-draw="off"] .r-acc { stroke-dashoffset: 1; }
+.routing[data-draw="off"] .r-box-acc { stroke: var(--line); }
+.routing[data-draw="on"] .r-acc { transition: stroke-dashoffset 360ms var(--ease-in-out) calc(var(--i) * 300ms + 200ms); }
+.routing[data-draw="on"] .r-box-acc { transition: stroke 200ms linear calc(var(--i) * 300ms + 520ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .routing[data-draw] .r-acc, .routing[data-draw] .r-box-acc { transition: none; }
+  .routing[data-draw="off"] .r-acc { stroke-dashoffset: 0; }
+  .routing[data-draw="off"] .r-box-acc { stroke: var(--accent); }
+}
+
+.checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; width: 100%; }
+.check { background: var(--paper); border-radius: 8px; padding: 12px 14px; box-shadow: 0 0 0 1px var(--line); }
+.check-question { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; }
