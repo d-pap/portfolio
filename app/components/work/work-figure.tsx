@@ -10,16 +10,20 @@ export type WorkItem = Pick<Entry, "slug" | "shortTitle" | "summary" | "role" | 
 
 export function WorkFigure({ item, priority }: { item: WorkItem; priority: boolean }) {
   const root = useRef<HTMLElement>(null);
-  const { mode, playing, setPlaying, hover } = useRecordingPlayback(root, Boolean(item.hero.recording));
+  const { playing, controls, toggle, hover } = useRecordingPlayback(root, Boolean(item.hero.recording));
 
   const style = { "--tint": item.tint, "--tint-dark": item.tintDark, "--vt": `entry-${item.slug}` } as CSSProperties;
 
   return (
     <article ref={root} className="work" style={style} {...hover}>
-      <div className="work-figure">
-        <Media hero={item.hero} sizes="(max-width: 899px) 100vw, 1392px" priority={priority} />
-        {mode === "tap" && (
-          <button type="button" className="media-play" aria-label={playing ? `Pause ${item.shortTitle} recording` : `Play ${item.shortTitle} recording`} onClick={() => setPlaying((value) => !value)}>
+      {/* The button sits outside .work-figure, whose view-transition-name makes a stacking
+          context that would keep it under the stretched link. */}
+      <div className="work-media">
+        <div className="work-figure">
+          <Media hero={item.hero} sizes="(max-width: 899px) 100vw, 1392px" priority={priority} />
+        </div>
+        {controls && (
+          <button type="button" className="media-play" aria-label={playing ? `Pause ${item.shortTitle} recording` : `Play ${item.shortTitle} recording`} onClick={toggle}>
             {playing ? "pause" : "play"}
           </button>
         )}

@@ -1,4 +1,5 @@
 .work { position: relative; }
+.work-media { position: relative; }
 .work-figure {
   position: relative;
   aspect-ratio: 2.1 / 1;

@@ -5,12 +5,12 @@ import { useRecordingPlayback } from "app/components/media/use-recording-playbac
 
 export function CaseHeroStage({ hasRecording, label, children }: { hasRecording: boolean; label: string; children: ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
-  const { mode, playing, setPlaying, hover } = useRecordingPlayback(root, hasRecording, false);
+  const { playing, controls, toggle, hover } = useRecordingPlayback(root, hasRecording, false);
   return (
     <div ref={root} className="case-hero-stage" {...hover}>
       {children}
-      {mode === "tap" && (
-        <button type="button" className="media-play" aria-label={playing ? `Pause ${label} recording` : `Play ${label} recording`} onClick={() => setPlaying((value) => !value)}>
+      {controls && (
+        <button type="button" className="media-play" aria-label={playing ? `Pause ${label} recording` : `Play ${label} recording`} onClick={toggle}>
           {playing ? "pause" : "play"}
         </button>
       )}
