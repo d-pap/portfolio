@@ -21,12 +21,16 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
     <article className="case page" style={style}>
       {entry.hero ? (
         <figure className="case-hero">
-          <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes="100vw" priority />
+          <div className="case-hero-stage">
+            <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
+          </div>
           {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
         </figure>
       ) : (
-        <div className="case-hero case-hero-text" aria-hidden="true">
-          <span className="case-wordmark">{entry.shortTitle}</span>
+        <div className="case-hero">
+          <div className="case-hero-stage case-hero-text" aria-hidden="true">
+            <span className="case-wordmark">{entry.shortTitle}</span>
+          </div>
         </div>
       )}
 

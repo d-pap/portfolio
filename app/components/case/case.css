@@ -1,11 +1,11 @@
 .case { --tint-current: var(--tint); }
 :root.dark .case { --tint-current: var(--tint-dark); }
 
-.case-hero {
+.case-hero { position: relative; margin-top: 12px; }
+.case-hero-stage {
   position: relative;
   height: 80vh;
   min-height: 520px;
-  margin-top: 12px;
   border-radius: 6px;
   overflow: hidden;
   background: var(--tint-current);
@@ -42,13 +42,14 @@
   .case-lede { column-count: 2; column-gap: 24px; }
 }
 @media (max-width: 899px) {
-  .case-hero { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  .case-hero-stage { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
   .case-hero-text { height: 40vh; aspect-ratio: auto; }
+  .case-hero-caption { position: static; margin-top: 8px; text-align: right; }
   .case-body { display: block; }
   .case-id { position: static; margin-bottom: 24px; }
   .case-title { font-size: 21px; }
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .case-hero { view-transition-name: none; }
+  .case-hero-stage { view-transition-name: none; }
 }

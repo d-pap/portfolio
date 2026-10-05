@@ -5,6 +5,8 @@ import "./media.css";
 type MediaProps = { hero: Hero; sizes: string; priority?: boolean; label?: string };
 type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recording?: string; sizes: string; priority: boolean; offset?: boolean };
 
+// Fills its nearest positioned ancestor (position: absolute; inset: 0), so the host
+// must be position: relative with a definite size.
 // A recording, when present, plays in the first device; its first frame is the poster.
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   if (hero.type === "screen") {
