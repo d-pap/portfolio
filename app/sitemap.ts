@@ -1,21 +1,13 @@
-import { MetadataRoute } from "next";
-import { getBlogPosts } from "./lib/posts";
+import type { MetadataRoute } from "next";
+import { getEntries } from "./lib/content";
 import { metaData } from "./config";
 
-const BaseUrl = metaData.baseUrl.endsWith("/")
-  ? metaData.baseUrl
-  : `${metaData.baseUrl}/`;
+const base = metaData.baseUrl.endsWith("/") ? metaData.baseUrl : `${metaData.baseUrl}/`;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogs = getBlogPosts().map((post) => ({
-    url: `${BaseUrl}work/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
-  }));
-
-  let routes = [""].map((route) => ({
-    url: `${BaseUrl}${route}`,
-    lastModified: new Date().toISOString().split("T")[0],
-  }));
-
-  return [...routes, ...blogs];
+export default function sitemap(): MetadataRoute.Sitemap {
+  const today = new Date().toISOString().slice(0, 10);
+  const work = getEntries()
+    .filter((entry) => entry.index !== "hidden")
+    .map((entry) => ({ url: `${base}work/${entry.slug}`, lastModified: entry.publishedAt }));
+  return [{ url: base, lastModified: today }, ...work];
 }
