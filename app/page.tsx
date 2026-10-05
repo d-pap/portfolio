@@ -1,3 +1,4 @@
+import { HomeIntro } from "app/components/cited-intro/home-intro";
 import { WorkFigure, type WorkItem } from "app/components/work/work-figure";
 import { getIndex } from "app/lib/content";
 import type { Entry } from "app/lib/entries";
@@ -13,9 +14,7 @@ export default function Home() {
   const { main, earlier } = getIndex();
   return (
     <div className="home page">
-      <section className="home-intro" aria-label="Introduction">
-        <p className="home-intro-text">I’m Derek, an AI &amp; software engineer at Michigan Medicine. I build AI systems for health research and test how well they work. I also design and build the apps people use them in.</p>
-      </section>
+      <HomeIntro />
 
       <section aria-labelledby="work-heading">
         <h2 id="work-heading" className="label home-label">work</h2>

@@ -18,3 +18,7 @@ export function getEntry(slug: string): Entry | undefined {
 export function getIndex(): { main: Entry[]; earlier: Entry[] } {
   return sortEntries(getEntries());
 }
+
+export function getHomeSource(): string {
+  return fs.readFileSync(path.join(CONTENT, "home.mdx"), "utf8");
+}

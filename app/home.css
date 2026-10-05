@@ -1,5 +1,3 @@
-.home-intro { padding: 72px 0 112px; }
-.home-intro-text { max-width: 640px; font-size: var(--size-intro); line-height: 1.5; letter-spacing: -.01em; }
 .home-label { margin-bottom: 18px; }
 .home-work-list { display: grid; gap: 88px; }
 .home-earlier { margin-top: 112px; }
@@ -8,7 +6,5 @@
 .home-earlier-row:hover .home-earlier-name { text-decoration: underline; text-underline-offset: 4px; }
 
 @media (max-width: 899px) {
-  .home-intro { padding: 40px 0 72px; }
-  .home-intro-text { font-size: 22px; }
   .home-work-list { gap: 56px; }
 }
