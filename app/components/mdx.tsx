@@ -1,5 +1,6 @@
 import type { ComponentProps } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { Figure } from "./case/figure";
 import { ProjectFigure } from "./project-figure";
 
 function MdxLink({ href = "", children, ...props }: ComponentProps<"a">) {
@@ -10,6 +11,7 @@ function MdxLink({ href = "", children, ...props }: ComponentProps<"a">) {
 const components = {
   a: MdxLink,
   h2: (props: ComponentProps<"h2">) => <h2 className="label flow-label" {...props} />,
+  Figure,
   ProjectFigure,
 };
 

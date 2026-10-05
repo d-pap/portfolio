@@ -1,0 +1,54 @@
+.case { --tint-current: var(--tint); }
+:root.dark .case { --tint-current: var(--tint-dark); }
+
+.case-hero {
+  position: relative;
+  height: 80vh;
+  min-height: 520px;
+  margin-top: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--tint-current);
+  view-transition-name: var(--vt);
+}
+.case-hero-caption { position: absolute; right: 14px; bottom: 12px; }
+.case-hero-text { height: 56vh; min-height: 360px; display: grid; place-items: center; }
+.case-wordmark { font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
+
+.case-body { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 36px; }
+.case-id { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
+.case-title { font-size: 17px; font-weight: 400; }
+.case-subtitle { margin-top: 4px; }
+.case-links { margin-top: 20px; display: grid; gap: 4px; font-size: 14px; }
+.case-links-note { color: var(--muted); }
+
+.case-lede { font-size: var(--size-lede); line-height: 1.55; }
+.case-lede p + p { margin-top: 12px; }
+.case-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.case-facts dt { margin-bottom: 4px; }
+.case-facts dd { font-size: 14.5px; line-height: 1.5; }
+
+.case-flow { margin-top: 72px; }
+.case-flow > .flow-label { margin: 56px 0 10px; }
+.case-flow > .flow-label:first-child { margin-top: 0; }
+.case-flow > p { font-size: var(--size-body); line-height: 1.7; max-width: 62ch; }
+.case-flow > p + p { margin-top: 14px; }
+.case-flow > .fig { margin-top: 40px; }
+.case-lede a, .case-flow a { text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
+.case-lede a:hover, .case-flow a:hover { text-decoration-color: currentColor; }
+.case-next { display: inline-flex; align-items: baseline; margin-top: 96px; }
+
+@media (min-width: 1100px) {
+  .case-lede { column-count: 2; column-gap: 24px; }
+}
+@media (max-width: 899px) {
+  .case-hero { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  .case-hero-text { height: 40vh; aspect-ratio: auto; }
+  .case-body { display: block; }
+  .case-id { position: static; margin-bottom: 24px; }
+  .case-title { font-size: 21px; }
+  .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-hero { view-transition-name: none; }
+}

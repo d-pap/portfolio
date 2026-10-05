@@ -1,0 +1,15 @@
+.fig-caption { margin-bottom: 10px; }
+.fig-stage { border-radius: 6px; overflow: hidden; }
+.fig-screen img { width: 100%; height: auto; }
+.fig-phone .fig-stage, .fig-custom .fig-stage {
+  display: grid;
+  place-items: center;
+  padding: clamp(24px, 5vw, 56px);
+  background: var(--tint-current, var(--wash));
+}
+.fig-phone img { width: auto; height: min(620px, 72svh); border-radius: 6% / 2.8%; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 18px 40px -16px rgba(0, 0, 0, .4); }
+.fig-custom .fig-stage > * { width: 100%; max-width: 440px; }
+
+@media (max-width: 899px) {
+  .fig-phone img { height: auto; width: min(260px, 100%); }
+}
