@@ -217,16 +217,17 @@ export function CitedIntro({ children }: { children: ReactNode }) {
       leave: () => { pointerInside.current = false; intent.leave(); },
       pointerDown: (type) => { pointerType.current = type; },
       // Open on keyboard focus only; a mouse click focuses the claim too, and press() handles that.
-      focus: (n, el) => { if (el.matches(":focus-visible")) intent.now(n); },
+      focus: (n, el) => { hoverNote.current = null; if (el.matches(":focus-visible")) intent.now(n); },
       // Mouse clicks pin the note open; taps toggle it.
       press: (n) => {
+        hoverNote.current = null;
         const type = pointerType.current ?? "mouse";
         pointerType.current = null;
         if (type !== "mouse" && activeRef.current !== n) scrollPending.current = n;
         if (type === "mouse" || activeRef.current !== n) intent.now(n);
         else forceClose();
       },
-      key: (n) => { if (activeRef.current === n) forceClose(); else intent.now(n); },
+      key: (n) => { hoverNote.current = null; if (activeRef.current === n) forceClose(); else intent.now(n); },
       registerClaim: (n, el) => { if (el) claims.current.set(n, el); else claims.current.delete(n); },
       registerNote: (n, el) => { if (el) notes.current.set(n, el); else notes.current.delete(n); },
     }),

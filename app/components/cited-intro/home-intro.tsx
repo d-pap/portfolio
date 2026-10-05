@@ -12,7 +12,8 @@ export function HomeIntro() {
   const source = getHomeSource();
   checkIntroPairs(source);
   return (
-    <section aria-label="Introduction">
+    <section aria-labelledby="intro-heading">
+      <h1 id="intro-heading" className="visually-hidden">Derek Papierski</h1>
       <CitedIntro>
         <MDXRemote source={source} components={{ Claim, Note, RoutingDiagram, EvalChecks, EvidenceMedia }} options={{ blockJS: false, blockDangerousJS: true }} />
       </CitedIntro>

@@ -13,6 +13,7 @@ export function WorkFigure({ item, priority }: { item: WorkItem; priority: boole
   const { playing, controls, toggle, hover } = useRecordingPlayback(root, Boolean(item.hero.recording));
 
   const style = { "--tint": item.tint, "--tint-dark": item.tintDark, "--vt": `entry-${item.slug}` } as CSSProperties;
+  const sizes = item.hero.type === "phones" ? "(max-width: 899px) 30vw, 18vw" : "(max-width: 899px) 85vw, 56vw";
 
   return (
     <article ref={root} className="work" style={style} {...hover}>
@@ -20,7 +21,7 @@ export function WorkFigure({ item, priority }: { item: WorkItem; priority: boole
           context that would keep it under the stretched link. */}
       <div className="work-media">
         <div className="work-figure">
-          <Media hero={item.hero} sizes="(max-width: 899px) 100vw, 1392px" priority={priority} />
+          <Media hero={item.hero} sizes={sizes} priority={priority} />
         </div>
         {controls && (
           <button type="button" className="media-play" aria-label={playing ? `Pause ${item.shortTitle} recording` : `Play ${item.shortTitle} recording`} onClick={toggle}>
