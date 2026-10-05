@@ -19,7 +19,7 @@ export function WorkFigure({ item, priority }: { item: WorkItem; priority: boole
       <div className="work-figure">
         <Media hero={item.hero} sizes="(max-width: 899px) 100vw, 1392px" priority={priority} />
         {mode === "tap" && (
-          <button type="button" className="media-play" aria-pressed={playing} onClick={() => setPlaying((value) => !value)}>
+          <button type="button" className="media-play" aria-label={playing ? `Pause ${item.shortTitle} recording` : `Play ${item.shortTitle} recording`} onClick={() => setPlaying((value) => !value)}>
             {playing ? "pause" : "play"}
           </button>
         )}

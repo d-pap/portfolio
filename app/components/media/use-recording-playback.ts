@@ -27,9 +27,11 @@ export function useRecordingPlayback(root: RefObject<HTMLElement | null>, hasRec
   useEffect(() => {
     const video = root.current?.querySelector("video");
     if (!video) return;
-    if (playing) video.play().catch(() => setPlaying(false));
+    if (playing) video.play().catch((error: DOMException) => { if (error.name !== "AbortError") setPlaying(false); });
     else video.pause();
   }, [playing, root]);
+
+  useEffect(() => { setPlaying(false); }, [mode]);
 
   useEffect(() => {
     if (mode !== "in-view" || !root.current) return;

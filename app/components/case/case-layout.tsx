@@ -22,7 +22,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
     <article className="case page" style={style}>
       {entry.hero ? (
         <figure className="case-hero">
-          <CaseHeroStage hasRecording={Boolean(entry.hero.recording)}>
+          <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} label={entry.shortTitle}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
           </CaseHeroStage>
           {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
