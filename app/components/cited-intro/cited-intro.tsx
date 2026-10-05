@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from "react";
 import { createHoverIntent } from "app/lib/hover-intent";
 import { anchorFor, heldAnchor, layoutNotes, reserveHeight, type NoteMeasure } from "app/lib/note-layout";
-import { firstLine, lastLine, routeSide, threadPath, type Box } from "app/lib/thread-path";
+import { chooseRun, firstLine, lastLine, mergeLines, threadPath, type Box } from "app/lib/thread-path";
 import { CitationContext, type CitationApi } from "./context";
 import "./cited-intro.css";
 
@@ -16,6 +16,15 @@ function boxIn(rect: DOMRect, origin: DOMRect): Box {
 
 function linesOf(el: Element | null | undefined, origin: DOMRect): Box[] {
   return el ? Array.from(el.getClientRects(), (rect) => boxIn(rect, origin)) : [];
+}
+
+/** One box per line of the intro paragraph, so the thread can find a clear way past it. */
+function paragraphLines(el: Element | null, origin: DOMRect): Box[] {
+  const paragraph = el?.querySelector(":scope > p");
+  if (!paragraph) return [];
+  const range = document.createRange();
+  range.selectNodeContents(paragraph);
+  return mergeLines(Array.from(range.getClientRects(), (rect) => boxIn(rect, origin)));
 }
 
 export function CitedIntro({ children }: { children: ReactNode }) {
@@ -81,8 +90,10 @@ export function CitedIntro({ children }: { children: ReactNode }) {
     const others: Box[] = [];
     claims.current.forEach((other, m) => { if (m !== n) others.push(...linesOf(other.querySelector(".claim-phrase"), origin)); });
     const target = { x: note.getBoundingClientRect().left - origin.left - 8, y: noteTop + 10 };
+    const markerBox = boxIn(marker.getBoundingClientRect(), origin);
+    const { above, runY } = chooseRun({ phrase: last, marker: markerBox, others, lines: paragraphLines(root.current, origin), endX: target.x });
 
-    line.setAttribute("d", threadPath({ phrase: last, marker: boxIn(marker.getBoundingClientRect(), origin), target, above: routeSide(last, others, target.x) === "above" }));
+    line.setAttribute("d", threadPath({ phrase: last, marker: markerBox, target, above, runY }));
     end.setAttribute("cx", String(target.x));
     end.setAttribute("cy", String(target.y));
     const length = line.getTotalLength();

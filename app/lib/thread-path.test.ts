@@ -1,6 +1,6 @@
-import { test } from "node:test";
+import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { firstLine, routeSide, lastLine, threadPath } from "./thread-path.ts";
+import { chooseRun, firstLine, mergeLines, routeSide, lastLine, threadPath } from "./thread-path.ts";
 
 const phrase = { left: 200, top: 100, right: 400, bottom: 130 };
 const marker = { left: 402, top: 98, right: 410, bottom: 110 };
@@ -61,4 +61,67 @@ test("a wrapped phrase anchors to its first line and threads from its last", () 
   assert.deepEqual(firstLine([bottom, top]), top);
   assert.deepEqual(lastLine([bottom, top]), bottom);
   assert.throws(() => firstLine([]), /no line boxes/);
+});
+
+test("far: drops beside the paragraph, runs under it, and ends at the note", () => {
+  const d = threadPath({ phrase, marker, target: { x: 800, y: 200 }, runY: 180 });
+  assert.equal(d, "M400 129.3 H413 Q422 129.3 422 138.3 V171 Q422 180 431 180 H757 Q766 180 766 189 V191 Q766 200 775 200 H800");
+});
+
+test("mergeLines joins fragments on the same line and sorts lines top to bottom", () => {
+  const lowerLine = { left: 300, top: 140, right: 500, bottom: 170 };
+  const upperStart = { left: 0, top: 100, right: 200, bottom: 130 };
+  const upperEnd = { left: 200, top: 101, right: 450, bottom: 131 };
+  assert.deepEqual(mergeLines([lowerLine, upperStart, upperEnd]), [
+    { left: 0, top: 100, right: 450, bottom: 131 },
+    { left: 300, top: 140, right: 500, bottom: 170 },
+  ]);
+  assert.deepEqual(mergeLines([]), []);
+});
+
+describe("chooseRun", () => {
+  // turnX = 413, so the far route's drop runs at x = 422 and later lines must end before 420.
+  const sameLine = { left: 500, top: 100.5, right: 700, bottom: 130 };
+  const previousLine = { left: 300, top: 61, right: 500, bottom: 91 };
+  const paragraph = (...laterRights: number[]) => [
+    { left: 0, top: 61, right: 700, bottom: 91 },
+    { left: 0, top: 100, right: 720, bottom: 130 },
+    ...laterRights.map((right, i) => ({ left: 0, top: 139 + i * 39, right, bottom: 169 + i * 39 })),
+  ];
+
+  test("runs below the line when no claim sits later on it", () => {
+    const before = { left: 0, top: 100, right: 150, bottom: 130 };
+    assert.deepEqual(chooseRun({ phrase, marker, others: [before, previousLine], lines: paragraph(380), endX: 800 }), { above: false });
+  });
+
+  test("runs above the line when a later claim sits on it and the previous line is clear", () => {
+    const earlyOnPrevious = { left: 0, top: 61, right: 200, bottom: 91 };
+    assert.deepEqual(chooseRun({ phrase, marker, others: [sameLine, earlyOnPrevious], lines: paragraph(380), endX: 800 }), { above: true });
+  });
+
+  test("runs under the paragraph when both gaps are crowded and later lines end before the drop", () => {
+    assert.deepEqual(chooseRun({ phrase, marker, others: [sameLine, previousLine], lines: paragraph(380, 419), endX: 800 }), { above: false, runY: 214 });
+  });
+
+  test("falls back to the least-crossing side when a later line reaches the drop", () => {
+    // routeSide: below crosses 200px of underline, above crosses 100px (400 to 500).
+    assert.deepEqual(chooseRun({ phrase, marker, others: [sameLine, previousLine], lines: paragraph(380, 420), endX: 800 }), { above: true });
+  });
+
+  test("counts raised markers and padded claim boxes as part of their own line", () => {
+    // Range rects as the browser returns them: claim boxes are padded 4px, markers sit 3.1px low.
+    const lines = [
+      { left: 0, top: 61, right: 700, bottom: 91 },
+      { left: 0, top: 100, right: 720, bottom: 130 },
+      { left: 600, top: 103.1, right: 607, bottom: 116.6 }, // a later claim's marker on the phrase's line
+      { left: 0, top: 135, right: 380, bottom: 173 }, // a padded claim box on the next line
+      { left: 0, top: 139, right: 380, bottom: 169 },
+      { left: 300, top: 142.1, right: 307, bottom: 155.6 }, // that claim's marker
+    ];
+    assert.deepEqual(chooseRun({ phrase, marker, others: [sameLine, previousLine], lines, endX: 800 }), { above: false, runY: 179 });
+  });
+
+  test("falls back when the phrase is on the paragraph's last line", () => {
+    assert.deepEqual(chooseRun({ phrase, marker, others: [sameLine, previousLine], lines: paragraph(), endX: 800 }), { above: true });
+  });
 });
