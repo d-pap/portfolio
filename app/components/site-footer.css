@@ -1,0 +1,15 @@
+.colophon { margin-top: 120px; }
+.colophon-in {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--margin-w);
+  column-gap: var(--margin-gap);
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--line);
+}
+.colophon-ask { color: var(--muted); margin-bottom: 4px; }
+.colophon-side { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.colophon-links { display: grid; gap: 4px; }
+
+@media (max-width: 899px) {
+  .colophon-in { grid-template-columns: 1fr; row-gap: 28px; }
+}

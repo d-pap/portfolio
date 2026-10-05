@@ -1,21 +1,20 @@
 import "./global.css";
+import "./styles/tokens.css";
+import "./styles/base.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Navbar } from "./components/nav";
+import { Fragment_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Footer from "./components/footer";
 import { ThemeProvider } from "./components/theme-switch";
+import { SiteHeader } from "./components/site-header";
+import { SiteFooter } from "./components/site-footer";
 import { metaData } from "./config";
 
-const inter = Inter({ subsets: ["latin"] });
+const mono = Fragment_Mono({ subsets: ["latin"], weight: "400", display: "swap", variable: "--font-fragment-mono" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(metaData.baseUrl),
-  title: {
-    default: metaData.title,
-    template: `%s | ${metaData.title}`,
-  },
+  title: { default: metaData.title, template: `%s | ${metaData.title}` },
   description: metaData.description,
   openGraph: {
     images: metaData.ogImage,
@@ -29,65 +28,21 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+    googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
-  twitter: {
-    title: metaData.name,
-    card: "summary_large_image",
-  },
-  icons: {
-    icon: "/favicon-greeno.ico",
-  },
+  twitter: { title: metaData.name, card: "summary_large_image" },
+  icons: { icon: "/favicon-greeno.ico" },
 };
 
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
-      <head>
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          href="/rss.xml"
-          title="RSS Feed"
-        />
-        <link
-          rel="alternate"
-          type="application/atom+xml"
-          href="/atom.xml"
-          title="Atom Feed"
-        />
-        <link
-          rel="alternate"
-          type="application/feed+json"
-          href="/feed.json"
-          title="JSON Feed"
-        />
-      </head>
-      <body className="antialiased flex flex-col mx-auto">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="site-frame">
-            <a className="skip-link" href="#main">skip to content</a>
-            <Navbar />
-
-            <main id="main">{children}</main>
-            <Footer />
-          </div>
+    <html lang="en" className={mono.variable} suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <a className="skip-link" href="#main">skip to content</a>
+          <SiteHeader />
+          <main id="main">{children}</main>
+          <SiteFooter />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

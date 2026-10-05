@@ -11,6 +11,7 @@
 # next.js
 /.next/
 /.next-preview/
+/.next-build/
 /out/
 
 # production
@@ -44,3 +45,10 @@ docs/
 # local browser checks and package cache
 .playwright-mcp/
 .pnpm-store/
+
+# brainstorming mockups stay local
+.superpowers/
+.impeccable/
+
+# local-only test media
+public/**/_local-*
