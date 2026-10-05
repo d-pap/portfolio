@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { parseReading, type Book } from "./reading";
 import { parseEntry, sortEntries, type Entry } from "./entries";
 
 const CONTENT = path.join(process.cwd(), "content");
@@ -21,4 +22,10 @@ export function getIndex(): { main: Entry[]; earlier: Entry[] } {
 
 export function getHomeSource(): string {
   return fs.readFileSync(path.join(CONTENT, "home.mdx"), "utf8");
+}
+
+export function getReading(): Book[] {
+  const file = path.join(CONTENT, "reading.json");
+  if (!fs.existsSync(file)) return [];
+  return parseReading(fs.readFileSync(file, "utf8"));
 }
