@@ -34,6 +34,7 @@
 .case-flow > p { font-size: var(--size-body); line-height: 1.7; max-width: 62ch; }
 .case-flow > p + p { margin-top: 14px; }
 .case-flow > .fig { margin-top: 40px; }
+.case-flow > .fig + p { margin-top: 28px; }
 .case-lede a, .case-flow a { text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
 .case-lede a:hover, .case-flow a:hover { text-decoration-color: currentColor; }
 .case-next { display: inline-flex; align-items: baseline; margin-top: 96px; }
