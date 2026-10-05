@@ -4,7 +4,7 @@
   grid-template-columns: minmax(0, 1fr) var(--margin-w);
   column-gap: var(--margin-gap);
   padding: 72px 0 112px;
-  min-height: calc(var(--notes-height, 0px) + 112px);
+  min-height: calc(var(--notes-height, 0px) + 32px);
 }
 .cited > p { grid-column: 1; max-width: 640px; font-size: var(--size-intro); line-height: 1.5; letter-spacing: -.01em; }
 

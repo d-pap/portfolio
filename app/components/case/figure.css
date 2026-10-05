@@ -3,6 +3,7 @@
 .fig-screen img { width: 100%; height: auto; }
 .fig-phone .fig-stage, .fig-custom .fig-stage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
   padding: clamp(24px, 5vw, 56px);
   background: var(--tint-current, var(--wash));

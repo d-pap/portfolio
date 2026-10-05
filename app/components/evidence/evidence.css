@@ -18,8 +18,10 @@
   .routing[data-draw="off"] .r-box-acc { stroke: var(--accent); }
 }
 
-.checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; width: 100%; }
-.check { background: var(--paper); border-radius: 8px; padding: 12px 14px; box-shadow: 0 0 0 1px var(--line); }
-.check-question { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; }
+.checks { display: grid; width: 100%; }
+.check { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); }
+.check:first-child { border-top: 0; padding-top: 0; }
+.check:last-child { padding-bottom: 0; }
+.check-question { font-size: 13.5px; line-height: 1.4; }
 .evidence-media { position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden; background: var(--tint); }
 :root.dark .evidence-media { background: var(--tint-dark); }

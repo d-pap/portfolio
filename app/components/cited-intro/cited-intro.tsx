@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from "react";
 import { createHoverIntent } from "app/lib/hover-intent";
-import { anchorFor, layoutNotes, NOTE_GAP, type NoteMeasure } from "app/lib/note-layout";
+import { anchorFor, heldAnchor, layoutNotes, reserveHeight, type NoteMeasure } from "app/lib/note-layout";
 import { firstLine, lastLine, routeSide, threadPath, type Box } from "app/lib/thread-path";
 import { CitationContext, type CitationApi } from "./context";
 import "./cited-intro.css";
@@ -132,14 +132,11 @@ export function CitedIntro({ children }: { children: ReactNode }) {
     });
     const current = activeRef.current;
     // Reserve the tallest normal state once so the page below never moves on hover.
-    const reserve = Math.max(...[null, ...measures.map((m) => m.n)].map((k) => layoutNotes(measures, k).height));
+    const reserve = reserveHeight(measures);
     if (current !== null && current === hoverNote.current && lastTops.current.has(current)) {
       // A note opened by hovering it stays near where the pointer found it, clamped so the layout fits the reserve.
       const held = measures.find((m) => m.n === current);
-      if (held) {
-        const tail = measures.filter((m) => m.n > current).reduce((sum, m) => sum + NOTE_GAP + m.collapsed, 0);
-        held.anchor = Math.min(lastTops.current.get(current)!, reserve - held.expanded - tail);
-      }
+      if (held) held.anchor = heldAnchor(measures, current, lastTops.current.get(current)!, reserve);
     }
     const { tops } = layoutNotes(measures, current);
     tops.forEach((top, n) => {

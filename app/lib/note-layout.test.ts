@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { anchorFor, layoutNotes } from "./note-layout.ts";
+import { anchorFor, heldAnchor, layoutNotes, reserveHeight } from "./note-layout.ts";
 
 const note = (n: number, anchor: number, collapsed = 60, expanded = 300) => ({ n, anchor, collapsed, expanded });
 
@@ -46,4 +46,17 @@ test("no notes have no height", () => {
 test("anchorFor centers a 20px note line on the claim's line", () => {
   assert.equal(anchorFor({ top: 100, bottom: 139 }), 109.5);
   assert.equal(anchorFor({ top: 100, bottom: 130 }, 30), 100);
+});
+
+test("reserveHeight fits the tallest open state", () => {
+  assert.equal(reserveHeight([note(1, 10), note(2, 40), note(3, 70)]), 474);
+  assert.equal(reserveHeight([]), 0);
+});
+
+test("heldAnchor keeps a hovered note under the pointer but inside the reserve", () => {
+  const notes = [note(1, 10), note(2, 40), note(3, 70)];
+  assert.equal(heldAnchor(notes, 3, 414, 474), 174);
+  assert.equal(heldAnchor(notes, 2, 332, 474), 92);
+  assert.equal(heldAnchor(notes, 2, 92, 474), 92);
+  assert.throws(() => heldAnchor(notes, 9, 0, 474), /no note 9/);
 });
