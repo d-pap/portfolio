@@ -4,7 +4,7 @@ export const metaData = {
   name: "Derek",
   ogImage: "/og-image.png",
   description:
-    "AI & software engineer in Michigan. Building and evaluating AI systems for health research, with work in app development and interface design.",
+    "AI & software engineer at Michigan Medicine. I build AI systems for health research, test how well they work, and design and build the apps people use them in.",
 };
 
 export const socialLinks = {

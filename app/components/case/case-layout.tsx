@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { Arrow } from "app/components/arrow";
 import { CustomMDX } from "app/components/mdx";
+import { CaseHeroStage } from "app/components/case/case-hero-stage";
 import { Media } from "app/components/media/media";
 import { caseLinks, splitLede } from "app/lib/case";
 import type { Entry } from "app/lib/entries";
@@ -21,9 +22,9 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
     <article className="case page" style={style}>
       {entry.hero ? (
         <figure className="case-hero">
-          <div className="case-hero-stage">
+          <CaseHeroStage hasRecording={Boolean(entry.hero.recording)}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
-          </div>
+          </CaseHeroStage>
           {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
         </figure>
       ) : (
