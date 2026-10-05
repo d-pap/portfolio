@@ -2,8 +2,8 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent, type ReactNode } from "react";
 import { createHoverIntent } from "app/lib/hover-intent";
-import { anchorFor, layoutNotes, type NoteMeasure } from "app/lib/note-layout";
-import { citedPhraseFollows, firstLine, lastLine, threadPath, type Box } from "app/lib/thread-path";
+import { anchorFor, layoutNotes, NOTE_GAP, type NoteMeasure } from "app/lib/note-layout";
+import { firstLine, lastLine, routeSide, threadPath, type Box } from "app/lib/thread-path";
 import { CitationContext, type CitationApi } from "./context";
 import "./cited-intro.css";
 
@@ -25,6 +25,11 @@ export function CitedIntro({ children }: { children: ReactNode }) {
   const claims = useRef(new Map<number, HTMLElement>());
   const notes = useRef(new Map<number, HTMLElement>());
   const drawnFor = useRef<number | null>(null);
+  const hoverNote = useRef<number | null>(null);
+  const lastTops = useRef(new Map<number, number>());
+  const pointerInside = useRef(false);
+  const pointerType = useRef<string | null>(null);
+  const scrollPending = useRef<number | null>(null);
   const [active, setActive] = useState<number | null>(null);
   const [stacked, setStacked] = useState(false);
   const activeRef = useRef<number | null>(null);
@@ -35,7 +40,10 @@ export function CitedIntro({ children }: { children: ReactNode }) {
       createHoverIntent<number>({
         open: (n) => setActive(n),
         // Keyboard focus inside the intro keeps a note open after the pointer leaves.
-        close: () => { if (!root.current?.contains(document.activeElement)) setActive(null); },
+        close: () => {
+          if (pointerInside.current) return;
+          if (!root.current?.contains(document.activeElement)) setActive(null);
+        },
         isOpen: () => activeRef.current !== null,
       }),
     [],
@@ -74,7 +82,7 @@ export function CitedIntro({ children }: { children: ReactNode }) {
     claims.current.forEach((other, m) => { if (m !== n) others.push(...linesOf(other.querySelector(".claim-phrase"), origin)); });
     const target = { x: note.getBoundingClientRect().left - origin.left - 8, y: noteTop + 10 };
 
-    line.setAttribute("d", threadPath({ phrase: last, marker: boxIn(marker.getBoundingClientRect(), origin), target, above: citedPhraseFollows(last, others) }));
+    line.setAttribute("d", threadPath({ phrase: last, marker: boxIn(marker.getBoundingClientRect(), origin), target, above: routeSide(last, others, target.x) === "above" }));
     end.setAttribute("cx", String(target.x));
     end.setAttribute("cy", String(target.y));
     const length = line.getTotalLength();
@@ -122,12 +130,24 @@ export function CitedIntro({ children }: { children: ReactNode }) {
       const evidence = note.querySelector<HTMLElement>(".note-inner")?.scrollHeight ?? 0;
       measures.push({ n, anchor: lines.length ? anchorFor(firstLine(lines)) : 0, collapsed, expanded: collapsed + evidence });
     });
-    const { tops, height } = layoutNotes(measures, activeRef.current);
+    const current = activeRef.current;
+    // Reserve the tallest normal state once so the page below never moves on hover.
+    const reserve = Math.max(...[null, ...measures.map((m) => m.n)].map((k) => layoutNotes(measures, k).height));
+    if (current !== null && current === hoverNote.current && lastTops.current.has(current)) {
+      // A note opened by hovering it stays near where the pointer found it, clamped so the layout fits the reserve.
+      const held = measures.find((m) => m.n === current);
+      if (held) {
+        const tail = measures.filter((m) => m.n > current).reduce((sum, m) => sum + NOTE_GAP + m.collapsed, 0);
+        held.anchor = Math.min(lastTops.current.get(current)!, reserve - held.expanded - tail);
+      }
+    }
+    const { tops } = layoutNotes(measures, current);
     tops.forEach((top, n) => {
       const note = notes.current.get(n);
       if (note) note.style.transform = `translateY(${top}px)`;
     });
-    el.style.setProperty("--notes-height", `${height}px`);
+    lastTops.current = tops;
+    el.style.setProperty("--notes-height", `${reserve}px`);
     const n = activeRef.current;
     if (n === null) hideThread();
     else drawThread(n, tops.get(n) ?? 0, origin);
@@ -142,20 +162,38 @@ export function CitedIntro({ children }: { children: ReactNode }) {
     if (!el) return;
     const observer = new ResizeObserver(() => layoutRef.current());
     observer.observe(el);
-    notes.current.forEach((note) => observer.observe(note));
+    notes.current.forEach((note) => {
+      const inner = note.querySelector(".note-inner");
+      if (inner) observer.observe(inner);
+    });
     document.fonts?.ready.then(() => layoutRef.current());
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!stacked || active === null) return;
-    // Wait for the note body to finish expanding, or "nearest" measures the collapsed note and never scrolls.
-    const reduced = window.matchMedia(REDUCED).matches;
-    const timer = window.setTimeout(
-      () => notes.current.get(active)?.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" }),
-      reduced ? 0 : 480,
-    );
-    return () => window.clearTimeout(timer);
+    if (!stacked || active === null || scrollPending.current !== active) return;
+    scrollPending.current = null;
+    const note = notes.current.get(active);
+    if (!note) return;
+    if (window.matchMedia(REDUCED).matches) {
+      const frame = requestAnimationFrame(() => note.scrollIntoView({ block: "nearest", behavior: "auto" }));
+      return () => cancelAnimationFrame(frame);
+    }
+    const body = note.querySelector(".note-body");
+    let done = false;
+    const go = () => {
+      if (done) return;
+      done = true;
+      note.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    };
+    const onEnd = (event: Event) => { if ((event as TransitionEvent).propertyName === "grid-template-rows") go(); };
+    body?.addEventListener("transitionend", onEnd);
+    const timer = window.setTimeout(go, 600);
+    return () => {
+      done = true;
+      body?.removeEventListener("transitionend", onEnd);
+      window.clearTimeout(timer);
+    };
   }, [active, stacked]);
 
   const forceClose = () => {
@@ -166,13 +204,18 @@ export function CitedIntro({ children }: { children: ReactNode }) {
   const api = useMemo<CitationApi>(
     () => ({
       active,
-      enter: (n) => intent.enter(n),
-      leave: () => intent.leave(),
+      enter: (n) => { pointerInside.current = true; hoverNote.current = null; intent.enter(n); },
+      enterNote: (n) => { pointerInside.current = true; hoverNote.current = n; intent.enter(n); },
+      leave: () => { pointerInside.current = false; intent.leave(); },
+      pointerDown: (type) => { pointerType.current = type; },
       // Open on keyboard focus only; a mouse click focuses the claim too, and press() handles that.
       focus: (n, el) => { if (el.matches(":focus-visible")) intent.now(n); },
       // Mouse clicks pin the note open; taps toggle it.
-      press: (n, pointerType) => {
-        if (pointerType === "mouse" || activeRef.current !== n) intent.now(n);
+      press: (n) => {
+        const type = pointerType.current ?? "mouse";
+        pointerType.current = null;
+        if (type !== "mouse" && activeRef.current !== n) scrollPending.current = n;
+        if (type === "mouse" || activeRef.current !== n) intent.now(n);
         else forceClose();
       },
       key: (n) => { if (activeRef.current === n) forceClose(); else intent.now(n); },
@@ -197,7 +240,7 @@ export function CitedIntro({ children }: { children: ReactNode }) {
   }
 
   function onBlur(event: FocusEvent<HTMLDivElement>) {
-    if (!root.current?.contains(event.relatedTarget as Node | null)) intent.leave();
+    if (!root.current?.contains(event.relatedTarget as Node | null) && !pointerInside.current) intent.leave();
   }
 
   return (

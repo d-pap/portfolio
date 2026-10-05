@@ -40,7 +40,7 @@ export function Note({ n, text, meta, thumb, children }: NoteProps) {
       className={open ? "note is-open" : "note"}
       data-n={n}
       ref={(el) => api.registerNote(n, el)}
-      onPointerEnter={(event) => { if (event.pointerType === "mouse") api.enter(n); }}
+      onPointerEnter={(event) => { if (event.pointerType === "mouse") api.enterNote(n); }}
       onPointerLeave={(event) => { if (event.pointerType === "mouse") api.leave(); }}
     >
       <div className="note-head">

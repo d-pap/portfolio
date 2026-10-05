@@ -25,7 +25,8 @@ export function Claim({ n, children }: { n: number; children: ReactNode }) {
       ref={(el) => api.registerClaim(n, el)}
       onPointerEnter={(event) => { if (event.pointerType === "mouse") api.enter(n); }}
       onPointerLeave={(event) => { if (event.pointerType === "mouse") api.leave(); }}
-      onClick={(event) => api.press(n, (event.nativeEvent as PointerEvent).pointerType ?? "")}
+      onPointerDown={(event) => api.pointerDown(event.pointerType)}
+      onClick={() => api.press(n)}
       onFocus={(event) => api.focus(n, event.currentTarget)}
       onKeyDown={onKeyDown}
     >

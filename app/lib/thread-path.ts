@@ -13,9 +13,20 @@ export function lastLine(lines: readonly Box[]): Box {
   return lines.reduce((a, b) => (b.top > a.top + LINE_TOLERANCE || (Math.abs(b.top - a.top) <= LINE_TOLERANCE && b.right > a.right) ? b : a));
 }
 
-/** True when another cited phrase sits later on the same line, so the thread must route above. */
-export function citedPhraseFollows(phraseLast: Box, others: readonly Box[], tolerance = 2): boolean {
-  return others.some((other) => Math.abs(other.top - phraseLast.top) <= tolerance && other.left >= phraseLast.right);
+/**
+ * Which side of the line the thread should run on: the side whose horizontal run
+ * (from the phrase end to `endX`) crosses the least claim underline. Ties go below.
+ */
+export function routeSide(phraseLast: Box, others: readonly Box[], endX: number, tolerance = 2): "below" | "above" {
+  const height = phraseLast.bottom - phraseLast.top;
+  const overlap = (box: Box) => Math.max(0, Math.min(box.right, endX) - Math.max(box.left, phraseLast.right));
+  let below = 0;
+  let above = 0;
+  for (const box of others) {
+    if (Math.abs(box.top - phraseLast.top) <= tolerance) below += overlap(box);
+    else if (box.bottom <= phraseLast.top + tolerance && box.bottom >= phraseLast.top - height) above += overlap(box);
+  }
+  return above < below ? "above" : "below";
 }
 
 type ThreadInput = {

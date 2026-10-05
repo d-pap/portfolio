@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { citedPhraseFollows, firstLine, lastLine, threadPath } from "./thread-path.ts";
+import { firstLine, routeSide, lastLine, threadPath } from "./thread-path.ts";
 
 const phrase = { left: 200, top: 100, right: 400, bottom: 130 };
 const marker = { left: 402, top: 98, right: 410, bottom: 110 };
@@ -37,12 +37,20 @@ test("the vertical run never crosses back over the phrase", () => {
   assert.doesNotMatch(d, /NaN/);
 });
 
-test("citedPhraseFollows detects a later claim on the same line only", () => {
-  const last = { left: 300, top: 100, right: 400, bottom: 130 };
-  assert.equal(citedPhraseFollows(last, [{ left: 420, top: 100.5, right: 500, bottom: 130 }]), true);
-  assert.equal(citedPhraseFollows(last, [{ left: 0, top: 139, right: 120, bottom: 169 }]), false);
-  assert.equal(citedPhraseFollows(last, [{ left: 50, top: 100, right: 190, bottom: 130 }]), false);
-  assert.equal(citedPhraseFollows(last, []), false);
+test("routeSide picks the side that crosses the least claim underline", () => {
+  const last = { left: 100, top: 100, right: 300, bottom: 130 };
+  const sameLine = { left: 340, top: 100.5, right: 500, bottom: 130 };
+  assert.equal(routeSide(last, [], 800), "below");
+  assert.equal(routeSide(last, [sameLine], 800), "above");
+  assert.equal(routeSide(last, [sameLine, { left: 250, top: 61, right: 700, bottom: 91 }], 800), "below");
+  assert.equal(routeSide(last, [{ left: 340, top: 100, right: 700, bottom: 130 }, { left: 280, top: 61, right: 400, bottom: 91 }], 800), "above");
+});
+
+test("routeSide ignores claims two lines up and claims before the phrase end", () => {
+  const last = { left: 100, top: 100, right: 300, bottom: 130 };
+  const sameLine = { left: 340, top: 100.5, right: 500, bottom: 130 };
+  assert.equal(routeSide(last, [sameLine, { left: 300, top: 22, right: 700, bottom: 52 }], 800), "above");
+  assert.equal(routeSide(last, [{ left: 0, top: 100, right: 90, bottom: 130 }], 800), "below");
 });
 
 test("a wrapped phrase anchors to its first line and threads from its last", () => {
