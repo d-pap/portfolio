@@ -6,7 +6,7 @@ area: coding practice platform
 role: Frontend & full-stack development
 period: 2024 – 2025
 context: University of Michigan–Dearborn
-stack: React, MUI, AWS Lambda, API Gateway, MongoDB, Judge0
+stack: React, AWS Lambda, API Gateway, MongoDB, OpenAI, Judge0
 status: Completed student project
 repository: https://github.com/d-pap/codecoach
 publishedAt: "2024-08-20"
@@ -21,18 +21,41 @@ hero:
 
 Two classmates and I built Code Coach as our senior design project for the University of Michigan–Dearborn ACM chapter. It brings contest problems, an in-browser editor, code execution, and AI help into one place. I worked on the interface and the application flows that connect it to the backend.
 
-<Figure src="/projects/cc-home-screen.webp" alt="Code Coach practice and interview preparation home page" width={1440} height={930} caption="practice home" />
+<Figure
+  src="/projects/cc-home-screen.webp"
+  alt="Code Coach practice and interview preparation home page"
+  width={1440}
+  height={930}
+/>
 
 ## the workspace
 
 Students browse ICPC and interview practice problems, write and run a solution, and ask for help next to their code. The assistant receives the problem and the student's solution, so its feedback has context. We also built an interview-preparation area with a resume builder.
 
-<Figure src="/projects/cc-compiler.webp" alt="The problem-solving workspace with a code editor" width={1440} height={930} caption="the workspace" />
+<Figure
+  src="/projects/cc-compiler.webp"
+  alt="The problem-solving workspace with a code editor"
+  width={1440}
+  height={930}
+  caption="the workspace"
+/>
 
-<Figure src="/projects/cc-aichat.webp" alt="AI help next to the coding problem" width={1440} height={930} caption="help with context from the problem and the code" />
+<Figure
+  src="/projects/cc-aichat.webp"
+  alt="AI help next to the coding problem"
+  width={1440}
+  height={930}
+  caption="help with context from the problem and the code"
+/>
 
-<Figure src="/projects/cc-resume-screen.webp" alt="The Code Coach resume builder" width={1440} height={930} caption="resume builder" />
+<Figure
+  src="/projects/cc-resume-screen.webp"
+  alt="The Code Coach resume builder"
+  width={1440}
+  height={930}
+  caption="resume builder"
+/>
 
 ## implementation
 
-The frontend uses React and MUI. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 runs the code. The AI help uses the university's U-M Maizey service.
+The frontend uses React. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 runs the code. The AI help uses OpenAI API via the university's UMGPT service.
