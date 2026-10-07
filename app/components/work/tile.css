@@ -9,7 +9,8 @@
 .tile-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); pointer-events: none; }
 .tile-media.is-main { view-transition-name: var(--vt); }
 .tile-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-.tile-diagram { position: absolute; inset: 0; display: grid; place-items: center; padding: 8%; container-type: inline-size; }
+/* A definite row lets the diagram's max-height apply, so a tall diagram letterboxes instead of running off the tile. */
+.tile-diagram { position: absolute; inset: 0; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 8%; container-type: inline-size; }
 .tile-diagram > * { width: 100%; max-width: 300px; max-height: 100%; }
 /* Small tiles show the first two checks so the text stays at its normal size. */
 @container (max-width: 360px) {
