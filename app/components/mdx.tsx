@@ -3,6 +3,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { slugify } from "app/lib/headings";
 import { Figure } from "./case/figure";
 import { EvalChecks } from "./evidence/eval-checks";
+import { MemoryDiagram } from "./evidence/memory-diagram";
+import { PlatformDiagram } from "./evidence/platform-diagram";
 import { RoutingDiagram } from "./evidence/routing-diagram";
 
 function MdxLink({ href = "", children, ...props }: ComponentProps<"a">) {
@@ -28,6 +30,8 @@ const components = {
   Figure,
   RoutingDiagram,
   EvalChecks,
+  PlatformDiagram,
+  MemoryDiagram,
 };
 
 export function CustomMDX({ source }: { source: string }) {

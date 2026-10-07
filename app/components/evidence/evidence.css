@@ -1,10 +1,10 @@
-.routing { width: 100%; height: auto; overflow: visible; }
-.routing text { font: 12px var(--font-mono); fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
-.routing .r-sub { font-size: 11px; fill: var(--muted); }
-.routing .r-box { fill: var(--paper); stroke: var(--line); stroke-width: 1; }
-.routing .r-box-acc { stroke: var(--accent); }
-.routing .r-line { fill: none; stroke: var(--faint); stroke-width: 1.2; }
-.routing .r-acc { fill: none; stroke: var(--accent); stroke-width: 1.4; }
+.diagram { width: 100%; height: auto; overflow: visible; }
+.diagram text { font: 12px var(--font-mono); fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+.diagram .r-sub { font-size: 11px; fill: var(--muted); }
+.diagram .r-box { fill: var(--paper); stroke: var(--line); stroke-width: 1; }
+.diagram .r-box-acc { stroke: var(--accent); }
+.diagram .r-line { fill: none; stroke: var(--faint); stroke-width: 1.2; }
+.diagram .r-acc { fill: none; stroke: var(--accent); stroke-width: 1.4; }
 
 .checks { display: grid; width: 100%; }
 .check { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-top: 1px solid var(--line); }

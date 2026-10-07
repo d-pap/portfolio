@@ -3,7 +3,7 @@ import "./evidence.css";
 export function RoutingDiagram() {
   return (
     <svg
-      className="routing"
+      className="diagram"
       viewBox="0 0 300 294"
       role="img"
       aria-label="How Sprout handles a message. Each message is classified first. Messages that need evidence go through search, then reranking, and the reply cites its sources. Conversational messages are answered from the conversation."
