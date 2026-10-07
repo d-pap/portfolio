@@ -1,8 +1,8 @@
 ---
 title: The Stitches Doll Project
-shortTitle: Stitches Doll Project
+shortTitle: Stitches
 summary: A new website for a nonprofit's archive of handmade dolls
-area: website
+area: nonprofit archive site
 role: Design & development
 period: 2026 – present
 context: Freelance
@@ -12,28 +12,35 @@ publishedAt: "2026-07-14"
 index: main
 order: 3
 kind: project
-tile:
-  shape: "4:3"
 hero:
   type: screen
   frames:
     - /projects/stitches-home.webp
   caption: homepage, development preview · september 2026
+tile:
+  shape: "3:2"
+  media: { kind: cover, src: /projects/stitches-home.webp }
+sections:
+  - id: collection
+    title: Stitches Collection
+    label: information architecture
+    shape: "4:3"
+    media: { kind: cover, src: /projects/stitches-gallery.webp }
 ---
 
-The Stitches Doll Project began in 1999 as a way for women affected by HIV/AIDS to tell their stories through handmade dolls. The collection grew to include experiences of violence, bleeding disorders, and other challenges. I'm rebuilding the website for the project's founder, Kathy: the design, the development, and the migration from the old site.
+The Stitches Doll Project began in 1999 as a way for women affected by HIV/AIDS to tell their stories through handmade dolls. The collection grew to include experiences of violence, bleeding disorders, and other challenges. I'm redesigning and rebuilding the project's website for its founder, Kathy.
 
-## rebuilding the archive
+## the redesign
 
-The original site was a set of static HTML pages. I wrote a Python pipeline to extract the doll records into structured content with schema validation. Matching photographs to the right dolls and separating shared entries took review rather than parsing, so I built local tools for those decisions.
+The visual direction is warm and handmade, and the photographs of the dolls do most of the work. The homepage opens with the dolls and leads to their stories, the project's history, and ways to get involved.
 
 <Figure src="/projects/stitches-before.webp" alt="The original Stitches homepage" width={1440} height={1080} caption="before · the original site, archived" />
 
 <Figure src="/projects/stitches-home.webp" alt="The redesigned Stitches homepage" width={1440} height={1080} caption="after · homepage, development preview, september 2026" />
 
-## designing for reading
+## collection
 
-The stories are the reason to visit. The gallery filters the collection and shows stories in rows, with longer stories expanding in place. Each doll also has its own page. The visual direction is warm and handmade, and the dolls' photographs do most of the work.
+The stories are the reason to visit, so the site is organized around the collection. I reworked the sitemap so events are groupings within the gallery instead of pages of their own. The gallery filters the collection and lists stories in rows, longer stories expand in place, and every doll has its own page.
 
 <Figure src="/projects/stitches-gallery.webp" alt="The Stitches gallery with collection filters and stories in rows" width={1440} height={1080} caption="reading a collection · development preview" />
 
@@ -43,4 +50,4 @@ The stories are the reason to visit. The gallery filters the collection and show
 
 ## implementation
 
-Astro builds the site from typed content collections. Pages CMS gives Kathy an editing interface, and Cloudflare Pages hosts it. Redirects from the old pages are mapped for the move. The rebuild is in development; the public site hasn't been replaced yet.
+Astro builds the site from typed content collections. Pages CMS gives Kathy an editing interface, and Cloudflare Pages hosts it. The rebuild is in development, and the public site hasn't been replaced yet.

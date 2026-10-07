@@ -3,7 +3,7 @@ title: Code Coach
 shortTitle: Code Coach
 summary: A coding practice platform for a university ACM chapter
 area: coding practice platform
-role: Frontend & full-stack development
+role: Design & full-stack development
 period: 2024 – 2025
 context: University of Michigan–Dearborn
 stack: React, AWS Lambda, API Gateway, MongoDB, OpenAI, Judge0
@@ -13,26 +13,27 @@ publishedAt: "2024-08-20"
 index: main
 order: 4
 kind: project
-tile:
-  shape: "4:3"
 hero:
-  type: logo
+  type: screen
   frames:
-    - /projects/codecoach-logo.svg
+    - /projects/cc-home-screen.webp
+  caption: practice home · 2024
+tile:
+  shape: "3:2"
+  media: { kind: cover, src: /projects/cc-home-screen.webp }
+sections:
+  - id: brand-identity
+    title: Code Coach Brand Identity
+    label: brand identity
+    shape: "1:1"
+    media: { kind: logo, src: /projects/codecoach-logo.svg }
 ---
 
-Two classmates and I built Code Coach as our senior design project for the University of Michigan–Dearborn ACM chapter. It brings contest problems, an in-browser editor, code execution, and AI help into one place. I worked on the interface and the application flows that connect it to the backend.
-
-<Figure
-  src="/projects/cc-home-screen.webp"
-  alt="Code Coach practice and interview preparation home page"
-  width={1440}
-  height={930}
-/>
+Code Coach is a practice platform for the University of Michigan–Dearborn ACM chapter. Students prepare for ICPC contests and technical interviews with practice problems, an in-browser editor, code execution, and an AI assistant in one place. It was a three-person senior design project. I designed it, made the logo, and built most of the frontend and backend.
 
 ## the workspace
 
-Students browse ICPC and interview practice problems, write and run a solution, and ask for help next to their code. The assistant receives the problem and the student's solution, so its feedback has context. We also built an interview-preparation area with a resume builder.
+Students browse ICPC problems by difficulty, year, and region, or FAANG-style interview questions by category. The problem page puts the statement, an editor, and the assistant side by side. Code runs through Judge0, and the assistant receives the problem and the student's current solution, so its hints are about their code. The platform also has an interview-prep area with a resume builder, discussion forums, and course pages where instructors group problems for a class.
 
 <Figure
   src="/projects/cc-compiler.webp"
@@ -58,6 +59,14 @@ Students browse ICPC and interview practice problems, write and run a solution, 
   caption="resume builder"
 />
 
+## brand identity
+
+I made the Code Coach logo: a mark of two angle brackets around a dot, set beside a lowercase wordmark. The interface uses a minimal palette and works from phones to desktops.
+
+<Figure caption="the logo">
+  <img src="/projects/codecoach-logo.svg" alt="The Code Coach logo: two angle brackets around a dot, beside the lowercase wordmark codecoach" />
+</Figure>
+
 ## implementation
 
-The frontend uses React. API Gateway routes requests to AWS Lambda, MongoDB stores application data, and Judge0 runs the code. The AI help uses OpenAI API via the university's UMGPT service.
+The frontend is React, deployed to Netlify from GitHub. The backend is serverless: API Gateway routes requests to Lambda functions, and MongoDB Atlas stores users, problems, submissions, and courses through Mongoose. Judge0 runs submitted code in a sandbox and returns its output, runtime, and memory use. The AI help uses OpenAI API via the university's UMGPT service.

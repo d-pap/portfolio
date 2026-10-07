@@ -1,0 +1,81 @@
+---
+title: Sprout
+shortTitle: Sprout
+summary: An AI health coach inside RENEW
+area: ai health coach
+role: System design & AI engineering
+period: 2025 – present
+context: Michigan Medicine
+stack: Python, FastAPI, LangGraph, PostgreSQL, pgvector, DeepEval, promptfoo
+status: Ongoing research & development
+availability: code is private to Michigan Medicine
+publishedAt: "2026-07-15"
+index: main
+order: 2
+kind: project
+hero:
+  type: phones
+  frames:
+    - /projects/sprout-chat.webp
+  caption: the coach's first screen · april 2026
+tile:
+  shape: "4:5"
+sections:
+  - id: rag-pipeline
+    title: Sprout RAG Pipeline
+    label: retrieval · llm systems
+    shape: "4:3"
+    media: { kind: diagram, name: routing }
+  - id: long-term-memory
+    title: Sprout Long-Term Memory
+    label: llm systems
+    shape: "4:3"
+    media: { kind: diagram, name: memory }
+  - id: evals
+    title: Sprout Evals
+    label: llm evaluation
+    shape: "16:9"
+    media: { kind: diagram, name: eval-checks }
+---
+
+Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
+
+## system design
+
+Sprout is a FastAPI service. A LangGraph graph runs each turn of a conversation, PostgreSQL with pgvector stores the corpus and the conversation memory, and every model call goes through the university's UM-GPT gateway. Each job in the graph has its own model setting with a fallback: classifying messages, reranking sources, writing background summaries, and periodic deep review. One job can move to a different model without changing the others.
+
+Every capability is a switch. A request lists the features it uses: retrieval, clinical context, memory, and app context. A study team turns on what its protocol calls for, and studies with different protocols share one service.
+
+## rag pipeline
+
+A classifier reads each message first. It decides whether the message needs evidence and, when it does, rewrites it into a search query. Conversational turns skip retrieval.
+
+Search is hybrid. Vector search matches the meaning of a question, keyword search matches clinical terms, and reciprocal rank fusion merges the two lists. A patient asking "what helps with cold hands?" and a clinician asking about first-line management of Raynaud's phenomenon reach the same passages. Each chunk is embedded with its document's title, because most of the corpus is journal articles with generic section headings.
+
+A small model then grades every candidate from 0 to 10 against the original question. This is the relevance gate. Fused rank scores can't be cut off at a meaningful threshold, and a grade can, so chunks below 4 are dropped. When nothing clears the gate, the coach says its sources don't cover the question and suggests asking the care team. The reranker runs on the same gateway as every other model, and its model is a setting, so a dedicated cross-encoder can take its place without code changes.
+
+Replies cite their sources, and medical facts have to come from the retrieved text.
+
+<Figure caption="how a message moves through sprout">
+  <RoutingDiagram />
+</Figure>
+
+## long-term memory
+
+The coach keeps context between conversations in layers. Each conversation is condensed into a dated summary of what the person reported and what helped. Patterns the coach infers from those summaries go into a ledger that tracks each one's confidence and age, merges duplicates, and retires stale entries. A periodic deep review revisits the whole ledger. The clinical summary from the study's assessments is the baseline: self-reports describe how someone is doing now, and they don't override it.
+
+I'm testing how well this memory handles corrections and whether the patterns it infers improve later replies.
+
+<Figure caption="what the coach remembers">
+  <MemoryDiagram />
+</Figure>
+
+## evals
+
+Each evaluation starts from a question, such as whether retrieval finds useful sources or whether a correction carries into the next conversation. The harness runs fixed conversation cases and scores them with a judge model that is separate from the chat model. Ablation arms turn off one source of context at a time, and memory designs are compared in a factorial setup, so each factor's effect can be read on its own. In memory bakeoffs, every arm replays the same canonical transcript, which removes the variance of generating a fresh conversation for each arm. Each run prints its estimated cost before it starts.
+
+I read the saved responses alongside the scores, because an automated judge can miss problems. The suites run on DeepEval and promptfoo.
+
+<Figure caption="what the evaluations check">
+  <EvalChecks />
+</Figure>

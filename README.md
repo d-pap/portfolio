@@ -17,7 +17,8 @@ Fragment Mono is downloaded during the build and served locally. `pnpm dev` and 
 ## Content
 
 - `content/home.mdx`: the about paragraph on the home page. External markdown links open in a new tab and get the same underline as the links list beside it.
-- `content/<slug>.mdx`: one entry per project or role. YAML frontmatter is validated at build time (`app/lib/entries.ts`); errors name the file. `index: main` entries need a `hero` (`phones`, `screen`, or `logo` for a single centered SVG) and appear as wide figures on the home page; `index: earlier` entries are text rows; `hidden` entries only have a page. Text before the first `##` is the two-column lede. Use `<Figure>` for media.
+- `content/<slug>.mdx`: one entry per product, project, or role. YAML frontmatter is validated at build time (`app/lib/entries.ts`); errors name the file. `index: main` entries need a `hero` (`phones`, `screen`, or `logo`) and a `tile` (`shape`, optional `media`) and appear in the home grid; `sections` adds feature tiles whose `id` must match a `## ` heading slug in the body (`## rag pipeline` → `rag-pipeline`). Shapes: `4:5`, `1:1`, `4:3`, `3:2`, `16:9`. Tile media: `cover`, `phones`, `logo`, or `diagram` (`routing`, `eval-checks`, `platform`, `memory`). Tile titles are 30 characters at most. `index: earlier` entries are text rows; `hidden` entries only have a page. Text before the first `##` is the two-column lede. Use `<Figure>` for media.
+- `content/grid.yml`: places every tile in three hand-arranged columns. `npm test` checks the spacing rules on it (`app/lib/grid.content.test.ts`).
 - `content/reading.json`: `[{ "title", "author", "isbn"?, "year"?, "notes"? }]`. Covers come from Open Library by ISBN. With an empty list, `/reading` is hidden.
 - Recordings: add `recording: /projects/<name>.mp4` under `hero` (H.264, about 2–3 MB, 1440px wide). The first frame image is the poster.
 
