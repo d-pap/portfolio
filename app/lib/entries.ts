@@ -2,7 +2,8 @@ import { parse as parseYaml } from "yaml";
 
 export type EntryIndex = "main" | "earlier" | "hidden";
 export type EntryKind = "project" | "role" | "analysis";
-export type Hero = { type: "phones" | "screen"; frames: string[]; recording?: string; caption?: string };
+/** A logo hero centers one image (usually an SVG) on the white stage, like a cover. */
+export type Hero = { type: "phones" | "screen" | "logo"; frames: string[]; recording?: string; caption?: string };
 export type Entry = {
   slug: string;
   title: string;
@@ -21,14 +22,11 @@ export type Entry = {
   index: EntryIndex;
   order: number;
   kind: EntryKind;
-  tint: string;
-  tintDark: string;
   hero?: Hero;
   body: string;
 };
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
-const HEX = /^#[0-9a-f]{6}$/i;
 const INDEXES = ["main", "earlier", "hidden"] as const;
 const KINDS = ["project", "role", "analysis"] as const;
 
@@ -63,11 +61,6 @@ export function parseEntry(raw: string, slug: string): Entry {
     if (!(allowed as readonly string[]).includes(value)) throw new Error(`${where}: "${key}" must be one of ${allowed.join(", ")}`);
     return value as T;
   };
-  const color = (key: string, fallback: string): string => {
-    const value = opt(key) ?? fallback;
-    if (!HEX.test(value)) throw new Error(`${where}: "${key}" must be a #rrggbb color`);
-    return value;
-  };
 
   const order = d.order === undefined ? 99 : Number(d.order);
   if (!Number.isFinite(order)) throw new Error(`${where}: "order" must be a number`);
@@ -94,8 +87,6 @@ export function parseEntry(raw: string, slug: string): Entry {
     index,
     order,
     kind: oneOf("kind", KINDS, "project"),
-    tint: color("tint", "#ecebe5"),
-    tintDark: color("tintDark", "#1f1e1c"),
     hero,
     body: match[2].trim(),
   };
@@ -105,7 +96,7 @@ function parseHero(value: unknown, where: string): Hero | undefined {
   if (value === undefined || value === null) return undefined;
   if (typeof value !== "object" || Array.isArray(value)) throw new Error(`${where}: "hero" must be a mapping`);
   const h = value as Record<string, unknown>;
-  if (h.type !== "phones" && h.type !== "screen") throw new Error(`${where}: hero.type must be "phones" or "screen"`);
+  if (h.type !== "phones" && h.type !== "screen" && h.type !== "logo") throw new Error(`${where}: hero.type must be "phones", "screen", or "logo"`);
   const frames = h.frames;
   if (!Array.isArray(frames) || frames.some((frame) => typeof frame !== "string" || !frame.startsWith("/"))) {
     throw new Error(`${where}: hero.frames must be a list of /public paths`);
@@ -115,6 +106,7 @@ function parseHero(value: unknown, where: string): Hero | undefined {
   if (h.recording !== undefined && (typeof h.recording !== "string" || !h.recording.startsWith("/") || !h.recording.endsWith(".mp4"))) {
     throw new Error(`${where}: hero.recording must be an .mp4 path`);
   }
+  if (h.recording !== undefined && h.type === "logo") throw new Error(`${where}: hero.recording needs a "phones" or "screen" hero`);
   if (h.caption !== undefined && typeof h.caption !== "string") throw new Error(`${where}: hero.caption must be text`);
   return { type: h.type, frames: frames as string[], recording: h.recording as string | undefined, caption: h.caption as string | undefined };
 }

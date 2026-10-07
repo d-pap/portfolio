@@ -1,4 +1,4 @@
-import { HomeIntro } from "app/components/cited-intro/home-intro";
+import { About } from "app/components/about";
 import { WorkFigure, type WorkItem } from "app/components/work/work-figure";
 import { getIndex } from "app/lib/content";
 import type { Entry } from "app/lib/entries";
@@ -6,15 +6,15 @@ import "./home.css";
 
 function toWorkItem(entry: Entry): WorkItem[] {
   if (!entry.hero) return [];
-  const { slug, shortTitle, summary, role, context, period, tint, tintDark, hero } = entry;
-  return [{ slug, shortTitle, summary, role, context, period, tint, tintDark, hero }];
+  const { slug, shortTitle, summary, role, context, period, hero } = entry;
+  return [{ slug, shortTitle, summary, role, context, period, hero }];
 }
 
 export default function Home() {
   const { main, earlier } = getIndex();
   return (
     <div className="home page">
-      <HomeIntro />
+      <About />
 
       <section aria-labelledby="work-heading">
         <h2 id="work-heading" className="label home-label">work</h2>

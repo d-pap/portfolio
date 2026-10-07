@@ -1,1 +1,7 @@
-[]
+[
+  { "title": "The Proof in the Code", "author": "Kevin Hartnett", "isbn": "9780374620059" },
+  { "title": "The Way of Kings", "author": "Brandon Sanderson", "isbn": "9780765365279" },
+  { "title": "The Blade Itself", "author": "Joe Abercrombie", "isbn": "9781591025948" },
+  { "title": "A Short History of Nearly Everything", "author": "Bill Bryson", "isbn": "9780767908177" },
+  { "title": "The Common Good", "author": "Robert Reich", "isbn": "9780525436379" }
+]

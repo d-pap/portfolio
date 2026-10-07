@@ -15,8 +15,6 @@ publishedAt: "2026-07-15"
 index: main
 order: 2
 kind: project
-tint: "#e2e9f4"
-tintDark: "#1b2029"
 hero:
   type: phones
   frames:
@@ -48,13 +46,11 @@ test("parses a complete entry", () => {
 });
 
 test("fills optional fields with defaults", () => {
-  const front = FRONT.replace("shortTitle: Sprout\n", "").replace("order: 2\n", "").replace("kind: project\n", "").replace('tint: "#e2e9f4"\n', "").replace('tintDark: "#1b2029"\n', "");
+  const front = FRONT.replace("shortTitle: Sprout\n", "").replace("order: 2\n", "").replace("kind: project\n", "");
   const entry = parseEntry(file(front), "rag-api");
   assert.equal(entry.shortTitle, "Sprout");
   assert.equal(entry.order, 99);
   assert.equal(entry.kind, "project");
-  assert.equal(entry.tint, "#ecebe5");
-  assert.equal(entry.tintDark, "#1f1e1c");
 });
 
 test("numbers in text fields become strings", () => {
@@ -85,7 +81,7 @@ test("hero frames are checked against the hero type", () => {
   const relative = FRONT.replace("/projects/sprout-chat.webp", "projects/sprout-chat.webp");
   assert.throws(() => parseEntry(file(relative), "x"), /hero\.frames must be a list of \/public paths/);
   const badType = FRONT.replace("type: phones", "type: tablet");
-  assert.throws(() => parseEntry(file(badType), "x"), /hero\.type must be "phones" or "screen"/);
+  assert.throws(() => parseEntry(file(badType), "x"), /hero\.type must be "phones", "screen", or "logo"/);
 });
 
 test("a recording must be an mp4", () => {
@@ -93,8 +89,13 @@ test("a recording must be an mp4", () => {
   assert.throws(() => parseEntry(file(front), "x"), /hero\.recording must be an \.mp4 path/);
 });
 
-test("tints must be #rrggbb", () => {
-  assert.throws(() => parseEntry(file(FRONT.replace('tint: "#e2e9f4"', 'tint: "blue"')), "x"), /"tint" must be a #rrggbb color/);
+test("a logo hero takes one image and no recording", () => {
+  const logo = FRONT.replace("type: phones", "type: logo").replace("/projects/sprout-chat.webp", "/projects/sprout-logo.svg");
+  assert.deepEqual(parseEntry(file(logo), "x").hero, { type: "logo", frames: ["/projects/sprout-logo.svg"], recording: undefined, caption: "the coach's first screen · april 2026" });
+  const two = logo.replace("    - /projects/sprout-logo.svg\n", "    - /a.svg\n    - /b.svg\n");
+  assert.throws(() => parseEntry(file(two), "x"), /hero\.frames needs 1–1 images for type "logo"/);
+  const recorded = logo.replace("  caption:", "  recording: /projects/sprout.mp4\n  caption:");
+  assert.throws(() => parseEntry(file(recorded), "x"), /hero\.recording needs a "phones" or "screen" hero/);
 });
 
 test("broken files fail with the file name", () => {

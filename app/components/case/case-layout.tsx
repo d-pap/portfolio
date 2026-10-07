@@ -16,7 +16,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
     ["when", entry.period],
   ];
   if (entry.stack) facts.push([entry.kind === "role" ? "tools" : "stack", entry.stack]);
-  const style = { "--tint": entry.tint, "--tint-dark": entry.tintDark, "--vt": `entry-${entry.slug}` } as CSSProperties;
+  const style = { "--vt": `entry-${entry.slug}` } as CSSProperties;
 
   return (
     <article className="case page" style={style}>

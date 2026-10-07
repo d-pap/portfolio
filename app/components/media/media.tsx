@@ -9,6 +9,14 @@ type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recordi
 // must be position: relative with a definite size.
 // A recording, when present, plays in the first device; its first frame is the poster.
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
+  if (hero.type === "logo") {
+    // SVGs skip the image optimizer, which would otherwise reject them.
+    return (
+      <div className="media">
+        <div className="media-logo"><Image src={hero.frames[0]} alt={label ?? ""} fill unoptimized priority={priority} /></div>
+      </div>
+    );
+  }
   if (hero.type === "screen") {
     return (
       <div className="media">

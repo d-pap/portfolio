@@ -5,10 +5,9 @@
   aspect-ratio: 2.1 / 1;
   border-radius: 6px;
   overflow: hidden;
-  background: var(--tint);
+  background: var(--stage);
   view-transition-name: var(--vt);
 }
-:root.dark .work-figure { background: var(--tint-dark); }
 .work-below { display: grid; grid-template-columns: minmax(0, 1fr) var(--margin-w); column-gap: var(--margin-gap); margin-top: 18px; }
 .work-name {
   display: inline;

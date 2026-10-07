@@ -6,13 +6,13 @@ import { useRecordingPlayback } from "app/components/media/use-recording-playbac
 import type { Entry, Hero } from "app/lib/entries";
 import "./work.css";
 
-export type WorkItem = Pick<Entry, "slug" | "shortTitle" | "summary" | "role" | "context" | "period" | "tint" | "tintDark"> & { hero: Hero };
+export type WorkItem = Pick<Entry, "slug" | "shortTitle" | "summary" | "role" | "context" | "period"> & { hero: Hero };
 
 export function WorkFigure({ item, priority }: { item: WorkItem; priority: boolean }) {
   const root = useRef<HTMLElement>(null);
   const { playing, controls, toggle, hover } = useRecordingPlayback(root, Boolean(item.hero.recording));
 
-  const style = { "--tint": item.tint, "--tint-dark": item.tintDark, "--vt": `entry-${item.slug}` } as CSSProperties;
+  const style = { "--vt": `entry-${item.slug}` } as CSSProperties;
   const sizes = item.hero.type === "phones" ? "(max-width: 899px) 30vw, 18vw" : "(max-width: 899px) 85vw, 56vw";
 
   return (
