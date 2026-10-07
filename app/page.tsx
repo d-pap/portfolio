@@ -1,26 +1,17 @@
 import { About } from "app/components/about";
-import { WorkFigure, type WorkItem } from "app/components/work/work-figure";
-import { getIndex } from "app/lib/content";
-import type { Entry } from "app/lib/entries";
+import { WorkGrid } from "app/components/work/work-grid";
+import { getGrid, getIndex } from "app/lib/content";
 import "./home.css";
 
-function toWorkItem(entry: Entry): WorkItem[] {
-  if (!entry.hero) return [];
-  const { slug, shortTitle, summary, role, context, period, hero } = entry;
-  return [{ slug, shortTitle, summary, role, context, period, hero }];
-}
-
 export default function Home() {
-  const { main, earlier } = getIndex();
+  const { earlier } = getIndex();
   return (
     <div className="home page">
       <About />
 
       <section aria-labelledby="work-heading">
         <h2 id="work-heading" className="label home-label">work</h2>
-        <div className="home-work-list">
-          {main.flatMap(toWorkItem).map((item, i) => <WorkFigure key={item.slug} item={item} priority={i === 0} />)}
-        </div>
+        <WorkGrid grid={getGrid()} />
       </section>
 
       {earlier.length > 0 && (

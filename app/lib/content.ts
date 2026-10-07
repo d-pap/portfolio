@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseReading, type Book } from "./reading";
 import { parseEntry, sortEntries, type Entry } from "./entries";
+import { parseGridFile, resolveGrid, type Grid } from "./grid";
 
 const CONTENT = path.join(process.cwd(), "content");
 
@@ -28,4 +29,8 @@ export function getReading(): Book[] {
   const file = path.join(CONTENT, "reading.json");
   if (!fs.existsSync(file)) return [];
   return parseReading(fs.readFileSync(file, "utf8"));
+}
+
+export function getGrid(): Grid {
+  return resolveGrid(parseGridFile(fs.readFileSync(path.join(CONTENT, "grid.yml"), "utf8")), getEntries());
 }

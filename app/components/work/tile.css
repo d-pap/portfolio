@@ -1,0 +1,40 @@
+.work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.work-col { display: grid; gap: 30px; }
+.work-list { display: none; }
+
+.tile { position: relative; }
+.tile-frame { position: relative; }
+.tile-media { position: relative; border-radius: 6px; overflow: hidden; isolation: isolate; }
+/* A hairline keeps white tiles' edges visible on the light page. */
+.tile-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); pointer-events: none; }
+.tile-media.is-main { view-transition-name: var(--vt); }
+.tile-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.tile-diagram { position: absolute; inset: 0; display: grid; place-items: center; padding: 8%; container-type: inline-size; }
+.tile-diagram > * { width: 100%; max-width: 300px; max-height: 100%; }
+/* Small tiles show the first two checks so the text stays at its normal size. */
+@container (max-width: 360px) {
+  .tile-diagram .check:nth-child(n + 3) { display: none; }
+}
+
+/* Caption: 12px gap + 21px title + 1px + 18px label = 52px; with the 30px column gap that is CAPTION_GAP (82) in app/lib/grid.ts. */
+/* The title is a block so its line box is exactly 21px; an inline-block would pick up the surrounding text's descent. */
+.tile-title { margin-top: 12px; font-size: var(--size-base); font-weight: 400; line-height: 21px; }
+.tile-link {
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 0% 1.5px;
+  transition: background-size 320ms var(--ease-out);
+}
+.tile:hover .tile-link, .tile:focus-within .tile-link { background-size: 100% 1.5px; }
+.tile-label { margin-top: 1px; line-height: 18px; }
+.tile-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.tile-link:focus-visible { outline: none; }
+.tile:has(.tile-link:focus-visible) .tile-media { outline: 2px solid var(--accent-ink); outline-offset: 4px; }
+.tile .media-play { z-index: 2; }
+
+@media (max-width: 899px) {
+  .work-grid { display: none; }
+  .work-list { display: grid; gap: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile-media.is-main { view-transition-name: none; }
+  .tile-link { transition: none; }
+}
