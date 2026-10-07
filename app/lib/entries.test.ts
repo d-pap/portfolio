@@ -15,6 +15,8 @@ publishedAt: "2026-07-15"
 index: main
 order: 2
 kind: project
+tile:
+  shape: "4:5"
 hero:
   type: phones
   frames:
@@ -102,6 +104,64 @@ test("broken files fail with the file name", () => {
   assert.throws(() => parseEntry("no frontmatter here", "x"), /content\/x\.mdx: missing frontmatter block/);
   assert.throws(() => parseEntry("---\ntitle: [unclosed\n---\nbody", "x"), /content\/x\.mdx: invalid YAML/);
   assert.throws(() => parseEntry("---\n- just\n- a list\n---\nbody", "x"), /content\/x\.mdx: frontmatter must be a mapping/);
+});
+
+const TILED = FRONT.replace(
+  'tile:\n  shape: "4:5"\n',
+  'tile:\n  shape: "4:5"\nsections:\n  - id: the-system\n    title: Sprout System\n    label: llm systems\n    shape: "16:9"\n    media: { kind: diagram, name: routing }\n',
+);
+
+test("parses the main tile and section tiles", () => {
+  const entry = parseEntry(file(TILED), "sprout");
+  assert.deepEqual(entry.tile, { shape: "4:5", media: undefined });
+  assert.deepEqual(entry.sections, [
+    { id: "the-system", title: "Sprout System", label: "llm systems", shape: "16:9", media: { kind: "diagram", name: "routing" } },
+  ]);
+});
+
+test("entries without sections get an empty list", () => {
+  assert.deepEqual(parseEntry(file(), "sprout").sections, []);
+});
+
+test("a main entry needs a tile", () => {
+  assert.throws(() => parseEntry(file(FRONT.replace('tile:\n  shape: "4:5"\n', "")), "x"), /content\/x\.mdx: main entries need a "tile"/);
+});
+
+test("tile shapes come from the fixed set", () => {
+  assert.throws(() => parseEntry(file(FRONT.replace('shape: "4:5"', 'shape: "2:1"')), "x"), /tile\.shape must be one of 4:5, 1:1, 4:3, 3:2, 16:9/);
+});
+
+test("a section needs a matching heading", () => {
+  assert.throws(
+    () => parseEntry(file(TILED.replace("id: the-system", "id: evals")), "x"),
+    /sections\[0\]\.id "evals" has no matching "## " heading \(headings: the-system\)/,
+  );
+});
+
+test("section ids and heading ids must be unique", () => {
+  const twice = TILED.replace("sections:\n", 'sections:\n  - id: the-system\n    title: Again\n    label: l\n    shape: "1:1"\n    media: { kind: logo, src: /a.svg }\n');
+  assert.throws(() => parseEntry(file(twice), "x"), /sections\[1\]\.id "the-system" appears twice/);
+  assert.throws(() => parseEntry(`---\n${FRONT}---\n## a b\n\n## a-b\n`, "x"), /two "## " headings share the id "a-b"/);
+});
+
+test("tile titles fit on one line", () => {
+  assert.throws(() => parseEntry(file(TILED.replace("title: Sprout System", `title: ${"x".repeat(31)}`)), "x"), /sections\[0\]\.title must be at most 30 characters/);
+  assert.throws(() => parseEntry(file(FRONT.replace("shortTitle: Sprout", `shortTitle: ${"x".repeat(31)}`)), "x"), /"shortTitle" is the tile title and must be at most 30 characters/);
+});
+
+test("tile media is checked by kind", () => {
+  const media = (yaml: string) => TILED.replace("media: { kind: diagram, name: routing }", `media: ${yaml}`);
+  assert.throws(() => parseEntry(file(media("{ kind: diagram, name: flowchart }")), "x"), /media\.name must be one of routing, eval-checks, platform, memory/);
+  assert.throws(() => parseEntry(file(media("{ kind: cover, src: projects/a.webp }")), "x"), /media\.src must be a \/public path/);
+  assert.throws(() => parseEntry(file(media("{ kind: cover, src: /a.webp, recording: /a.mov }")), "x"), /media\.recording must be an \.mp4 path/);
+  assert.throws(() => parseEntry(file(media("{ kind: phones, frames: [/a.webp, /b.webp, /c.webp] }")), "x"), /media\.frames needs 1–2 \/public paths/);
+  assert.throws(() => parseEntry(file(media("{ kind: video, src: /a.mp4 }")), "x"), /media\.kind must be one of cover, phones, logo, diagram/);
+  assert.deepEqual(parseEntry(file(media("{ kind: cover, src: /a.webp, position: center 20% }")), "x").sections[0].media, {
+    kind: "cover",
+    src: "/a.webp",
+    position: "center 20%",
+    recording: undefined,
+  });
 });
 
 test("sortEntries splits by index and orders by order, then slug", () => {
