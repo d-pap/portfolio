@@ -17,6 +17,27 @@
 .case-subtitle { margin-top: 4px; }
 .case-links { margin-top: 20px; display: grid; gap: 4px; font-size: 14px; }
 .case-links-note { color: var(--muted); }
+.case-summary { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.45; max-width: 32ch; }
+.case-sections { margin-top: 28px; }
+.case-sections ul { display: grid; gap: 4px; font-size: 14px; }
+.case-sections a { position: relative; display: inline-block; padding-left: 14px; color: var(--muted); transition: color 160ms; }
+.case-sections a:hover { color: var(--ink); }
+.case-sections a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .72em;
+  width: 8px;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.case-sections a.is-active { color: var(--ink); }
+.case-sections a.is-active::before { transform: scaleX(1); }
+.case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 24px); }
+.case-context { display: none; }
 
 .case-lede { font-size: var(--size-lede); line-height: 1.55; }
 .case-lede p + p { margin-top: 12px; }
@@ -44,6 +65,31 @@
   .case-lede { column-count: 2; column-gap: 24px; }
 }
 @media (max-width: 899px) {
+  .case-sections { display: none; }
+  .case-context {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 36px;
+    padding: 0 var(--gutter);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity 160ms, transform 200ms var(--ease-out);
+  }
+  .case-context.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+  .case-context-summary { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 36px + 20px); }
   .case-hero-stage { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
   .case-hero-text { height: 40vh; aspect-ratio: auto; }
   .case-hero-caption { position: static; margin-top: 8px; text-align: right; }
@@ -53,5 +99,6 @@
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .case-context, .case-sections a::before { transition: none; }
   .case-hero-stage { view-transition-name: none; }
 }

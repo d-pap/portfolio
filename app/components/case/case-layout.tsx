@@ -2,14 +2,17 @@ import type { CSSProperties } from "react";
 import { Arrow } from "app/components/arrow";
 import { CustomMDX } from "app/components/mdx";
 import { CaseHeroStage } from "app/components/case/case-hero-stage";
+import { ContextBar, SectionNav } from "app/components/case/section-nav";
 import { Media } from "app/components/media/media";
 import { caseLinks, splitLede } from "app/lib/case";
+import { listHeadings } from "app/lib/headings";
 import type { Entry } from "app/lib/entries";
 import "./case.css";
 
 export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
   const { lede, rest } = splitLede(entry.body);
   const { links, note } = caseLinks(entry);
+  const sections = listHeadings(entry.body);
   const facts: [string, string][] = [
     ["role", entry.role],
     ["with", entry.context],
@@ -20,6 +23,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
 
   return (
     <article className="case page" style={style}>
+      <ContextBar title={entry.shortTitle} summary={entry.summary} />
       {entry.hero ? (
         <figure className="case-hero">
           <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} label={entry.shortTitle}>
@@ -36,8 +40,9 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
       )}
 
       <div className="case-body">
-        <div className="case-id">
+        <div className="case-id" data-case-id>
           <h1 className="case-title">{entry.title}</h1>
+          <p className="case-summary">{entry.summary}</p>
           <p className="label case-subtitle">{entry.area} · {entry.context}</p>
           {(links.length > 0 || note) && (
             <ul className="case-links">
@@ -47,9 +52,10 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
               {note && <li className="case-links-note">{note}</li>}
             </ul>
           )}
+          {sections.length > 0 && <SectionNav sections={sections} />}
         </div>
 
-        <div className="case-main">
+        <div className="case-main" id="overview">
           {lede && <div className="case-lede"><CustomMDX source={lede} /></div>}
           <dl className="case-facts">
             {facts.map(([name, value]) => (
