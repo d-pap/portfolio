@@ -1,4 +1,4 @@
-import { socialLinks } from "app/config";
+import { socialLinks, teams } from "app/config";
 import { getHomeSource, getReading } from "app/lib/content";
 import { Arrow } from "./arrow";
 import { CustomMDX } from "./mdx";
@@ -9,9 +9,17 @@ export function About() {
   return (
     <section className="about" aria-labelledby="about-heading">
       <h1 className="visually-hidden">Derek Papierski</h1>
-      <div className="about-text">
-        <h2 id="about-heading" className="label about-label">about</h2>
-        <CustomMDX source={getHomeSource()} />
+      <div className="about-main">
+        <div className="about-text">
+          <h2 id="about-heading" className="label about-label">about</h2>
+          <CustomMDX source={getHomeSource()} />
+        </div>
+        <div className="about-teams">
+          <h2 className="label about-label">teams</h2>
+          <ul>
+            {teams.map((team) => <li key={team}>{team}</li>)}
+          </ul>
+        </div>
       </div>
       <div className="about-links">
         <h2 className="label about-label">links</h2>

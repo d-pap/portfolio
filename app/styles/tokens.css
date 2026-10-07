@@ -22,6 +22,7 @@
   --page-max: 1440px;
   --margin-w: 312px;
   --margin-gap: 88px;
+  --team-w: 220px;
   --header-h: 60px;
 
   --ease-out: cubic-bezier(.22, 1, .36, 1);

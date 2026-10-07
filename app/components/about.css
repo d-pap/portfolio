@@ -6,7 +6,9 @@
 }
 .about-label { margin-bottom: 8px; }
 .about-text p { max-width: 580px; }
-.about-links ul { display: grid; gap: 2px; }
+/* Same nesting as the masthead: teams line up under the role, links under the location. */
+.about-main { display: grid; grid-template-columns: minmax(0, 1fr) var(--team-w); column-gap: 24px; }
+.about-teams ul, .about-links ul { display: grid; gap: 2px; }
 
 /* Links read as links at rest, like the reference; the arrow marks the ones that leave the site. */
 .about a {
@@ -20,5 +22,7 @@
 .about .link-arrow { width: 9px; height: 9px; margin-left: 2px; vertical-align: .45em; color: var(--accent-ink); }
 
 @media (max-width: 899px) {
-  .about { grid-template-columns: 1fr; row-gap: 28px; padding: 28px 0 48px; }
+  .about { grid-template-columns: 1fr 1fr; column-gap: 24px; row-gap: 28px; padding: 28px 0 48px; }
+  .about-main { display: contents; }
+  .about-text { grid-column: 1 / -1; }
 }

@@ -12,3 +12,5 @@ export const socialLinks = {
   linkedin: "https://www.linkedin.com/in/derekpapierski/",
   email: "mailto:derek@derekpapierski.com",
 };
+
+export const teams = ["Michigan Medicine", "iLabs", "UM–Dearborn", "Freelance"];
