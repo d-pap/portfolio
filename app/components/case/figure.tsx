@@ -19,7 +19,7 @@ export function Figure({ caption, src, alt = "", width, height, kind = "screen",
   return (
     <figure className={`fig fig-${variant}`}>
       <figcaption className="label fig-caption">{caption}</figcaption>
-      <div className="fig-stage">
+      <div className={src && kind === "screen" ? "fig-stage" : "fig-stage stage"}>
         {src ? (
           <Image src={src} alt={alt} width={width} height={height} sizes={kind === "phone" ? "(max-width: 899px) 70vw, 360px" : "(max-width: 899px) 100vw, 66vw"} />
         ) : (

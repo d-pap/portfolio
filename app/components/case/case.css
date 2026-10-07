@@ -5,12 +5,11 @@
   min-height: 520px;
   border-radius: 6px;
   overflow: hidden;
-  background: var(--stage);
   view-transition-name: var(--vt);
 }
-.case-hero-caption { color: var(--stage-ink); position: absolute; right: 14px; bottom: 12px; }
+.case-hero-caption { color: var(--ink); position: absolute; right: 14px; bottom: 12px; }
 .case-hero-text { height: 56vh; min-height: 360px; display: grid; place-items: center; }
-.case-wordmark { color: var(--stage-ink); font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
+.case-wordmark { font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
 
 .case-body { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 36px; }
 .case-id { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
@@ -35,6 +34,11 @@
 .case-lede a, .case-flow a { text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
 .case-lede a:hover, .case-flow a:hover { text-decoration-color: currentColor; }
 .case-next { display: inline-flex; align-items: baseline; margin-top: 96px; }
+
+/* At 900px and up the caption sits over the white stage (a sibling, outside .stage), so it takes the light ink. */
+@media (min-width: 900px) {
+  .case-hero-caption { color: #161615; }
+}
 
 @media (min-width: 1100px) {
   .case-lede { column-count: 2; column-gap: 24px; }

@@ -29,6 +29,20 @@ a:hover .link-arrow { transform: translate(2px, -2px); }
 .skip-link:focus { transform: none; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+/* White stages hold project images and diagrams. They keep the light palette in both themes,
+   so captions, wordmarks, and diagram text drawn on them stay readable on white. */
+.stage {
+  --paper: #fff;
+  --ink: #161615;
+  --muted: #6b6a64;
+  --faint: #aaa8a0;
+  --line: #e3e1da;
+  --wash: #ecebe5;
+  --accent-ink: #c93f0f;
+  background: var(--paper);
+  color: var(--ink);
+}
+
 @view-transition { navigation: auto; }
 ::view-transition-group(*) { animation-duration: 450ms; animation-timing-function: var(--ease-in-out); }
 

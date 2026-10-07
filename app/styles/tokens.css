@@ -8,9 +8,6 @@
   --wash: #ecebe5;
   --accent: #ff5a1f;
   --accent-ink: #c93f0f;
-  /* Project images sit on plain white in both themes, so anything drawn on it uses --stage-ink. */
-  --stage: #fff;
-  --stage-ink: #161615;
 
   --font-text: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-fragment-mono), ui-monospace, "SF Mono", Menlo, monospace;

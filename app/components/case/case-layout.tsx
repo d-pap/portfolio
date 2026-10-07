@@ -29,7 +29,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
         </figure>
       ) : (
         <div className="case-hero">
-          <div className="case-hero-stage case-hero-text" aria-hidden="true">
+          <div className="case-hero-stage case-hero-text stage" aria-hidden="true">
             <span className="case-wordmark">{entry.shortTitle}</span>
           </div>
         </div>

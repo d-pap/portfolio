@@ -20,7 +20,7 @@ export function WorkFigure({ item, priority }: { item: WorkItem; priority: boole
       {/* The button sits outside .work-figure, whose view-transition-name makes a stacking
           context that would keep it under the stretched link. */}
       <div className="work-media">
-        <div className="work-figure">
+        <div className="work-figure stage">
           <Media hero={item.hero} sizes={sizes} priority={priority} />
         </div>
         {controls && (
