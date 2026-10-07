@@ -1,4 +1,5 @@
 import { readingOrder, type Grid } from "app/lib/grid";
+import { SectionLinkTransitions } from "./section-link-transitions";
 import { WorkTile } from "./work-tile";
 import "./tile.css";
 
@@ -9,6 +10,7 @@ import "./tile.css";
 export function WorkGrid({ grid }: { grid: Grid }) {
   return (
     <>
+      <SectionLinkTransitions />
       <div className="work-grid">
         {grid.map((column, i) => (
           <div key={i} className="work-col">
