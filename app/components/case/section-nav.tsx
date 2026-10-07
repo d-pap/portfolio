@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { currentSection } from "app/lib/current-section";
 import type { Heading } from "app/lib/headings";
 
 /** A section counts as current once its heading is within this many px of the viewport top. */
@@ -13,12 +14,12 @@ export function SectionNav({ sections }: { sections: Heading[] }) {
     let frame = 0;
     const update = () => {
       frame = 0;
-      let current = "overview";
-      for (const { id } of sections) {
+      const headings = sections.flatMap(({ id }) => {
         const heading = document.getElementById(id);
-        if (heading && heading.getBoundingClientRect().top <= CURRENT_LINE) current = id;
-      }
-      setActive(current);
+        return heading ? [{ id, top: heading.getBoundingClientRect().top }] : [];
+      });
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      setActive(currentSection(headings, { line: CURRENT_LINE, height: window.innerHeight, atBottom, hash: window.location.hash }));
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -26,9 +27,11 @@ export function SectionNav({ sections }: { sections: Heading[] }) {
     update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    window.addEventListener("hashchange", schedule);
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      window.removeEventListener("hashchange", schedule);
       cancelAnimationFrame(frame);
     };
   }, [sections]);
