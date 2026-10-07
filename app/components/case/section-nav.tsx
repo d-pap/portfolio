@@ -55,6 +55,15 @@ export function SectionNav({ sections }: { sections: Heading[] }) {
 export function ContextBar({ title, summary }: { title: string; summary: string }) {
   const [shown, setShown] = useState(false);
 
+  // The browser's jump to a #section on load stays instant; smooth scrolling starts with the next click.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => document.documentElement.classList.add("smooth-scroll"));
+    return () => {
+      cancelAnimationFrame(frame);
+      document.documentElement.classList.remove("smooth-scroll");
+    };
+  }, []);
+
   useEffect(() => {
     const identity = document.querySelector("[data-case-id]");
     if (!identity) return;

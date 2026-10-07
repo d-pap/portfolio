@@ -1,8 +1,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+/* Case pages add .smooth-scroll after the first paint, so in-page links glide but landing on a #section is instant. */
+@media (prefers-reduced-motion: no-preference) {
+  html.smooth-scroll { scroll-behavior: smooth; }
 }
 body {
   margin: 0;
