@@ -1,0 +1,3 @@
+I’m Derek, {an AI & software engineer at Michigan Medicine | a woodworker and wood carver on the weekends}.
+I {build AI systems for health research and test how well they work | carve and build things out of wood, mostly by hand}.
+I also {design and build apps for patients and care teams | read a lot, usually more than one book at a time}.

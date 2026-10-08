@@ -23,16 +23,20 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
 
   return (
     <article className="case page" style={style}>
+      {/* Holds the first paint until the hero is parsed. On a first visit the page could otherwise paint
+          before the hero exists, and the tile fades out instead of morphing into it. React hoists this to <head>;
+          `blocking` isn't in React's types yet, hence the spread. */}
+      <link rel="expect" href="#case-hero" {...{ blocking: "render" }} />
       <ContextBar title={entry.shortTitle} summary={entry.summary} />
       {entry.hero ? (
-        <figure className="case-hero">
+        <figure className="case-hero" id="case-hero">
           <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} label={entry.shortTitle}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
           </CaseHeroStage>
           {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
         </figure>
       ) : (
-        <div className="case-hero">
+        <div className="case-hero" id="case-hero">
           <div className="case-hero-stage case-hero-text stage" aria-hidden="true">
             <span className="case-wordmark">{entry.shortTitle}</span>
           </div>

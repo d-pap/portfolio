@@ -1,0 +1,22 @@
+/* A phrase shows the question-mark cursor, and its dotted underline appears while the pointer is over the paragraph.
+   Touch screens can't hover, so there the underline always shows. */
+.wp-text { position: relative; }
+.wp-phrase {
+  cursor: help;
+  border-radius: 2px;
+  text-decoration: underline dotted 1px transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 200ms;
+}
+@media (hover: hover) {
+  .wp-text:hover .wp-phrase { text-decoration-color: var(--faint); }
+  .wp-text .wp-phrase:hover { text-decoration-color: var(--accent); }
+}
+@media (hover: none) {
+  .wp-phrase { text-decoration-color: var(--faint); }
+}
+
+/* While letters move, the real text stays in place (and keeps focus) but goes transparent under the overlay. */
+.wp-text.is-morphing p, .wp-text.is-morphing .wp-phrase { color: transparent; text-decoration-color: transparent; }
+.wp-overlay { position: absolute; inset: 0; pointer-events: none; }
+.wp-overlay span { position: absolute; white-space: pre; }

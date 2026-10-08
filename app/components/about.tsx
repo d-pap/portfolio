@@ -1,7 +1,7 @@
 import { socialLinks, teams } from "app/config";
-import { getHomeSource, getReading } from "app/lib/content";
+import { getAbout, getReading } from "app/lib/content";
 import { Arrow } from "./arrow";
-import { CustomMDX } from "./mdx";
+import { WorkPlay } from "./work-play";
 import "./about.css";
 
 export function About() {
@@ -12,7 +12,7 @@ export function About() {
       <div className="about-main">
         <div className="about-text">
           <h2 id="about-heading" className="label about-label">about</h2>
-          <CustomMDX source={getHomeSource()} />
+          <WorkPlay parts={getAbout()} />
         </div>
         <div className="about-teams">
           <h2 className="label about-label">teams</h2>
