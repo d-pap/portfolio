@@ -195,6 +195,21 @@
       "size_bytes": 116655,
       "description": "Switch from week to month, let the chart settle, then return to week.",
       "source_revision": "loops"
+    },
+    {
+      "id": "renew-platform-study",
+      "title": "Platform motion study",
+      "kind": "loop",
+      "src": "/projects/renew/loops/renew-platform-study-1x1.mp4",
+      "poster": "/projects/renew/loops/renew-platform-study-1x1.jpg",
+      "duration_seconds": 4.8,
+      "width": 900,
+      "height": 900,
+      "fps": 60,
+      "has_audio": false,
+      "size_bytes": 95552,
+      "description": "Platform: modular corner fields share one center. Abstract motion study; no text or measured data.",
+      "source_revision": "wordless-studies-v2"
     }
   ]
 }

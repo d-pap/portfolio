@@ -7,7 +7,7 @@ export type DiagramName = (typeof DIAGRAMS)[number];
 
 /** What a home tile shows. `cover` fills the tile; the others sit on the white stage. */
 export type TileMedia =
-  | { kind: "cover"; src: string; position?: string; recording?: string }
+  | { kind: "cover"; src: string; position?: string; fit?: "cover" | "contain"; recording?: string }
   | { kind: "phones"; frames: string[] }
   | { kind: "logo"; src: string }
   | { kind: "diagram"; name: DiagramName };

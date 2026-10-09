@@ -15,24 +15,25 @@ index: main
 order: 1
 kind: project
 hero:
-  type: phones
+  type: composition
   frames:
-    - /projects/renew-modules.webp
-    - /projects/renew-module-detail.webp
-  caption: learning modules and a lesson · 2026
+    - /projects/renew/videos/renew-overview-4x3.jpg
+  recording: /projects/renew/videos/renew-overview-4x3.mp4
+  caption: home, goals, and modules · development build, october 2026
 tile:
   shape: "4:3"
+  media: { kind: cover, src: /projects/renew/loops/renew-mood-loop-4x5.jpg, recording: /projects/renew/loops/renew-mood-loop-4x5.mp4, fit: contain }
 sections:
   - id: platform
     title: RENEW Platform
     label: backend · mobile infrastructure
     shape: "1:1"
-    media: { kind: diagram, name: platform }
+    media: { kind: cover, src: /projects/renew/loops/renew-platform-study-1x1.jpg, recording: /projects/renew/loops/renew-platform-study-1x1.mp4, fit: contain }
   - id: redesign
     title: RENEW Redesign
     label: product design · react native
     shape: "4:5"
-    media: { kind: cover, src: /projects/renew-new-goal.webp }
+    media: { kind: cover, src: /projects/renew/loops/renew-chart-loop-4x5.jpg, recording: /projects/renew/loops/renew-chart-loop-4x5.mp4, fit: contain }
 ---
 
 RENEW is a Michigan Medicine study app for people living with scleroderma. It helps them set wellness goals, track how they're feeling, and work through lessons on fatigue self-management, and it includes [Sprout](/work/sprout), the AI health coach. I took over RENEW in September 2025 and own the app, its backend, and its releases.
@@ -49,9 +50,7 @@ On the client, TanStack Query caches server data and the tab screens load at sta
 
 I also keep the app current and ship it: three Expo upgrades, from SDK 50 to 57, an Android 15 target, scripted production deploys, and TestFlight and Play Store builds.
 
-<Figure caption="how the app, its api, and sprout fit together">
-  <PlatformDiagram />
-</Figure>
+<VideoFigure src="/projects/renew/loops/renew-platform-study-1x1.mp4" poster="/projects/renew/loops/renew-platform-study-1x1.jpg" width={900} height={900} caption="platform · motion study" />
 
 ## redesign
 
@@ -59,8 +58,8 @@ I'm redesigning the app screen by screen. Home is a new tab that opens with a da
 
 The public release doesn't include every screen shown here.
 
-<Figure src="/projects/renew-new-goal.webp" alt="Setting a new goal in RENEW" width={830} height={1800} kind="phone" caption="setting a goal · june 2026" />
+<VideoFigure src="/projects/renew/videos/renew-statistics-4x5.mp4" poster="/projects/renew/videos/renew-statistics-4x5.jpg" width={960} height={1200} caption="goal statistics · demonstration data, october 2026" />
 
-<Figure src="/projects/renew-modules.webp" alt="Learning modules in RENEW" width={830} height={1800} kind="phone" caption="learning modules · may 2026" />
+<VideoFigure src="/projects/renew/videos/renew-new-goal-4x5.mp4" poster="/projects/renew/videos/renew-new-goal-4x5.jpg" width={960} height={1200} caption="setting a goal · development build" />
 
-<Figure src="/projects/renew-module-detail.webp" alt="A RENEW lesson with expandable activities" width={830} height={1800} kind="phone" caption="a lesson · july 2026" />
+<VideoFigure src="/projects/renew/videos/renew-modules-4x5.mp4" poster="/projects/renew/videos/renew-modules-4x5.jpg" width={960} height={1200} caption="finding a lesson and reading an activity · development build" />

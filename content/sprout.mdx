@@ -14,31 +14,33 @@ index: main
 order: 2
 kind: project
 hero:
-  type: phones
+  type: composition
   frames:
-    - /projects/sprout-chat.webp
-  caption: the coach's first screen · april 2026
+    - /projects/sprout/videos/sprout-conversation-4x5.jpg
+  recording: /projects/sprout/videos/sprout-conversation-4x5.mp4
+  caption: a demonstration conversation with staged app data · october 2026
 tile:
   shape: "4:5"
+  media: { kind: cover, src: /projects/sprout/loops/sprout-sources-loop-4x5.jpg, recording: /projects/sprout/loops/sprout-sources-loop-4x5.mp4, fit: contain }
 sections:
   - id: rag-pipeline
     title: Sprout RAG Pipeline
     label: retrieval · llm systems
     shape: "4:3"
-    media: { kind: diagram, name: routing }
+    media: { kind: cover, src: /projects/sprout/loops/sprout-retrieval-study-4x3.jpg, recording: /projects/sprout/loops/sprout-retrieval-study-4x3.mp4, fit: contain }
   - id: long-term-memory
     title: Sprout Long-Term Memory
     label: llm systems
     shape: "4:3"
-    media: { kind: diagram, name: memory }
+    media: { kind: cover, src: /projects/sprout/loops/sprout-memory-study-4x3.jpg, recording: /projects/sprout/loops/sprout-memory-study-4x3.mp4, fit: contain }
   - id: evals
     title: Sprout Evals
     label: llm evaluation
     shape: "16:9"
-    media: { kind: diagram, name: eval-checks }
+    media: { kind: cover, src: /projects/sprout/loops/sprout-evaluation-study-16x9.jpg, recording: /projects/sprout/loops/sprout-evaluation-study-16x9.mp4, fit: contain }
 ---
 
-Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
+Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. The research is ongoing. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
 
 ## system design
 
@@ -56,9 +58,7 @@ A small model then grades every candidate from 0 to 10 against the original ques
 
 Replies cite their sources, and medical facts have to come from the retrieved text.
 
-<Figure caption="how a message moves through sprout">
-  <RoutingDiagram />
-</Figure>
+<VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="retrieval · motion study" />
 
 ## long-term memory
 
@@ -66,9 +66,7 @@ The coach keeps context between conversations in layers. Each conversation is co
 
 I'm testing how well this memory handles corrections and whether the patterns it infers improve later replies.
 
-<Figure caption="what the coach remembers">
-  <MemoryDiagram />
-</Figure>
+<VideoFigure src="/projects/sprout/loops/sprout-memory-study-4x3.mp4" poster="/projects/sprout/loops/sprout-memory-study-4x3.jpg" width={1200} height={900} caption="memory · motion study" />
 
 ## evals
 
@@ -76,6 +74,4 @@ Each evaluation starts from a question, such as whether retrieval finds useful s
 
 I read the saved responses alongside the scores, because an automated judge can miss problems. The suites run on DeepEval and promptfoo.
 
-<Figure caption="what the evaluations check">
-  <EvalChecks />
-</Figure>
+<VideoFigure src="/projects/sprout/loops/sprout-evaluation-study-16x9.mp4" poster="/projects/sprout/loops/sprout-evaluation-study-16x9.jpg" width={1200} height={675} caption="evaluation · motion study" />

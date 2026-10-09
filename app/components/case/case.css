@@ -7,7 +7,7 @@
   overflow: hidden;
   view-transition-name: var(--vt);
 }
-.case-hero-caption { color: var(--ink); position: absolute; right: 14px; bottom: 12px; }
+.case-hero-caption { color: var(--ink); margin-top: 8px; text-align: right; }
 .case-hero-text { height: 56vh; min-height: 360px; display: grid; place-items: center; }
 .case-wordmark { font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
 
@@ -91,6 +91,9 @@
   .case-context-summary { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
   .case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 36px + 20px); }
   .case-hero-stage { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  /* Reframe only the white canvas; the full phone remains inside the stage. */
+  .case-hero-stage.is-composition { aspect-ratio: 4 / 5; }
+  .case-hero-stage.is-composition .media-composition { width: 160%; max-width: none; left: -30%; }
   .case-hero-text { height: 40vh; aspect-ratio: auto; }
   .case-hero-caption { position: static; margin-top: 8px; text-align: right; }
   .case-body { display: block; }

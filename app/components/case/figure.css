@@ -13,3 +13,8 @@
 @media (max-width: 899px) {
   .fig-phone img { height: auto; width: min(260px, 100%); }
 }
+
+.fig-video-stage { position: relative; background: #fff; border-radius: 6px; overflow: hidden; }
+.fig-video-stage video { display: block; width: 100%; height: auto; object-fit: contain; }
+.fig-video-stage.is-portrait video { max-height: 720px; }
+@media (max-width: 899px) { .fig-video-stage.is-portrait video { max-height: 80svh; } }

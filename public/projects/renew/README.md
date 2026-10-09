@@ -1,7 +1,7 @@
 # RENEW portfolio media
 Prepared: 2026-10-08
 
-13 MP4s and 13 matching JPEG posters, copied without re-encoding from the reviewed media collections.
+The 13 approved app MP4s and matching JPEG posters are preserved without re-encoding. A separate 4.8-second abstract Platform study was added on 2026-10-08.
 
 - `loops/`: three thumbnail loop studies, each under five seconds, with a dissolve back to its starting state.
 - `videos/`: all ten tighter v3 edits for project detail pages and other placements.
@@ -19,7 +19,7 @@ Files in this folder are served by the site at `/projects/renew/`. For example:
 ></video>
 ```
 
-In React/JSX, use `autoPlay` and `playsInline`. The existing site components have not been changed or wired to these assets.
+The site now uses visible-only silent autoplay with no playback controls. Reduced-motion visitors see stills. The Platform study uses wordless black linework and orange on white, matching the Sprout motion studies.
 
 ## Thumbnail loops
 
@@ -28,6 +28,7 @@ In React/JSX, use `autoPlay` and `playsInline`. The existing site components hav
 | Completing a goal | 3.5s | [renew-completion-loop-4x5.mp4](loops/renew-completion-loop-4x5.mp4) | [JPEG](loops/renew-completion-loop-4x5.jpg) |
 | Mood check-in | 4.45s | [renew-mood-loop-4x5.mp4](loops/renew-mood-loop-4x5.mp4) | [JPEG](loops/renew-mood-loop-4x5.jpg) |
 | Chart study | 4.9s | [renew-chart-loop-4x5.mp4](loops/renew-chart-loop-4x5.mp4) | [JPEG](loops/renew-chart-loop-4x5.jpg) |
+| Platform motion study | 4.8s | [renew-platform-study-1x1.mp4](loops/renew-platform-study-1x1.mp4) | [JPEG](loops/renew-platform-study-1x1.jpg) |
 
 ## Longer collection — tighter v3 edits
 

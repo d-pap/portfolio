@@ -29,7 +29,6 @@
 .tile-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
 .tile-link:focus-visible { outline: none; }
 .tile:has(.tile-link:focus-visible) .tile-media { outline: 2px solid var(--accent-ink); outline-offset: 4px; }
-.tile .media-play { z-index: 2; }
 
 @media (max-width: 899px) {
   .work-grid { display: none; }

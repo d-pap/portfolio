@@ -1,18 +1,19 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { playbackMode } from "./playback.ts";
+import { shouldPlayLoop } from "./playback.ts";
 
-test("no recording never plays", () => {
-  assert.equal(playbackMode({ hasRecording: false, canHover: true, reducedMotion: false }), "none");
-  assert.equal(playbackMode({ hasRecording: false, canHover: false, reducedMotion: true }), "none");
+const visibleFilm = { hasRecording: true, visible: true, reducedMotion: false, documentHidden: false };
+
+test("visible films autoplay without requiring hover or a control", () => {
+  assert.equal(shouldPlayLoop(visibleFilm), true);
 });
 
-test("pointer devices play on hover, even with reduced motion (the visitor starts it)", () => {
-  assert.equal(playbackMode({ hasRecording: true, canHover: true, reducedMotion: false }), "hover");
-  assert.equal(playbackMode({ hasRecording: true, canHover: true, reducedMotion: true }), "hover");
+test("offscreen films and hidden tabs stop playback", () => {
+  assert.equal(shouldPlayLoop({ ...visibleFilm, visible: false }), false);
+  assert.equal(shouldPlayLoop({ ...visibleFilm, documentHidden: true }), false);
 });
 
-test("touch devices play in view, or on tap with reduced motion", () => {
-  assert.equal(playbackMode({ hasRecording: true, canHover: false, reducedMotion: false }), "in-view");
-  assert.equal(playbackMode({ hasRecording: true, canHover: false, reducedMotion: true }), "tap");
+test("reduced motion and still images never autoplay", () => {
+  assert.equal(shouldPlayLoop({ ...visibleFilm, reducedMotion: true }), false);
+  assert.equal(shouldPlayLoop({ ...visibleFilm, hasRecording: false }), false);
 });

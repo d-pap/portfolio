@@ -83,7 +83,7 @@ test("hero frames are checked against the hero type", () => {
   const relative = FRONT.replace("/projects/sprout-chat.webp", "projects/sprout-chat.webp");
   assert.throws(() => parseEntry(file(relative), "x"), /hero\.frames must be a list of \/public paths/);
   const badType = FRONT.replace("type: phones", "type: tablet");
-  assert.throws(() => parseEntry(file(badType), "x"), /hero\.type must be "phones", "screen", or "logo"/);
+  assert.throws(() => parseEntry(file(badType), "x"), /hero\.type must be "phones", "screen", "logo", or "composition"/);
 });
 
 test("a recording must be an mp4", () => {
@@ -97,7 +97,7 @@ test("a logo hero takes one image and no recording", () => {
   const two = logo.replace("    - /projects/sprout-logo.svg\n", "    - /a.svg\n    - /b.svg\n");
   assert.throws(() => parseEntry(file(two), "x"), /hero\.frames needs 1–1 images for type "logo"/);
   const recorded = logo.replace("  caption:", "  recording: /projects/sprout.mp4\n  caption:");
-  assert.throws(() => parseEntry(file(recorded), "x"), /hero\.recording needs a "phones" or "screen" hero/);
+  assert.throws(() => parseEntry(file(recorded), "x"), /hero\.recording needs a "phones", "screen", or "composition" hero/);
 });
 
 test("broken files fail with the file name", () => {
@@ -170,4 +170,19 @@ test("sortEntries splits by index and orders by order, then slug", () => {
   const { main, earlier } = sortEntries([make("b", "main", 2), make("a", "main", 2), make("c", "main", 1), make("d", "earlier", 1), make("e", "hidden", 1)]);
   assert.deepEqual(main.map((e) => e.slug), ["c", "a", "b"]);
   assert.deepEqual(earlier.map((e) => e.slug), ["d"]);
+});
+
+test("finished compositions keep one full frame and allow recordings", () => {
+  const front = FRONT.replace("type: phones", "type: composition").replace("  caption:", "  recording: /projects/sprout.mp4\n  caption:");
+  const entry = parseEntry(file(front), "sprout");
+  assert.equal(entry.hero?.type, "composition");
+  assert.equal(entry.hero?.recording, "/projects/sprout.mp4");
+});
+
+test("cover fit preserves full devices and rejects invalid sizing", () => {
+  const front = TILED.replace("{ kind: diagram, name: routing }", "{ kind: cover, src: /frame.jpg, recording: /clip.mp4, fit: contain }");
+  assert.deepEqual(parseEntry(file(front), "sprout").sections[0].media, {
+    kind: "cover", src: "/frame.jpg", recording: "/clip.mp4", position: undefined, fit: "contain",
+  });
+  assert.throws(() => parseEntry(file(front.replace("fit: contain", "fit: stretch")), "x"), /fit must be "cover" or "contain"/);
 });

@@ -1,19 +1,10 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { useRecordingPlayback } from "app/components/media/use-recording-playback";
+import { useLoopPlayback } from "app/components/media/use-loop-playback";
 
-export function CaseHeroStage({ hasRecording, label, children }: { hasRecording: boolean; label: string; children: ReactNode }) {
+export function CaseHeroStage({ hasRecording, children, composition = false }: { hasRecording: boolean; children: ReactNode; composition?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
-  const { playing, controls, toggle, hover } = useRecordingPlayback(root, hasRecording, false);
-  return (
-    <div ref={root} className="case-hero-stage stage" {...hover}>
-      {children}
-      {controls && (
-        <button type="button" className="media-play" aria-label={playing ? `Pause ${label} recording` : `Play ${label} recording`} onClick={toggle}>
-          {playing ? "pause" : "play"}
-        </button>
-      )}
-    </div>
-  );
+  useLoopPlayback(root, hasRecording);
+  return <div ref={root} className={`case-hero-stage stage${composition ? " is-composition" : ""}`}>{children}</div>;
 }

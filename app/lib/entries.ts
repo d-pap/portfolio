@@ -5,7 +5,7 @@ import { DIAGRAMS, MAX_TILE_TITLE, SHAPES, type DiagramName, type MainTile, type
 export type EntryIndex = "main" | "earlier" | "hidden";
 export type EntryKind = "project" | "role" | "analysis";
 /** A logo hero centers one image (usually an SVG) on the white stage, like a cover. */
-export type Hero = { type: "phones" | "screen" | "logo"; frames: string[]; recording?: string; caption?: string };
+export type Hero = { type: "phones" | "screen" | "logo" | "composition"; frames: string[]; recording?: string; caption?: string };
 export type Entry = {
   slug: string;
   title: string;
@@ -109,7 +109,7 @@ function parseHero(value: unknown, where: string): Hero | undefined {
   if (value === undefined || value === null) return undefined;
   if (typeof value !== "object" || Array.isArray(value)) throw new Error(`${where}: "hero" must be a mapping`);
   const h = value as Record<string, unknown>;
-  if (h.type !== "phones" && h.type !== "screen" && h.type !== "logo") throw new Error(`${where}: hero.type must be "phones", "screen", or "logo"`);
+  if (h.type !== "phones" && h.type !== "screen" && h.type !== "logo" && h.type !== "composition") throw new Error(`${where}: hero.type must be "phones", "screen", "logo", or "composition"`);
   const frames = h.frames;
   if (!Array.isArray(frames) || frames.some((frame) => typeof frame !== "string" || !frame.startsWith("/"))) {
     throw new Error(`${where}: hero.frames must be a list of /public paths`);
@@ -119,7 +119,7 @@ function parseHero(value: unknown, where: string): Hero | undefined {
   if (h.recording !== undefined && (typeof h.recording !== "string" || !h.recording.startsWith("/") || !h.recording.endsWith(".mp4"))) {
     throw new Error(`${where}: hero.recording must be an .mp4 path`);
   }
-  if (h.recording !== undefined && h.type === "logo") throw new Error(`${where}: hero.recording needs a "phones" or "screen" hero`);
+  if (h.recording !== undefined && h.type === "logo") throw new Error(`${where}: hero.recording needs a "phones", "screen", or "composition" hero`);
   if (h.caption !== undefined && typeof h.caption !== "string") throw new Error(`${where}: hero.caption must be text`);
   return { type: h.type, frames: frames as string[], recording: h.recording as string | undefined, caption: h.caption as string | undefined };
 }
@@ -139,7 +139,8 @@ function parseTileMedia(value: unknown, at: string): TileMedia {
       if (!isPublicPath(m.src)) throw new Error(`${at}.src must be a /public path`);
       if (m.position !== undefined && typeof m.position !== "string") throw new Error(`${at}.position must be text`);
       if (m.recording !== undefined && !(isPublicPath(m.recording) && m.recording.endsWith(".mp4"))) throw new Error(`${at}.recording must be an .mp4 path`);
-      return { kind: "cover", src: m.src, position: m.position as string | undefined, recording: m.recording as string | undefined };
+      if (m.fit !== undefined && m.fit !== "cover" && m.fit !== "contain") throw new Error(`${at}.fit must be "cover" or "contain"`);
+      return { kind: "cover", ...(m.fit ? { fit: m.fit as "cover" | "contain" } : {}), src: m.src, position: m.position as string | undefined, recording: m.recording as string | undefined };
     }
     case "phones": {
       if (!Array.isArray(m.frames) || m.frames.length < 1 || m.frames.length > 2 || !m.frames.every(isPublicPath)) {

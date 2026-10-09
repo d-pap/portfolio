@@ -67,6 +67,8 @@ I made the Code Coach logo: a mark of two angle brackets around a dot, set besid
   <img src="/projects/codecoach-logo.svg" alt="The Code Coach logo: two angle brackets around a dot, beside the lowercase wordmark codecoach" />
 </Figure>
 
+<VideoFigure src="/projects/codecoach/videos/codecoach-landing-4x5.mp4" poster="/projects/codecoach/videos/codecoach-landing-4x5.jpg" width={960} height={1200} caption="the public landing page · edited scroll study, october 2026" />
+
 ## implementation
 
 The frontend is React, deployed to Netlify from GitHub. The backend is serverless: API Gateway routes requests to Lambda functions, and MongoDB Atlas stores users, problems, submissions, and courses through Mongoose. Judge0 runs submitted code in a sandbox and returns its output, runtime, and memory use. The AI help uses OpenAI API via the university's UMGPT service.

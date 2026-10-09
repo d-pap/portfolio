@@ -9,6 +9,13 @@ type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recordi
 // must be position: relative with a definite size.
 // A recording, when present, plays in the first device; its first frame is the poster.
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
+  if (hero.type === "composition") {
+    return <div className="media">{hero.recording ? (
+      <video className="media-composition" src={hero.recording} poster={hero.frames[0]} muted loop playsInline preload="none" aria-label={label || undefined} />
+    ) : (
+      <Image className="media-composition" src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
+    )}</div>;
+  }
   if (hero.type === "logo") {
     // SVGs skip the image optimizer, which would otherwise reject them.
     return (
