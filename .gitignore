@@ -53,3 +53,6 @@ docs/
 
 # local-only test media
 public/**/_local-*
+
+# generated
+app/lib/media-colors.json

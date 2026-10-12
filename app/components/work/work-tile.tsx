@@ -6,6 +6,7 @@ import { DIAGRAMS_BY_NAME } from "app/components/evidence/diagrams";
 import { Media } from "app/components/media/media";
 import { useLoopPlayback } from "app/components/media/use-loop-playback";
 import type { Tile } from "app/lib/grid";
+import { mediaColor } from "app/lib/media-colors";
 import { SHAPES } from "app/lib/tiles";
 import "./tile.css";
 
@@ -32,20 +33,27 @@ function TileMediaView({ media, priority }: { media: Tile["media"]; priority: bo
       return media.recording ? (
         <video className="tile-cover" src={media.recording} poster={media.src} muted loop playsInline preload="none" style={{ objectPosition: media.position, objectFit: media.fit }} />
       ) : (
-        <Image className="tile-cover" src={media.src} alt="" fill sizes={COVER_SIZES} priority={priority} style={{ objectPosition: media.position, objectFit: media.fit }} />
+        <Image className={priority ? "tile-cover" : "tile-cover arrive"} src={media.src} alt="" fill sizes={COVER_SIZES} priority={priority} style={{ objectPosition: media.position, objectFit: media.fit }} />
       );
   }
 }
 
-export function WorkTile({ tile, priority = false }: { tile: Tile; priority?: boolean }) {
+export function WorkTile({ tile, priority = false, enter }: { tile: Tile; priority?: boolean; enter?: number }) {
   const root = useRef<HTMLElement>(null);
   const labelId = useId();
   const recording = (tile.media.kind === "cover" && tile.media.recording) || (tile.media.kind === "hero" && tile.media.hero.recording);
   useLoopPlayback(root, Boolean(recording));
-  const style = { aspectRatio: String(SHAPES[tile.shape]), ...(tile.main ? { "--vt": `entry-${tile.slug}` } : {}) } as CSSProperties;
+  const color = tile.media.kind === "cover" ? mediaColor(tile.media.src) : undefined;
+  const style = {
+    aspectRatio: String(SHAPES[tile.shape]),
+    ...(color ? { background: color } : {}),
+    ...(tile.main ? { "--vt": `entry-${tile.slug}` } : {}),
+  } as CSSProperties;
+
+  const entrance = enter === undefined ? {} : { "data-enter": "", style: { "--enter-i": enter } as CSSProperties };
 
   return (
-    <article ref={root} className="tile">
+    <article ref={root} className="tile" {...entrance}>
       <div className="tile-frame">
         <div className={tile.main ? "tile-media stage is-main" : "tile-media stage"} style={style}>
           <TileMediaView media={tile.media} priority={priority} />

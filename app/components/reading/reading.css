@@ -1,8 +1,8 @@
-.reading { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 40px; }
+.reading { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 0; }
 .reading-intro { font-size: var(--size-lede); font-weight: 400; line-height: 1.5; }
 .reading-titles { margin-top: 28px; display: grid; gap: 4px; }
 .reading-title { font: var(--size-label)/1.6 var(--font-mono); color: var(--muted); transition: color 160ms; }
-.reading-title.is-hot { color: var(--accent-ink); }
+.reading-title.is-hot { color: var(--plane-ink); }
 .reading-covers { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; align-content: start; }
 .reading-cover { position: relative; aspect-ratio: 2 / 3; border-radius: 3px; overflow: hidden; background: var(--wash); transition: opacity 200ms; }
 .reading.has-hot .reading-cover:not(.is-hot) { opacity: .35; }

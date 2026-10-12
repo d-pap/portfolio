@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { About } from "app/components/about";
 import { WorkGrid } from "app/components/work/work-grid";
 import { getGrid, getIndex } from "app/lib/content";
@@ -10,7 +11,7 @@ export default function Home() {
       <About />
 
       <section aria-labelledby="work-heading">
-        <h2 id="work-heading" className="label home-label">work</h2>
+        <h2 id="work-heading" className="label home-label" data-enter="" style={{ "--enter-i": 4 } as CSSProperties}>work</h2>
         <WorkGrid grid={getGrid()} />
       </section>
 

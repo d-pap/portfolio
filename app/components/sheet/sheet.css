@@ -1,0 +1,49 @@
+/* The dark sheet the work sits on. Its rounded bottom edge lifts off the lime plane behind it. */
+.sheet {
+  position: relative;
+  z-index: 2;
+  flex: 1 0 auto;
+  background: var(--paper);
+  border-radius: 0 0 var(--sheet-radius) var(--sheet-radius);
+  padding-bottom: 120px;
+}
+/* Marks the sheet's bottom edge for the reveal timeline, the canvas color (plane-watch.tsx), and the trip
+   (app/boot/trip.js). */
+.sheet-end { position: absolute; left: 0; right: 0; bottom: 0; height: 0; pointer-events: none; }
+
+/* The shadow the sheet casts on the plane. Animating box-shadow would repaint the whole sheet on every frame, so it is
+   painted once in two layers and only their opacity changes: tight while the sheet sits on the plane, wide as it lifts. */
+.sheet::before, .sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.sheet::before { box-shadow: 0 1px 1px rgba(0, 0, 0, .20), 0 2px 4px rgba(0, 0, 0, .16); }
+.sheet::after {
+  opacity: 1;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .04),
+    0 2px 3px rgba(0, 0, 0, .10),
+    0 8px 16px rgba(0, 0, 0, .12),
+    0 24px 48px rgba(0, 0, 0, .16),
+    0 56px 96px rgba(0, 0, 0, .20);
+}
+
+/* The reveal: progress runs from the moment the sheet's edge reaches the bottom of the screen until the page ends. */
+body { timeline-scope: --reveal; }
+.sheet-end { view-timeline: --reveal block; }
+@supports (animation-timeline: view()) {
+  .sheet::before, .sheet::after, .back-in {
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: --reveal;
+    animation-range: cover 0px cover calc(var(--back-h) - var(--sheet-radius));
+  }
+  .sheet::before { animation-name: lift-tight; }
+  .sheet::after { animation-name: lift-wide; }
+}
+@keyframes lift-tight { from { opacity: 1; } to { opacity: 0; } }
+@keyframes lift-wide { from { opacity: 0; } to { opacity: 1; } }

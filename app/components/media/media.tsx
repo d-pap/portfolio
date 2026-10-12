@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Hero } from "app/lib/entries";
+import { mediaColor } from "app/lib/media-colors";
 import "./media.css";
 
 type MediaProps = { hero: Hero; sizes: string; priority?: boolean; label?: string };
@@ -10,10 +11,10 @@ type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recordi
 // A recording, when present, plays in the first device; its first frame is the poster.
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   if (hero.type === "composition") {
-    return <div className="media">{hero.recording ? (
+    return <div className="media" style={{ background: mediaColor(hero.frames[0]) }}>{hero.recording ? (
       <video className="media-composition" src={hero.recording} poster={hero.frames[0]} muted loop playsInline preload="none" aria-label={label || undefined} />
     ) : (
-      <Image className="media-composition" src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
+      <Image className={priority ? "media-composition" : "media-composition arrive"} src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
     )}</div>;
   }
   if (hero.type === "logo") {
@@ -42,11 +43,11 @@ export function Media({ hero, sizes, priority = false, label }: MediaProps) {
 
 function Device({ kind, src, alt, recording, sizes, priority, offset }: DeviceProps) {
   return (
-    <div className={`device device-${kind}${offset ? " device-offset" : ""}`}>
+    <div className={`device device-${kind}${offset ? " device-offset" : ""}`} style={{ background: mediaColor(src) }}>
       {recording ? (
         <video className="device-video" src={recording} poster={src} muted loop playsInline preload="none" aria-label={alt || undefined} />
       ) : (
-        <Image className="device-image" src={src} alt={alt} fill sizes={sizes} priority={priority} />
+        <Image className={priority ? "device-image" : "device-image arrive"} src={src} alt={alt} fill sizes={sizes} priority={priority} />
       )}
     </div>
   );

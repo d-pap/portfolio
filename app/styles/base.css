@@ -1,20 +1,21 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+html { background: var(--paper); scrollbar-gutter: stable; }
+/* At the end of a front page the canvas turns lime: rubber-banding past the bottom shows the back plane's color,
+   and so does the gap a lifting sheet leaves. The class is set by the trip (app/boot/trip.js) during a trip and kept
+   current while scrolling by app/components/sheet/plane-watch.tsx. */
+html.at-end { background: var(--plane); }
 /* Case pages add .smooth-scroll after the first paint, so in-page links glide but landing on a #section is instant. */
-@media (prefers-reduced-motion: no-preference) {
-  html.smooth-scroll { scroll-behavior: smooth; }
-}
+html.smooth-scroll { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
   color: var(--ink);
   font: var(--size-base)/1.5 var(--font-text);
   -webkit-font-smoothing: antialiased;
 }
-main { flex: 1; }
 h1, h2, h3, p, figure, dl, dd, ul { margin: 0; }
 ul { padding: 0; list-style: none; }
 img, video, svg { display: block; max-width: 100%; }
@@ -25,6 +26,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .page { width: 100%; max-width: var(--page-max); margin-inline: auto; padding-inline: var(--gutter); }
 .label { font: var(--size-label)/1.5 var(--font-mono); color: var(--muted); }
+/* Doorway words and room titles share one box model (inline-block, line-height .98), so a word flying from one to
+   the other starts and lands exactly on the real text. */
+.door-type { display: inline-block; font-size: var(--door-size); font-weight: 400; line-height: .98; letter-spacing: -0.035em; }
 .text-link { text-decoration-line: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color 160ms; }
 .text-link:hover { text-decoration-color: currentColor; }
 .link-arrow { display: inline-block; flex-shrink: 0; margin-left: 4px; transition: transform 180ms var(--ease-out); }
@@ -33,7 +37,7 @@ a:hover .link-arrow { transform: translate(2px, -2px); }
 .skip-link:focus { transform: none; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* White stages hold project images and diagrams. They keep the light palette in both themes,
+/* White stages hold project images and diagrams. They keep a light palette on the dark page,
    so captions, wordmarks, and diagram text drawn on them stay readable on white. */
 .stage {
   --paper: #fff;
@@ -47,9 +51,15 @@ a:hover .link-arrow { transform: translate(2px, -2px); }
   color: var(--ink);
 }
 
-@view-transition { navigation: auto; }
-::view-transition-group(*) { animation-duration: 450ms; animation-timing-function: var(--ease-in-out); }
-
 .empty-page { padding-block: 96px; }
 .empty-page h1 { font-size: 24px; font-weight: 400; margin: 12px 0; }
 .empty-page p:not(.label) { color: var(--muted); margin-bottom: 16px; }
+
+/* First page of a visit: the frame, then the intro, then the first tiles settle in, 55ms apart (app/boot/first-visit.js).
+   The fill is backwards only: each element ends on its own style, so the class can go once they settle. */
+html.first-visit [data-enter] { animation: enter 520ms var(--ease-out) backwards; animation-delay: calc(var(--enter-i, 0) * 55ms); }
+@keyframes enter { from { opacity: 0; transform: translateY(8px); } }
+
+/* No stranded last words; headings balance their lines. */
+p, li, figcaption { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }

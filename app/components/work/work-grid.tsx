@@ -14,12 +14,13 @@ export function WorkGrid({ grid }: { grid: Grid }) {
       <div className="work-grid">
         {grid.map((column, i) => (
           <div key={i} className="work-col">
-            {column.map((tile, k) => <WorkTile key={tile.id} tile={tile} priority={k === 0} />)}
+            {column.map((tile, k) => <WorkTile key={tile.id} tile={tile} priority={k === 0} enter={k === 0 ? 5 + i : undefined} />)}
           </div>
         ))}
       </div>
       <div className="work-list">
-        {readingOrder(grid).map((tile) => <WorkTile key={tile.id} tile={tile} />)}
+        {/* On phones the first tile is on screen too, so it settles in after the intro like the columns' first tiles. */}
+        {readingOrder(grid).map((tile, k) => <WorkTile key={tile.id} tile={tile} enter={k === 0 ? 5 : undefined} />)}
       </div>
     </>
   );

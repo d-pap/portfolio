@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node --test \"app/**/*.test.ts\""
+    "test": "node scripts/media-colors.mjs && node --test \"app/**/*.test.ts\""
   },
   "dependencies": {
     "@types/node": "22.10.7",
@@ -15,10 +15,12 @@
     "@vercel/speed-insights": "^1.1.0",
     "next": "15.1.11",
     "next-mdx-remote": "^6.0.0",
-    "next-themes": "^0.4.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "typescript": "5.7.3",
     "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "sharp": "0.33.5"
   }
 }

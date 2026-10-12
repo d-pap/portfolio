@@ -2,14 +2,15 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import type { Metadata } from "next";
 import { Fragment_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ThemeProvider } from "./components/theme-switch";
-import { SiteHeader } from "./components/site-header";
-import { SiteFooter } from "./components/site-footer";
+import { SiteAnalytics } from "app/components/site-analytics";
 import { metaData } from "./config";
+import { bootScripts, tripStyle } from "app/boot/boot";
 
 const mono = Fragment_Mono({ subsets: ["latin"], weight: "400", display: "swap", variable: "--font-fragment-mono" });
+
+const SPECULATION = {
+  prerender: [{ where: { or: [{ href_matches: "/work/*" }, { href_matches: "/bookshelf" }] }, eagerness: "moderate" }],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(metaData.baseUrl),
@@ -36,15 +37,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={mono.variable} suppressHydrationWarning>
+      <head>
+        {bootScripts().map((source, i) => (
+          <script key={i} dangerouslySetInnerHTML={{ __html: source }} />
+        ))}
+        <style dangerouslySetInnerHTML={{ __html: tripStyle() }} />
+      </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <a className="skip-link" href="#main">skip to content</a>
-          <SiteHeader />
-          <main id="main">{children}</main>
-          <SiteFooter />
-        </ThemeProvider>
-        <Analytics />
-        <SpeedInsights />
+        <a className="skip-link" href="#main">skip to content</a>
+        {children}
+        {/* Prerender a project or the bookshelf when the pointer rests on its link, so the transition starts on the next frame. */}
+        <script type="speculationrules" dangerouslySetInnerHTML={{ __html: JSON.stringify(SPECULATION) }} />
+        <SiteAnalytics />
       </body>
     </html>
   );

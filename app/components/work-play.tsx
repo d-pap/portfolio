@@ -124,12 +124,11 @@ function morph(
 
   const oldLetters = letters(from.text);
   const newLetters = letters(to.text);
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const overlay = document.createElement("div");
   overlay.className = "wp-overlay";
   overlay.setAttribute("aria-hidden", "true");
 
-  if (reduce || oldLetters.length !== from.boxes.length || newLetters.length !== to.boxes.length) {
+  if (oldLetters.length !== from.boxes.length || newLetters.length !== to.boxes.length) {
     animations.push(p.animate([{ opacity: 0.25 }, { opacity: 1 }], { duration: 220, easing: "ease-out" }));
   } else {
     const ink = getComputedStyle(p).color;

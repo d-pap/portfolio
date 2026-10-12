@@ -11,7 +11,7 @@ function Cover({ book, hot, onHover }: { book: Book; hot: boolean; onHover: (on:
   return (
     <li className={hot ? "reading-cover is-hot" : "reading-cover"} onPointerEnter={() => onHover(true)} onPointerLeave={() => onHover(false)}>
       {book.isbn && !failed ? (
-        <Image src={coverUrl(book.isbn)} alt={label} fill sizes="(max-width: 899px) 33vw, 15vw" onError={() => setFailed(true)} />
+        <Image className="arrive" src={coverUrl(book.isbn)} alt={label} fill sizes="(max-width: 899px) 33vw, 15vw" onError={() => setFailed(true)} />
       ) : (
         <span className="reading-card" role="img" aria-label={label}>
           <span>{book.title}</span>
@@ -28,7 +28,7 @@ export function ReadingList({ books }: { books: Book[] }) {
   return (
     <div className={hot ? "reading has-hot" : "reading"}>
       <div>
-        <h1 className="reading-intro">Books I’ve read.</h1>
+        <p className="reading-intro">Books I’ve read.</p>
         {/* Covers carry the same names for screen readers, so the visual list is hidden from them. */}
         <ul className="reading-titles" aria-hidden="true">
           {books.map((book) => {

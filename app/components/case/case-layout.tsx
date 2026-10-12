@@ -29,21 +29,21 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
       <link rel="expect" href="#case-hero" {...{ blocking: "render" }} />
       <ContextBar title={entry.shortTitle} summary={entry.summary} />
       {entry.hero ? (
-        <figure className="case-hero" id="case-hero">
+        <figure className="case-hero" id="case-hero" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
           <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} composition={entry.hero.type === "composition"}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
           </CaseHeroStage>
           {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
         </figure>
       ) : (
-        <div className="case-hero" id="case-hero">
+        <div className="case-hero" id="case-hero" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
           <div className="case-hero-stage case-hero-text stage" aria-hidden="true">
             <span className="case-wordmark">{entry.shortTitle}</span>
           </div>
         </div>
       )}
 
-      <div className="case-body">
+      <div className="case-body" data-enter="" style={{ "--enter-i": 2 } as CSSProperties}>
         <div className="case-id" data-case-id>
           <h1 className="case-title">{entry.title}</h1>
           <p className="case-summary">{entry.summary}</p>

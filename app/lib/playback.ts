@@ -1,6 +1,6 @@
 /** One playback policy for thumbnails, case heroes, and inline films. */
-export function shouldPlayLoop({ hasRecording, visible, reducedMotion, documentHidden }: {
-  hasRecording: boolean; visible: boolean; reducedMotion: boolean; documentHidden: boolean;
+export function shouldPlayLoop({ hasRecording, visible, documentHidden }: {
+  hasRecording: boolean; visible: boolean; documentHidden: boolean;
 }): boolean {
-  return hasRecording && visible && !reducedMotion && !documentHidden;
+  return hasRecording && visible && !documentHidden;
 }
