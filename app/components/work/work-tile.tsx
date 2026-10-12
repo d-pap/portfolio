@@ -33,7 +33,7 @@ function TileMediaView({ media, priority }: { media: Tile["media"]; priority: bo
       return media.recording ? (
         <video className="tile-cover" src={media.recording} poster={media.src} muted loop playsInline preload="none" style={{ objectPosition: media.position, objectFit: media.fit }} />
       ) : (
-        <Image className={priority ? "tile-cover" : "tile-cover arrive"} src={media.src} alt="" fill sizes={COVER_SIZES} priority={priority} style={{ objectPosition: media.position, objectFit: media.fit }} />
+        <Image className={priority ? "tile-cover" : "tile-cover arrive"} suppressHydrationWarning src={media.src} alt="" fill sizes={COVER_SIZES} priority={priority} style={{ objectPosition: media.position, objectFit: media.fit }} />
       );
   }
 }

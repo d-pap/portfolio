@@ -1,6 +1,7 @@
 /* Lazy images fade in over their average color once they can paint (class "arrive", styles in media.css).
    Inlined in <head> so it hears every load event. Images that are ready before the first paint, including
-   everything on a prerendered page, show at once without the fade. */
+   everything on a prerendered page, show at once without the fade. The mark (data-arrived) can land before React
+   hydrates, so every <img> with the arrive class carries suppressHydrationWarning. */
 (function () {
   if (typeof window === "undefined") return;
   // Lazy images are hidden only while this script is here to show them again (media.css).

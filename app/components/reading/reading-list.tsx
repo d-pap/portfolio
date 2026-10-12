@@ -11,7 +11,7 @@ function Cover({ book, hot, onHover }: { book: Book; hot: boolean; onHover: (on:
   return (
     <li className={hot ? "reading-cover is-hot" : "reading-cover"} onPointerEnter={() => onHover(true)} onPointerLeave={() => onHover(false)}>
       {book.isbn && !failed ? (
-        <Image className="arrive" src={coverUrl(book.isbn)} alt={label} fill sizes="(max-width: 899px) 33vw, 15vw" onError={() => setFailed(true)} />
+        <Image className="arrive" suppressHydrationWarning src={coverUrl(book.isbn)} alt={label} fill sizes="(max-width: 899px) 33vw, 15vw" onError={() => setFailed(true)} />
       ) : (
         <span className="reading-card" role="img" aria-label={label}>
           <span>{book.title}</span>

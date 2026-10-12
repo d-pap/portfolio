@@ -14,7 +14,7 @@ export function Media({ hero, sizes, priority = false, label }: MediaProps) {
     return <div className="media" style={{ background: mediaColor(hero.frames[0]) }}>{hero.recording ? (
       <video className="media-composition" src={hero.recording} poster={hero.frames[0]} muted loop playsInline preload="none" aria-label={label || undefined} />
     ) : (
-      <Image className={priority ? "media-composition" : "media-composition arrive"} src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
+      <Image className={priority ? "media-composition" : "media-composition arrive"} suppressHydrationWarning src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
     )}</div>;
   }
   if (hero.type === "logo") {
@@ -47,7 +47,7 @@ function Device({ kind, src, alt, recording, sizes, priority, offset }: DevicePr
       {recording ? (
         <video className="device-video" src={recording} poster={src} muted loop playsInline preload="none" aria-label={alt || undefined} />
       ) : (
-        <Image className={priority ? "device-image" : "device-image arrive"} src={src} alt={alt} fill sizes={sizes} priority={priority} />
+        <Image className={priority ? "device-image" : "device-image arrive"} suppressHydrationWarning src={src} alt={alt} fill sizes={sizes} priority={priority} />
       )}
     </div>
   );
