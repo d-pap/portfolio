@@ -1,19 +1,18 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { IncompleteLookup, NO_LOOKUP as none, cleanGoogleDescription, cleanOpenLibraryDescription, lookupBook, mergeBook, pickGoogleMatch, resolveIsbn, stripHtml, type Lookup } from "./enrich.ts";
+import { IncompleteLookup, NO_LOOKUP as none, cleanOpenLibraryDescription, lookupBook, mergeBook, type Lookup } from "./enrich.ts";
 const kings = { title: "The Way of Kings", author: "Brandon Sanderson", isbn: "9780765365279" };
-const item = (title: string, authors: string[], description?: string, isbn?: string) => ({ volumeInfo: { title, authors, description, industryIdentifiers: isbn ? [{ identifier: isbn }] : [] } });
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
 
 test("Notion overrides win over everything", () => {
-  const found: Lookup = { year: 2011, description: "From Google.", source: "google books", coverId: 42 };
+  const found: Lookup = { year: 2011, description: "From Open Library.", coverId: 42 };
   assert.deepEqual(mergeBook({ year: 2010, description: "Mine.", cover: "https://blob/x.jpg" }, found), {
     year: 2010, description: { text: "Mine.", source: "notion" }, cover: "https://blob/x.jpg",
   });
 });
 
 test("lookups fill what Notion leaves empty", () => {
-  assert.deepEqual(mergeBook({ year: null, description: null, cover: null }, { year: 2010, description: "Roshar.", source: "open library", coverId: 7 }), {
+  assert.deepEqual(mergeBook({ year: null, description: null, cover: null }, { year: 2010, description: "Roshar.", coverId: 7 }), {
     year: 2010, description: { text: "Roshar.", source: "open library" }, cover: "https://covers.openlibrary.org/b/id/7-L.jpg",
   });
 });
@@ -22,42 +21,24 @@ test("a book with nothing anywhere has no year, description, or cover", () => {
   assert.deepEqual(mergeBook({ year: null, description: null, cover: null }, none), { year: null, description: null, cover: null });
 });
 
-test("Google matches need the title and the author's surname, and prefer the ISBN", () => {
-  const items = [
-    item("The Way of Kings Prime", ["Brandon Sanderson"], "Prime."),
-    item("The Way of Kings", ["Someone Else"], "Wrong author."),
-    item("The Way of Kings", ["Brandon Sanderson"], "Any edition."),
-    item("The Way of Kings: Book One of the Stormlight Archive", ["Brandon Sanderson"], "This edition.", "9780765365279"),
-  ];
-  assert.equal(pickGoogleMatch(items, kings)?.volumeInfo?.description, "This edition.");
-  assert.equal(pickGoogleMatch(items.slice(0, 3), kings)?.volumeInfo?.description, "Any edition.");
-  assert.equal(pickGoogleMatch(items.slice(0, 2), kings), null);
-});
-
 test("descriptions come through as plain text", () => {
-  assert.equal(stripHtml("<p>One &amp; two.</p><p>Three<br>four.</p>"), "One & two.\n\nThree\nfour.");
   assert.equal(cleanOpenLibraryDescription("Roshar is a world.\r\n\r\n([source][1])\n\n----------\n[1]: https://example.com"), "Roshar is a world.");
 });
 
-async function withStubbedFetch(answer: (url: string) => Response, run: (urls: string[]) => Promise<void>, { googleKey }: { googleKey?: string } = {}) {
+async function withStubbedFetch(answer: (url: string) => Response, run: (urls: string[]) => Promise<void>) {
   const originalFetch = globalThis.fetch;
-  const originalKey = process.env.GOOGLE_BOOKS_API_KEY;
-  if (googleKey) process.env.GOOGLE_BOOKS_API_KEY = googleKey;
-  else delete process.env.GOOGLE_BOOKS_API_KEY;
   const urls: string[] = [];
   globalThis.fetch = (async (input: any) => { const url = String(input); urls.push(url); return answer(url); }) as typeof fetch;
   try {
     await run(urls);
   } finally {
     globalThis.fetch = originalFetch;
-    if (originalKey !== undefined) process.env.GOOGLE_BOOKS_API_KEY = originalKey;
-    else delete process.env.GOOGLE_BOOKS_API_KEY;
   }
 }
 
 test("a lookup where every catalog answers 404 resolves to nothing", async () => {
   await withStubbedFetch(() => new Response("{}", { status: 404 }), async () => {
-    assert.deepEqual(await lookupBook(kings, { retryBaseMs: 0 }), { year: null, description: null, source: null, coverId: null });
+    assert.deepEqual(await lookupBook(kings, { retryBaseMs: 0 }), { year: null, description: null, coverId: null });
   });
 });
 
@@ -69,7 +50,7 @@ test("a lookup that gave up on transient errors throws IncompleteLookup with wha
     async (urls) => {
       await assert.rejects(lookupBook(kings, { retryBaseMs: 0 }), (error) => {
         assert.ok(error instanceof IncompleteLookup);
-        assert.deepEqual(error.partial, { year: 2010, description: null, source: null, coverId: 7 });
+        assert.deepEqual(error.partial, { year: 2010, description: null, coverId: 7 });
         return true;
       });
       assert.equal(urls.filter((u) => u.includes("/isbn/")).length, 4);
@@ -88,56 +69,19 @@ test("an edition's own cover wins over the book's default cover", async () => {
   );
 });
 
-const dune = { title: "Dune", author: "Frank Herbert" };
-
-test("a title and author resolve to the ISBN of Google's match, preferring one with a description", async () => {
+test("a book without an ISBN takes its year, cover, and description from the work matching its title and author", async () => {
   await withStubbedFetch(
-    (url) => url.includes("googleapis.com") ? json({ items: [
-      item("Dune", ["Frank Herbert"], undefined, "0441013597"),
-      item("Dune", ["Frank Herbert"], "Arrakis.", "9780441013593"),
-    ] }) : json({}, 404),
-    async () => {
-      assert.equal(await resolveIsbn(dune, { retryBaseMs: 0 }), "9780441013593");
-    },
-    { googleKey: "test-key" },
-  );
-});
-
-test("Google matches without an ISBN fall through to Open Library's edition", async () => {
-  await withStubbedFetch(
-    (url) => url.includes("googleapis.com") ? json({ items: [item("Dune", ["Frank Herbert"], "A library scan.")] })
-      : url.includes("/search.json") ? json({ docs: [
-        { title: "Dune Messiah", author_name: ["Frank Herbert"], editions: { docs: [{ isbn: ["9780425074985"] }] } },
-        { title: "Dune", author_name: ["Frank Herbert"], editions: { docs: [{ isbn: ["bad", "0425038912", "9780425038918"] }] } },
-      ] })
+    (url) => url.includes("/search.json") ? json({ docs: [
+      { key: "/works/OL1W", title: "The Way of Kings, Part One", author_name: ["Brandon Sanderson"], first_publish_year: 2011, cover_i: 1 },
+      { key: "/works/OL2W", title: "The Way of Kings", author_name: ["Someone Else"], first_publish_year: 1999, cover_i: 2 },
+      { key: "/works/OL3W", title: "The Way of Kings", author_name: ["Brandon Sanderson"], first_publish_year: 2010, cover_i: 14658316 },
+    ] })
+      : url.endsWith("/works/OL3W.json") ? json({ description: { value: "Roshar is a world of stone and storms." } })
       : json({}, 404),
-    async () => {
-      assert.equal(await resolveIsbn(dune, { retryBaseMs: 0 }), "9780425038918");
+    async (urls) => {
+      assert.deepEqual(await lookupBook({ ...kings, isbn: null }, { retryBaseMs: 0 }), { year: 2010, description: "Roshar is a world of stone and storms.", coverId: 14658316 });
+      assert.ok(!urls.some((u) => u.includes("isbn")), "no ISBN requests without an ISBN");
     },
-    { googleKey: "test-key" },
-  );
-});
-
-test("a title and author with no match anywhere resolve to nothing", async () => {
-  await withStubbedFetch(() => json({}, 404), async () => {
-    assert.equal(await resolveIsbn(dune, { retryBaseMs: 0 }), null);
-  });
-});
-
-test("a resolve that gave up on transient errors throws instead of answering nothing", async () => {
-  await withStubbedFetch(() => new Response("busy", { status: 503 }), async () => {
-    await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0 }), IncompleteLookup);
-  });
-});
-
-test("a resolve doesn't settle for Open Library while Google is failing", async () => {
-  await withStubbedFetch(
-    (url) => url.includes("googleapis.com") ? new Response("busy", { status: 503 })
-      : json({ docs: [{ title: "Dune", author_name: ["Frank Herbert"], editions: { docs: [{ isbn: ["9780425038918"] }] } }] }),
-    async () => {
-      await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0 }), IncompleteLookup);
-    },
-    { googleKey: "test-key" },
   );
 });
 
@@ -157,35 +101,20 @@ test("an ISBN Open Library doesn't list takes the year and cover from the matchi
   );
 });
 
-test("Google blurbs lose the wrapping quotes and the publisher's sign-off", () => {
-  assert.equal(cleanGoogleDescription(`"The war moves on. Dalinar leads."--Publisher's description.`), "The war moves on. Dalinar leads.");
-  assert.equal(cleanGoogleDescription(`“A curly one.” -- Publisher’s Description`), "A curly one.");
-  assert.equal(cleanGoogleDescription(`Plain text with a "quote" inside.`), `Plain text with a "quote" inside.`);
-});
-
-// A daily quota won't clear in seconds: retrying only slows every page that renders while it lasts.
-const quotaRefusal = () => new Response(JSON.stringify({ error: { code: 429, message: "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'books.googleapis.com'" } }), { status: 429 });
-
-test("Google's daily-quota refusal isn't retried, and the lookup isn't kept", async () => {
-  await withStubbedFetch(
-    (url) => url.includes("googleapis.com") ? quotaRefusal() : json({}, 404),
-    async (urls) => {
-      await assert.rejects(lookupBook(kings, { retryBaseMs: 0 }), IncompleteLookup);
-      assert.equal(urls.filter((u) => u.includes("googleapis.com")).length, 1);
-    },
-    { googleKey: "test-key" },
-  );
-});
-
-test("a resolve stops at Google's daily-quota refusal without retrying", async () => {
-  await withStubbedFetch(
-    (url) => url.includes("googleapis.com") ? quotaRefusal() : json({}, 404),
-    async (urls) => {
-      await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0 }), IncompleteLookup);
-      assert.equal(urls.filter((u) => u.includes("googleapis.com")).length, 1);
-    },
-    { googleKey: "test-key" },
-  );
+// Open Library allows 1 request a second from apps that don't say who they are, 3 from ones that give a contact.
+test("lookups tell Open Library who is asking and how to reach them", async () => {
+  const originalFetch = globalThis.fetch;
+  const agents: (string | null)[] = [];
+  globalThis.fetch = (async (_input: unknown, init?: RequestInit) => {
+    agents.push(new Headers(init?.headers).get("User-Agent"));
+    return json({}, 404);
+  }) as typeof fetch;
+  try {
+    await lookupBook(kings, { retryBaseMs: 0 });
+    assert.ok(agents.length > 0 && agents.every((agent) => /derekpap\.com.*\(hello@derekpap\.com\)/.test(agent ?? "")), String(agents[0]));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 // A catalog that never answers must not hold a page past the build's limit: the lookup stops at its budget.
@@ -199,7 +128,7 @@ test("a lookup stops at its time budget when a catalog never answers", async () 
   try {
     const started = Date.now();
     await assert.rejects(lookupBook(kings, { retryBaseMs: 0, budgetMs: 150 }), IncompleteLookup);
-    await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0, budgetMs: 150 }), IncompleteLookup);
+    await assert.rejects(lookupBook({ ...kings, isbn: null }, { retryBaseMs: 0, budgetMs: 150 }), IncompleteLookup);
     assert.ok(Date.now() - started < 2000, `took ${Date.now() - started}ms`);
   } finally {
     clearInterval(keepAlive);

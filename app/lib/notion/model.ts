@@ -16,7 +16,7 @@ export type BookEntry = {
   id: string; slug: string; title: string; author: string; isbn: string | null; status: BookStatus;
   date: string | null; createdTime: string; lastEditedTime: string;
   year: number | null; cover: string | null;
-  description: { text: string; source: "notion" | "google books" | "open library" } | null;
+  description: { text: string; source: "notion" | "open library" } | null;
 };
 export type NoteEntry = {
   id: string; slug: string; title: string; category: NoteCategory | null; date: string;

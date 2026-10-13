@@ -5,8 +5,9 @@ import { queryPublished, readBlocks } from "./source";
 import { parseBookPage, parseNotePage, type Parsed } from "./pages";
 import { assignSlugs } from "./slugs";
 import { orderBooks, orderNotes } from "./order";
-import { IncompleteLookup, NO_LOOKUP, lookupBook, mergeBook, resolveIsbn, type Lookup } from "./enrich";
-import { mirror } from "./mirror";
+import { IncompleteLookup, coverSource, lookupBook, mergeBook, type Lookup } from "./enrich";
+import { keepCover, mirror } from "./mirror";
+import { coverKey } from "./images";
 import { toBlocks, type Block } from "./blocks";
 import { fallbackBooks } from "./fallback";
 import type { BookEntry, NoteEntry } from "./model";
@@ -35,35 +36,51 @@ function fallback(): BookEntry[] {
   return fallbackBooks(getReading());
 }
 
-// Spec §5.4: a book is looked up by its ISBN, cached for 30 days; without one in Notion, by the ISBN its title and author
-// resolve to. Title and author are in the key so a typo fixed in Notion gets a fresh lookup. A lookup that gave up on a
-// passing failure throws, so it isn't cached; this render uses what it did find. Never call this inside another
-// unstable_cache: Next 15.1 skips reading a nested one, so every call would go to the catalogs.
-async function lookup({ title, author, isbn }: { title: string; author: string; isbn: string | null }): Promise<Lookup> {
-  const pinned = isbn ?? (await resolve(title, author));
-  if (!pinned) return NO_LOOKUP;
+type Named = { title: string; author: string; isbn: string | null };
+
+// A build renders every page at once and every page loads every book, so cache misses arrive together. They share the
+// work still in flight: Open Library sees one request per book, not one per page (it allows us 3 a second).
+const inFlight = new Map<string, Promise<unknown>>();
+function shared<T>(key: string, run: () => Promise<T>): Promise<T> {
+  let pending = inFlight.get(key) as Promise<T> | undefined;
+  if (!pending) {
+    pending = run().finally(() => inFlight.delete(key));
+    inFlight.set(key, pending);
+  }
+  return pending;
+}
+
+// Spec §5.4: a book is looked up by its title and author, or by an ISBN typed to correct the match, and kept 30 days. All
+// three are in the key, so a fix in Notion gets a fresh lookup. A lookup that gave up on a passing failure throws, so it
+// isn't kept; this render uses what it did find. Never call this inside another unstable_cache: Next 15.1 skips reading
+// a nested one, so every call would go to the catalog.
+async function lookup({ title, author, isbn }: Named): Promise<Lookup> {
   try {
-    return await unstable_cache(() => lookupBook({ title, author, isbn: pinned }), ["book-lookup-v4", pinned, title, author], { tags: [`book:isbn:${pinned}`], revalidate: MONTH })();
+    return await unstable_cache(() => shared(`lookup:${isbn}:${title}:${author}`, () => lookupBook({ title, author, isbn })), ["book-lookup-v5", isbn ?? "", title, author], { revalidate: MONTH })();
   } catch (error) {
     if (error instanceof IncompleteLookup) return error.partial;
     throw error;
   }
 }
 
-class NoMatch extends Error {}
+class NoCover extends Error {}
 
-// A title and author resolve to an ISBN once, kept until either changes in Notion: searches shift over time, and a monthly
-// re-search could quietly swap the edition. No match isn't kept, so the next refresh searches again.
-async function resolve(title: string, author: string): Promise<string | null> {
+// A cover found once is copied to Blob under the book's own name and kept for good, so it never needs Open Library, its
+// slow cover server, or the lookup cache again. Until a copy exists (no Blob token locally, a failed copy, nothing found
+// yet) the cover comes straight from Open Library and the next render tries again.
+async function cover(book: Named, coverId: number | null): Promise<string | null> {
+  const source = coverId ? coverSource(coverId) : null;
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return source;
+  const key = coverKey(book);
   try {
     return await unstable_cache(async () => {
-      const isbn = await resolveIsbn({ title, author });
-      if (!isbn) throw new NoMatch();
-      return isbn;
-    }, ["book-isbn-v1", title, author], { revalidate: false })();
+      const kept = await shared(`cover:${key}`, () => keepCover(key, source));
+      if (!kept) throw new NoCover();
+      return kept;
+    }, ["book-cover-v1", key], { revalidate: false })();
   } catch (error) {
-    if (error instanceof NoMatch || error instanceof IncompleteLookup) return null;
-    throw error;
+    if (!(error instanceof NoCover)) console.warn(`[notion] could not keep the cover for ${book.title}; using Open Library's`);
+    return source;
   }
 }
 
@@ -88,12 +105,14 @@ const listBooks = unstable_cache(async (): Promise<ListedBook[]> => {
   return orderBooks(books);
 }, ["notion-books-v2"], { tags: ["notion", "notion:books"], revalidate: HOUR });
 
-/** The bookshelf: the hourly list, each book filled in from its own 30-day lookup. */
+/** The bookshelf: the hourly list, each book filled in from its own 30-day lookup, its cover from Blob once kept. */
 export async function loadBooks(): Promise<BookEntry[]> {
   if (!notionConfig()) return fallback();
   const books = await listBooks();
-  const found = await Promise.all(books.map(lookup));
-  return books.map(({ own, ...book }, i) => ({ ...book, ...mergeBook(own, found[i]) }));
+  return Promise.all(books.map(async ({ own, ...book }) => {
+    const found = await lookup(book);
+    return { ...book, ...mergeBook({ ...own, cover: own.cover ?? (await cover(book, found.coverId)) }, found) };
+  }));
 }
 
 export const loadNotes = unstable_cache(async (): Promise<NoteEntry[]> => {

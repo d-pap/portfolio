@@ -80,3 +80,23 @@ export async function mirror(sourceUrl: string, id: string, edited: string): Pro
     throw new Error(`[notion] could not copy image ${id} to Blob`, { cause: error });
   }
 }
+
+/**
+ * A book cover's permanent URL: the copy already in Blob under `key`, else `sourceUrl` copied there. Null when there is
+ * no copy yet and no source, or the source answers 4xx. Throws on anything that may pass.
+ */
+export async function keepCover(key: string, sourceUrl: string | null): Promise<string | null> {
+  try {
+    return (await head(key)).url;
+  } catch (error) {
+    if (!(error instanceof BlobNotFoundError)) throw new Error(`[notion] could not check ${key} in Blob`, { cause: error });
+  }
+  if (!sourceUrl) return null;
+  const file = await download(sourceUrl);
+  if (!file) return null;
+  const blob = await put(key, file.bytes, {
+    access: "public", addRandomSuffix: false, allowOverwrite: true, cacheControlMaxAge: 31536000,
+    contentType: file.type ?? "image/jpeg",
+  });
+  return blob.url;
+}
