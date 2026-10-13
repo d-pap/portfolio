@@ -58,3 +58,5 @@ public/**/_local-*
 # generated
 app/lib/media-colors.json
 .env*
+
+critique-response.md

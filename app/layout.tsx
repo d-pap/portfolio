@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
   twitter: { title: metaData.name, card: "summary_large_image" },
-  icons: { icon: "/favicon-greeno.ico" },
+  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
