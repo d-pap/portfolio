@@ -66,27 +66,37 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 type Fetched = { json: any | null; gaveUp: boolean };
 
-// gaveUp means all attempts ended in 429, 5xx, a network error, or a timeout; a 4xx (other than 429) is a definitive answer.
-async function getJson(url: string, retryBaseMs: number): Promise<Fetched> {
+// gaveUp means all attempts ended in 429, 5xx, a network error, or a timeout, or the lookup's time ran out; a 4xx (other
+// than 429) is a definitive answer.
+async function getJson(url: string, retryBaseMs: number, deadline: number): Promise<Fetched> {
   for (let attempt = 0; attempt < 4; attempt++) {
+    const left = deadline - Date.now();
+    if (left <= 0) break;
     try {
-      const response = await fetch(url, { headers: { "User-Agent": "derekpap.com bookshelf" }, signal: AbortSignal.timeout(8000) });
+      const response = await fetch(url, { headers: { "User-Agent": "derekpap.com bookshelf" }, signal: AbortSignal.timeout(Math.min(8000, left)) });
       if (response.ok) return { json: await response.json(), gaveUp: false };
+      // A daily quota won't clear in seconds. Give up now: the lookup isn't kept, so a later render tries again.
+      if (response.status === 429 && /per day/i.test(await response.text())) return { json: null, gaveUp: true };
       if (response.status !== 429 && response.status < 500) return { json: null, gaveUp: false };
     } catch {
       // Network trouble or timeout: retry like a 5xx.
     }
-    if (attempt < 3) await sleep(retryBaseMs * 2 ** attempt);
+    if (attempt < 3) await sleep(Math.min(retryBaseMs * 2 ** attempt, Math.max(0, deadline - Date.now())));
   }
   return { json: null, gaveUp: true };
 }
 
-/** One lookup's requests, remembering whether any of them gave up. */
-function catalog(retryBaseMs: number) {
+// A whole lookup's time, so a slow or failing catalog can't hold a page past the build's 60-second limit. Every page
+// loads every book (and a book page does it twice, for its metadata and its body), so this stays well under it.
+const BUDGET_MS = 10_000;
+
+/** One lookup's requests, sharing one time budget and remembering whether any of them gave up. */
+function catalog(retryBaseMs: number, budgetMs: number) {
+  const deadline = Date.now() + budgetMs;
   let gaveUp = false;
   return {
     get: async (url: string) => {
-      const result = await getJson(url, retryBaseMs);
+      const result = await getJson(url, retryBaseMs, deadline);
       gaveUp ||= result.gaveUp;
       return result.json;
     },
@@ -104,9 +114,9 @@ type OpenLibraryWork = { title?: string; author_name?: string[]; first_publish_y
 const openLibrarySearch = (book: Named, fields: string) =>
   `https://openlibrary.org/search.json?${new URLSearchParams({ title: book.title, author: surname(book.author), fields, limit: "5" })}`;
 
-export async function lookupBook(book: Book, { retryBaseMs = 800 }: { retryBaseMs?: number } = {}): Promise<Lookup> {
+export async function lookupBook(book: Book, { retryBaseMs = 800, budgetMs = BUDGET_MS }: { retryBaseMs?: number; budgetMs?: number } = {}): Promise<Lookup> {
   const out: Lookup = { ...NO_LOOKUP };
-  const { get, gaveUp } = catalog(retryBaseMs);
+  const { get, gaveUp } = catalog(retryBaseMs, budgetMs);
   let work: OpenLibraryWork | undefined = (await get(`https://openlibrary.org/search.json?isbn=${book.isbn}&fields=first_publish_year,cover_i&limit=1`))?.docs?.[0];
   // An edition Open Library doesn't list (often one Google picked): the matching work still has the year and a cover.
   if (!work) {
@@ -147,8 +157,8 @@ export async function lookupBook(book: Book, { retryBaseMs = 800 }: { retryBaseM
  * Library ranks first for the matching work. Null when neither has one. Throws IncompleteLookup when a catalog gave up,
  * so a passing Google failure never settles the match on Open Library's pick.
  */
-export async function resolveIsbn(book: Named, { retryBaseMs = 800 }: { retryBaseMs?: number } = {}): Promise<string | null> {
-  const { get, gaveUp } = catalog(retryBaseMs);
+export async function resolveIsbn(book: Named, { retryBaseMs = 800, budgetMs = BUDGET_MS }: { retryBaseMs?: number; budgetMs?: number } = {}): Promise<string | null> {
+  const { get, gaveUp } = catalog(retryBaseMs, budgetMs);
   const key = process.env.GOOGLE_BOOKS_API_KEY?.trim();
   if (key) {
     const items: GoogleItem[] = (await get(googleSearch(book, key)))?.items ?? [];

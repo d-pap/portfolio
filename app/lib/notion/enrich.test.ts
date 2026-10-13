@@ -162,3 +162,47 @@ test("Google blurbs lose the wrapping quotes and the publisher's sign-off", () =
   assert.equal(cleanGoogleDescription(`“A curly one.” -- Publisher’s Description`), "A curly one.");
   assert.equal(cleanGoogleDescription(`Plain text with a "quote" inside.`), `Plain text with a "quote" inside.`);
 });
+
+// A daily quota won't clear in seconds: retrying only slows every page that renders while it lasts.
+const quotaRefusal = () => new Response(JSON.stringify({ error: { code: 429, message: "Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'books.googleapis.com'" } }), { status: 429 });
+
+test("Google's daily-quota refusal isn't retried, and the lookup isn't kept", async () => {
+  await withStubbedFetch(
+    (url) => url.includes("googleapis.com") ? quotaRefusal() : json({}, 404),
+    async (urls) => {
+      await assert.rejects(lookupBook(kings, { retryBaseMs: 0 }), IncompleteLookup);
+      assert.equal(urls.filter((u) => u.includes("googleapis.com")).length, 1);
+    },
+    { googleKey: "test-key" },
+  );
+});
+
+test("a resolve stops at Google's daily-quota refusal without retrying", async () => {
+  await withStubbedFetch(
+    (url) => url.includes("googleapis.com") ? quotaRefusal() : json({}, 404),
+    async (urls) => {
+      await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0 }), IncompleteLookup);
+      assert.equal(urls.filter((u) => u.includes("googleapis.com")).length, 1);
+    },
+    { googleKey: "test-key" },
+  );
+});
+
+// A catalog that never answers must not hold a page past the build's limit: the lookup stops at its budget.
+test("a lookup stops at its time budget when a catalog never answers", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = ((_input: unknown, init?: RequestInit) => new Promise((_resolve, reject) => {
+    init?.signal?.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError")));
+  })) as typeof fetch;
+  // AbortSignal.timeout doesn't hold Node's event loop open, and nothing else here would; a server always does.
+  const keepAlive = setInterval(() => {}, 1000);
+  try {
+    const started = Date.now();
+    await assert.rejects(lookupBook(kings, { retryBaseMs: 0, budgetMs: 150 }), IncompleteLookup);
+    await assert.rejects(resolveIsbn(dune, { retryBaseMs: 0, budgetMs: 150 }), IncompleteLookup);
+    assert.ok(Date.now() - started < 2000, `took ${Date.now() - started}ms`);
+  } finally {
+    clearInterval(keepAlive);
+    globalThis.fetch = originalFetch;
+  }
+});
