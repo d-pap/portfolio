@@ -55,6 +55,29 @@ html:active-view-transition:not(:active-view-transition-type(to-back, to-front))
   animation: trip-out 160ms linear both;
 }
 
+/* Inside a room: the frame, title, filters, and list stay exactly where they are; only the open entry changes. The
+   still parts swap without a crossfade, and the list's crossfade only moves the lit row. */
+html:active-view-transition-type(within-room) .room-title { view-transition-name: room-title; }
+html:active-view-transition-type(within-room) .reader-filters { view-transition-name: room-filters; }
+html:active-view-transition-type(within-room) .reader-list { view-transition-name: room-list; }
+html:active-view-transition-type(within-room) .reader-entry { view-transition-name: room-reader; }
+html:active-view-transition-type(within-room)::view-transition-old(root),
+html:active-view-transition-type(within-room)::view-transition-new(root),
+html:active-view-transition-type(within-room)::view-transition-old(frame),
+html:active-view-transition-type(within-room)::view-transition-new(frame),
+html:active-view-transition-type(within-room)::view-transition-old(room-title),
+html:active-view-transition-type(within-room)::view-transition-new(room-title),
+html:active-view-transition-type(within-room)::view-transition-old(room-filters),
+html:active-view-transition-type(within-room)::view-transition-new(room-filters) { animation: none; }
+html:active-view-transition-type(within-room)::view-transition-group(room-reader) { animation: none; }
+html:active-view-transition-type(within-room)::view-transition-old(room-reader),
+html:active-view-transition-type(within-room)::view-transition-new(room-reader) { height: auto; width: 100%; object-fit: none; object-position: top left; }
+/* The old entry fades out exactly where it was on screen: when the new entry sits higher or lower (the new page opens
+   scrolled less, or Back restores another scroll), trip.js sets --reader-from to the difference. It isn't clipped to
+   the new entry's box, which would cut off its top line where the list sticks; the frame covers anything above. */
+html:active-view-transition-type(within-room)::view-transition-old(room-reader) { animation: trip-out 120ms linear both; transform: translateY(var(--reader-from, 0px)); }
+html:active-view-transition-type(within-room)::view-transition-new(room-reader) { animation: trip-rise 360ms var(--ease-out) 80ms both; }
+
 @keyframes trip-out { to { opacity: 0; } }
 @keyframes trip-in { from { opacity: 0; } }
 @keyframes trip-rise { from { opacity: 0; transform: translateY(14px); } }

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { lastUpdated, parseCommitDate } from "./updated.ts";
+import { laterDate, lastUpdated, parseCommitDate } from "./updated.ts";
 
 test("reads git's short commit date", () => {
   assert.equal(parseCommitDate("2026-10-08\n"), "2026-10-08");
@@ -18,4 +18,21 @@ test("rejects empty or unexpected output", () => {
 test("in this repository the last change is a date", () => {
   const value = lastUpdated();
   assert.ok(value === null || /^\d{4}-\d{2}-\d{2}$/.test(value), String(value));
+});
+
+test("a commit date captured at build time wins over asking git", () => {
+  process.env.SITE_COMMIT_DATE = "2026-01-02";
+  try {
+    assert.equal(lastUpdated(), "2026-01-02");
+  } finally {
+    delete process.env.SITE_COMMIT_DATE;
+  }
+});
+
+test("the updated date is the later of the last commit and the newest Notion edit", () => {
+  assert.equal(laterDate("2026-10-08", "2026-10-12T10:00:00.000Z"), "2026-10-12");
+  assert.equal(laterDate("2026-10-13", "2026-10-12T10:00:00.000Z"), "2026-10-13");
+  assert.equal(laterDate(null, "2026-10-12T10:00:00.000Z"), "2026-10-12");
+  assert.equal(laterDate("2026-10-08", null), "2026-10-08");
+  assert.equal(laterDate(null, null), null);
 });

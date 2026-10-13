@@ -1,16 +1,17 @@
 import type { CSSProperties } from "react";
 import { socialLinks } from "app/config";
 import { Arrow } from "app/components/arrow";
-import { getReading } from "app/lib/content";
+import { roomsContent } from "app/lib/notion/rooms";
 import { visibleRooms } from "app/lib/rooms";
-import { lastUpdated } from "app/lib/updated";
+import { laterDate, lastUpdated } from "app/lib/updated";
 import { CopyEmail } from "./copy-email";
 import "./back-plane.css";
 
 /** The lime plane under every front page: the doorways to the person behind the work, and how to reach him. */
-export function BackPlane() {
-  const rooms = visibleRooms({ books: getReading().length > 0, desk: false });
-  const updated = lastUpdated();
+export async function BackPlane() {
+  const content = await roomsContent();
+  const rooms = visibleRooms({ books: content.books, notes: content.notes });
+  const updated = laterDate(lastUpdated(), content.latestEdit);
   return (
     <footer id="back" className="back-plane">
       <div className="back-in page">

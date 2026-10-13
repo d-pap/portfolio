@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { bookKey, coverUrl, parseReading } from "./reading.ts";
+import { parseReading } from "./reading.ts";
 
 const sample = fs.readFileSync(new URL("./fixtures/reading.sample.json", import.meta.url), "utf8");
 
@@ -28,12 +28,4 @@ test("problems name the file and the item", () => {
 
 test("ten-digit ISBNs may end in X", () => {
   assert.equal(parseReading('[{"title":"x","author":"y","isbn":"0-306-40615-x"}]')[0].isbn, "030640615X");
-});
-
-test("coverUrl asks Open Library for a 404 when there is no cover", () => {
-  assert.equal(coverUrl("9780374533557"), "https://covers.openlibrary.org/b/isbn/9780374533557-L.jpg?default=false");
-});
-
-test("bookKey is stable and URL-safe", () => {
-  assert.equal(bookKey({ title: "Thinking, Fast and Slow", author: "Daniel Kahneman" }), "thinking-fast-and-slow-daniel-kahneman");
 });

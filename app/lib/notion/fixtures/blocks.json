@@ -1,0 +1,29 @@
+[
+  { "object": "block", "id": "p1", "type": "paragraph", "has_children": false, "last_edited_time": "2026-10-12T10:00:00.000Z",
+    "paragraph": { "rich_text": [
+      { "type": "text", "plain_text": "Plain, ", "href": null, "annotations": { "bold": false, "italic": false, "strikethrough": false, "underline": false, "code": false } },
+      { "type": "text", "plain_text": "bold", "href": null, "annotations": { "bold": true, "italic": false, "strikethrough": false, "underline": false, "code": false } },
+      { "type": "text", "plain_text": " and ", "href": null, "annotations": { "bold": false, "italic": false, "strikethrough": false, "underline": false, "code": false } },
+      { "type": "text", "plain_text": "a link", "href": "https://example.com/", "annotations": { "bold": false, "italic": true, "strikethrough": false, "underline": false, "code": false } },
+      { "type": "mention", "plain_text": "Another page", "href": "https://www.notion.so/abc", "annotations": { "bold": false, "italic": false, "strikethrough": false, "underline": false, "code": false } },
+      { "type": "text", "plain_text": "git worktree", "href": null, "annotations": { "bold": false, "italic": false, "strikethrough": false, "underline": false, "code": true } }
+    ] } },
+  { "object": "block", "id": "h1", "type": "heading_1", "has_children": false, "heading_1": { "rich_text": [{ "type": "text", "plain_text": "Top heading" }] } },
+  { "object": "block", "id": "h3", "type": "heading_3", "has_children": false, "heading_3": { "rich_text": [{ "type": "text", "plain_text": "Small heading" }] } },
+  { "object": "block", "id": "l1", "type": "bulleted_list_item", "has_children": true, "bulleted_list_item": { "rich_text": [{ "type": "text", "plain_text": "one" }] },
+    "children": [ { "object": "block", "id": "l1a", "type": "bulleted_list_item", "has_children": false, "bulleted_list_item": { "rich_text": [{ "type": "text", "plain_text": "one-a" }] } } ] },
+  { "object": "block", "id": "l2", "type": "bulleted_list_item", "has_children": false, "bulleted_list_item": { "rich_text": [{ "type": "text", "plain_text": "two" }] } },
+  { "object": "block", "id": "n1", "type": "numbered_list_item", "has_children": false, "numbered_list_item": { "rich_text": [{ "type": "text", "plain_text": "first" }] } },
+  { "object": "block", "id": "q1", "type": "quote", "has_children": false, "quote": { "rich_text": [{ "type": "text", "plain_text": "A quote." }] } },
+  { "object": "block", "id": "c1", "type": "callout", "has_children": false, "callout": { "rich_text": [{ "type": "text", "plain_text": "Heads up." }], "icon": { "type": "emoji", "emoji": "💡" } } },
+  { "object": "block", "id": "t1", "type": "toggle", "has_children": true, "toggle": { "rich_text": [{ "type": "text", "plain_text": "More" }] },
+    "children": [ { "object": "block", "id": "t1a", "type": "paragraph", "has_children": false, "paragraph": { "rich_text": [{ "type": "text", "plain_text": "Inside." }] } } ] },
+  { "object": "block", "id": "k1", "type": "code", "has_children": false, "code": { "language": "bash", "rich_text": [{ "type": "text", "plain_text": "git worktree add ../x\n" }, { "type": "text", "plain_text": "cd ../x" }], "caption": [] } },
+  { "object": "block", "id": "i1", "type": "image", "has_children": false, "last_edited_time": "2026-10-12T11:00:00.000Z", "image": { "type": "file", "file": { "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/x/desk.jpg?X-Amz-Signature=abc", "expiry_time": "2026-10-12T12:00:00.000Z" }, "caption": [{ "type": "text", "plain_text": "The desk." }] } },
+  { "object": "block", "id": "i2", "type": "image", "has_children": false, "last_edited_time": "2026-10-12T11:00:00.000Z", "image": { "type": "external", "external": { "url": "https://example.com/pic.png" }, "caption": [] } },
+  { "object": "block", "id": "d1", "type": "divider", "has_children": false, "divider": {} },
+  { "object": "block", "id": "bk", "type": "bookmark", "has_children": false, "bookmark": { "url": "https://rsms.me/", "caption": [{ "type": "text", "plain_text": "rsms" }] } },
+  { "object": "block", "id": "tb", "type": "table", "has_children": true, "table": { "table_width": 2 } },
+  { "object": "block", "id": "em", "type": "embed", "has_children": false, "embed": { "url": "https://example.com/" } },
+  { "object": "block", "id": "cp", "type": "child_page", "has_children": false, "child_page": { "title": "Sub" } }
+]

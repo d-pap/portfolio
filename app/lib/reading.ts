@@ -30,11 +30,3 @@ export function parseReading(raw: string, where = "content/reading.json"): Book[
 
   return books.sort((a, b) => sortKey(a.title).localeCompare(sortKey(b.title)));
 }
-
-export function coverUrl(isbn: string): string {
-  return `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg?default=false`;
-}
-
-export function bookKey(book: Pick<Book, "title" | "author">): string {
-  return `${book.title}-${book.author}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}

@@ -3,6 +3,9 @@ import { Frame } from "app/components/frame";
 import { PlaneWatch } from "app/components/sheet/plane-watch";
 import "app/components/sheet/sheet.css";
 
+// The back plane reads the rooms from Notion: a webhook refreshes these pages by tag, and an hour is the safety net.
+export const revalidate = 3600;
+
 export default function FrontLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

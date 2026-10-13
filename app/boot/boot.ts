@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Order matters only for readability; each file is a self-contained IIFE, inlined as its own <script>.
-const FILES = ["trip.js", "arrive.js", "first-visit.js"];
+const FILES = ["trip.js", "arrive.js", "first-visit.js", "filter.js"];
 
 // Read once per server process. next.config.ts traces these files into every route's bundle, so pages rendered on
 // request can read them too; a missing file degrades to nothing (no trip) rather than failing the page. Development

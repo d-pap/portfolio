@@ -15,12 +15,12 @@ const at = (p: string) => `https://derekpapierski.com${p}`;
 test("front pages to a room go behind the work", () => {
   assert.equal(transitionType(at("/"), at("/bookshelf")), "to-back");
   assert.equal(transitionType(at("/work/sprout"), at("/bookshelf")), "to-back");
-  assert.equal(transitionType(at("/work/sprout#evals"), at("/desk")), "to-back");
+  assert.equal(transitionType(at("/work/sprout#evals"), at("/notes")), "to-back");
 });
 
 test("a room back to a front page comes forward", () => {
   assert.equal(transitionType(at("/bookshelf"), at("/")), "to-front");
-  assert.equal(transitionType(at("/desk"), at("/work/renew")), "to-front");
+  assert.equal(transitionType(at("/notes"), at("/work/renew")), "to-front");
 });
 
 test("home and case pages keep the case morph in both directions", () => {
@@ -45,11 +45,25 @@ test("everything else gets no type", () => {
 
 test("roomOf names the room a URL opens, so only that doorway flies", () => {
   assert.equal(roomOf(at("/bookshelf")), "bookshelf");
-  assert.equal(roomOf(at("/desk/")), "desk");
+  assert.equal(roomOf(at("/notes/")), "notes");
   assert.equal(roomOf(at("/")), null);
   assert.equal(roomOf(at("/work/sprout")), null);
   assert.equal(roomOf("not a url"), null);
   assert.equal(roomOf(undefined), null);
+});
+
+test("room entry URLs count as the room", () => {
+  assert.equal(transitionType(at("/"), at("/notes/git-worktrees")), "to-back");
+  assert.equal(transitionType(at("/bookshelf/the-way-of-kings"), at("/")), "to-front");
+  assert.equal(roomOf(at("/notes/git-worktrees")), "notes");
+  assert.equal(roomOf(at("/bookshelf/the-way-of-kings/")), "bookshelf");
+});
+
+test("moving inside one room keeps the room still", () => {
+  assert.equal(transitionType(at("/bookshelf"), at("/bookshelf/the-way-of-kings")), "within-room");
+  assert.equal(transitionType(at("/notes/a"), at("/notes/b")), "within-room");
+  assert.equal(transitionType(at("/notes/a"), at("/bookshelf/b")), null);
+  assert.equal(transitionType(at("/notes/a"), at("/notes/a")), null);
 });
 
 test("the lift clears the sheet's bottom edge plus room for its shadow", () => {

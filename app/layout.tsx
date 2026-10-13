@@ -9,7 +9,7 @@ import { bootScripts, tripStyle } from "app/boot/boot";
 const mono = Fragment_Mono({ subsets: ["latin"], weight: "400", display: "swap", variable: "--font-fragment-mono" });
 
 const SPECULATION = {
-  prerender: [{ where: { or: [{ href_matches: "/work/*" }, { href_matches: "/bookshelf" }] }, eagerness: "moderate" }],
+  prerender: [{ where: { or: [{ href_matches: "/work/*" }, { href_matches: "/bookshelf" }, { href_matches: "/bookshelf/*" }, { href_matches: "/notes" }, { href_matches: "/notes/*" }] }, eagerness: "moderate" }],
 };
 
 export const metadata: Metadata = {
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a className="skip-link" href="#main">skip to content</a>
         {children}
-        {/* Prerender a project or the bookshelf when the pointer rests on its link, so the transition starts on the next frame. */}
+        {/* Prerender a project or a room entry when the pointer rests on its link, so the transition starts on the next frame. */}
         <script type="speculationrules" dangerouslySetInnerHTML={{ __html: JSON.stringify(SPECULATION) }} />
         <SiteAnalytics />
       </body>

@@ -2,7 +2,7 @@
    before the first paint; also loaded by trip.test.ts, which reads the pure helpers from globalThis.__trip. */
 (function () {
   var FRONT = /^\/(work\/[^/]+)?$/;
-  var ROOM = /^\/(bookshelf|desk)$/;
+  var ROOM = /^\/(bookshelf|notes)(\/[^/]+)?$/;
   var CASE = /^\/work\/[^/]+$/;
   var CLEARANCE = 120; // room for the sheet's shadow to leave the screen with it
 
@@ -24,6 +24,7 @@
     var b = pathOf(to);
     if (FRONT.test(a) && ROOM.test(b)) return "to-back";
     if (ROOM.test(a) && FRONT.test(b)) return "to-front";
+    if (ROOM.test(a) && ROOM.test(b) && a !== b && ROOM.exec(a)[1] === ROOM.exec(b)[1]) return "within-room";
     if ((a === "/" && CASE.test(b)) || (CASE.test(a) && b === "/")) return "to-case";
     return null;
   }
@@ -112,10 +113,49 @@
     });
   }
 
+  // Switching entries keeps the filters and the list exactly where they are (spec §3.4), but a new page opens at its
+  // top. Before leaving, this notes how far the next page should scroll: as far as this one, or, once the list has
+  // stuck, just far enough to stick it, so the next entry starts at its top. Everything above the list is the same on
+  // every page of a room. Back and Forward restore each page's own scroll, so only the old entry's place is noted for
+  // them. Phones stack the list over the entry and keep the default.
+  var KEEP = "room-scroll";
+
+  function noteListScroll(toUrl, traverse) {
+    var reader = document.querySelector(".reader");
+    var side = reader && reader.querySelector(".reader-side");
+    var entry = reader && reader.querySelector(".reader-entry");
+    if (!side || !entry || !matchMedia("(min-width: 900px)").matches) return;
+    var note = { url: toUrl, entryTop: entry.getBoundingClientRect().top };
+    // The side starts at the grid's top; measuring the side itself would give where it's stuck. Rounded up, so the
+    // next page's list sticks rather than resting a fraction of a pixel lower.
+    var sticks = Math.ceil(reader.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(side).top));
+    if (!traverse) note.y = Math.min(scrollY, sticks);
+    try {
+      sessionStorage.setItem(KEEP, JSON.stringify(note));
+    } catch (e) {}
+  }
+
+  function keepListScroll(transition, traverse) {
+    var kept = null;
+    try {
+      kept = JSON.parse(sessionStorage.getItem(KEEP));
+      sessionStorage.removeItem(KEEP);
+    } catch (e) {}
+    if (!kept || kept.url !== location.href) return;
+    if (!traverse && typeof kept.y === "number") scrollTo(0, kept.y);
+    // The old entry's snapshot is drawn at the new entry's top; this puts it back where it was on screen, so it fades
+    // out in place instead of jumping by the difference in scroll (trip.css).
+    var entry = document.querySelector(".reader-entry");
+    if (!entry || typeof kept.entryTop !== "number") return;
+    root.style.setProperty("--reader-from", kept.entryTop - entry.getBoundingClientRect().top + "px");
+    transition.finished.then(function () { root.style.removeProperty("--reader-from"); }, function () {});
+  }
+
   addEventListener("pageswap", function (event) {
     if (!event.viewTransition || !event.activation || !event.activation.entry) return;
     var type = transitionType(location.href, event.activation.entry.url);
     if (!type) return;
+    if (type === "within-room") noteListScroll(event.activation.entry.url, event.activation.navigationType === "traverse");
     if (type === "to-back") {
       markEnd();
       onlyDoor(roomOf(event.activation.entry.url));
@@ -133,6 +173,7 @@
     var from = activation && activation.from ? activation.from.url : document.referrer;
     var type = transitionType(from, location.href);
     if (!type) return;
+    if (type === "within-room") keepListScroll(transition, !activation || activation.navigationType === "traverse");
     if (type === "to-front") {
       // The same call the room made in pageswap, plus where the page actually landed: only a traversal back to the
       // end of the sheet can show it dropping into place. trip.css fades anything the room already named.
