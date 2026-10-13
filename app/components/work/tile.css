@@ -7,6 +7,8 @@
 .tile-media { position: relative; border-radius: 6px; overflow: hidden; isolation: isolate; }
 /* A faint inset hairline gives white images a crisp edge. */
 .tile-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06); pointer-events: none; }
+/* Hover dims the image as if it were at 80% over the page: a paper tint, since the tile's own fill color sits behind it. */
+.tile:hover .tile-media::after { background-color: rgba(18, 18, 17, .2); }
 .tile-media.is-main { view-transition-name: var(--vt); }
 .tile-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 /* A definite row lets the diagram's max-height apply, so a tall diagram letterboxes instead of running off the tile. */
