@@ -12,7 +12,7 @@ export const metaData = {
 export const socialLinks = {
   github: "https://github.com/d-pap",
   linkedin: "https://www.linkedin.com/in/derekpapierski/",
-  email: "mailto:derek@derekpap.com",
+  email: "mailto:hello@derekpap.com",
 };
 
 export const teams = ["Michigan Medicine", "iLabs", "UM–Dearborn", "Freelance"];

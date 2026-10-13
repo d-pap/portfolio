@@ -5,7 +5,7 @@ import { queryPublished, readBlocks } from "./source";
 import { parseBookPage, parseNotePage, type Parsed } from "./pages";
 import { assignSlugs } from "./slugs";
 import { orderBooks, orderNotes } from "./order";
-import { IncompleteLookup, NO_LOOKUP, lookupBook, mergeBook, type Lookup } from "./enrich";
+import { IncompleteLookup, NO_LOOKUP, lookupBook, mergeBook, resolveIsbn, type Lookup } from "./enrich";
 import { mirror } from "./mirror";
 import { toBlocks, type Block } from "./blocks";
 import { fallbackBooks } from "./fallback";
@@ -35,16 +35,34 @@ function fallback(): BookEntry[] {
   return fallbackBooks(getReading());
 }
 
-// Spec §5.4: only books with an ISBN are looked up, cached per ISBN for 30 days. Title and author are in the key so a
-// typo fixed in Notion gets a fresh lookup. A lookup that gave up on a passing failure throws, so it isn't cached; this
-// render uses what it did find. Never call this inside another unstable_cache: Next 15.1 skips reading a nested one, so
-// every call would go to the catalogs.
+// Spec §5.4: a book is looked up by its ISBN, cached for 30 days; without one in Notion, by the ISBN its title and author
+// resolve to. Title and author are in the key so a typo fixed in Notion gets a fresh lookup. A lookup that gave up on a
+// passing failure throws, so it isn't cached; this render uses what it did find. Never call this inside another
+// unstable_cache: Next 15.1 skips reading a nested one, so every call would go to the catalogs.
 async function lookup({ title, author, isbn }: { title: string; author: string; isbn: string | null }): Promise<Lookup> {
-  if (!isbn) return NO_LOOKUP;
+  const pinned = isbn ?? (await resolve(title, author));
+  if (!pinned) return NO_LOOKUP;
   try {
-    return await unstable_cache(() => lookupBook({ title, author, isbn }), ["book-lookup-v2", isbn, title, author], { tags: [`book:isbn:${isbn}`], revalidate: MONTH })();
+    return await unstable_cache(() => lookupBook({ title, author, isbn: pinned }), ["book-lookup-v3", pinned, title, author], { tags: [`book:isbn:${pinned}`], revalidate: MONTH })();
   } catch (error) {
     if (error instanceof IncompleteLookup) return error.partial;
+    throw error;
+  }
+}
+
+class NoMatch extends Error {}
+
+// A title and author resolve to an ISBN once, kept until either changes in Notion: searches shift over time, and a monthly
+// re-search could quietly swap the edition. No match isn't kept, so the next refresh searches again.
+async function resolve(title: string, author: string): Promise<string | null> {
+  try {
+    return await unstable_cache(async () => {
+      const isbn = await resolveIsbn({ title, author });
+      if (!isbn) throw new NoMatch();
+      return isbn;
+    }, ["book-isbn-v1", title, author], { revalidate: false })();
+  } catch (error) {
+    if (error instanceof NoMatch || error instanceof IncompleteLookup) return null;
     throw error;
   }
 }
