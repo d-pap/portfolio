@@ -22,7 +22,7 @@ function textOf(node: ReactNode): string {
 
 /** Section headings carry the id listHeadings() gives them, so tiles and the section list can link here. */
 function SectionHeading({ children, ...props }: ComponentProps<"h2">) {
-  return <h2 id={slugify(textOf(children))} className="label flow-label" {...props}>{children}</h2>;
+  return <h2 id={slugify(textOf(children))} className="flow-label" {...props}>{children}</h2>;
 }
 
 const components = {

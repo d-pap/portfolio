@@ -5,6 +5,8 @@ import { CaseHeroStage } from "app/components/case/case-hero-stage";
 import { ContextBar, SectionNav } from "app/components/case/section-nav";
 import { Media } from "app/components/media/media";
 import { caseLinks, splitLede } from "app/lib/case";
+import { stackLogos } from "app/lib/stack-logos";
+import { StackIcons } from "app/components/case/stack-icons";
 import { listHeadings } from "app/lib/headings";
 import type { Entry } from "app/lib/entries";
 import "./case.css";
@@ -13,6 +15,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
   const { lede, rest } = splitLede(entry.body);
   const { links, note } = caseLinks(entry);
   const sections = listHeadings(entry.body);
+  const logos = entry.stack ? stackLogos(entry.stack) : [];
   const facts: [string, string][] = [
     ["role", entry.role],
     ["with", entry.context],
@@ -27,7 +30,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
           before the hero exists, and the tile fades out instead of morphing into it. React hoists this to <head>;
           `blocking` isn't in React's types yet, hence the spread. */}
       <link rel="expect" href="#case-hero" {...{ blocking: "render" }} />
-      <ContextBar title={entry.shortTitle} summary={entry.summary} />
+      <ContextBar title={entry.shortTitle} summary={entry.summary} sections={sections} />
       {entry.hero ? (
         <figure className="case-hero" id="case-hero" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
           <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} composition={entry.hero.type === "composition"}>
@@ -45,8 +48,8 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
       <div className="case-body" data-enter="" style={{ "--enter-i": 2 } as CSSProperties}>
         <div className="case-id" data-case-id>
           <h1 className="case-title">{entry.title}</h1>
-          <p className="case-summary">{entry.summary}</p>
-          <p className="label case-subtitle">{entry.area}, {entry.context}</p>
+          <p className="label case-category">{entry.area}</p>
+          {logos.length > 0 && <StackIcons logos={logos} />}
           {(links.length > 0 || note) && (
             <ul className="case-links">
               {links.map((link) => (

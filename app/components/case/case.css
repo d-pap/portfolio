@@ -15,11 +15,16 @@ figure.case-hero { padding-bottom: 26px; }
 .case-body { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 36px; }
 .case-id { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
 .case-title { font-size: var(--size-read); font-weight: 400; }
-.case-subtitle { margin-top: 4px; }
-.case-links { margin-top: 20px; display: grid; gap: 4px; font-size: var(--size-base); }
+.case-category { margin-top: 4px; }
+/* The margin's groups (title, stack, links, sections) sit 32px apart. */
+.case-stack { margin-top: 32px; }
+.case-stack-row { display: flex; flex-wrap: wrap; gap: 16px; list-style: none; }
+.case-stack-row svg { display: block; width: 24px; height: 24px; fill: var(--muted); transition: fill 160ms; }
+.case-stack-row li:hover svg { fill: var(--ink); }
+.case-stack-name { margin-top: 8px; min-height: 18px; }
+.case-links { margin-top: 32px; display: grid; gap: 4px; font-size: var(--size-base); }
 .case-links-note { color: var(--muted); }
-.case-summary { margin-top: 6px; color: var(--muted); font-size: var(--size-base); line-height: 1.45; max-width: 32ch; }
-.case-sections { margin-top: 28px; }
+.case-sections { margin-top: 32px; }
 .case-sections ul { display: grid; gap: 4px; font-size: var(--size-base); }
 .case-sections a { position: relative; display: inline-block; padding-left: 14px; color: var(--muted); transition: color 160ms; }
 .case-sections a:hover { color: var(--ink); }
@@ -47,7 +52,8 @@ figure.case-hero { padding-bottom: 26px; }
 .case-facts dd { font-size: var(--size-base); line-height: 1.5; }
 
 .case-flow { margin-top: 72px; }
-.case-flow > .flow-label { margin: 56px 0 10px; }
+/* Section titles are body text set apart by space alone; captions keep the mono label. */
+.case-flow > .flow-label { margin: 56px 0 8px; font-size: var(--size-read); font-weight: 400; line-height: 1.55; }
 .case-flow > .flow-label:first-child { margin-top: 0; }
 .case-flow > p { font-size: var(--size-read); line-height: 1.7; max-width: 62ch; }
 .case-flow > p + p { margin-top: 14px; }
@@ -85,6 +91,7 @@ figure.case-hero { padding-bottom: 26px; }
   }
   .case-context.is-shown { opacity: 1; transform: none; pointer-events: auto; }
   .case-context-summary { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .case-context-section { margin-left: auto; padding-left: 16px; flex: none; }
   .case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 36px + 20px); }
   .case-hero-stage { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
   /* Reframe only the white canvas; the full phone remains inside the stage. */
@@ -93,6 +100,5 @@ figure.case-hero { padding-bottom: 26px; }
   .case-hero-text { height: 40vh; aspect-ratio: auto; }
   .case-body { display: block; }
   .case-id { position: static; margin-bottom: 24px; }
-  .case-title { font-size: 21px; }
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

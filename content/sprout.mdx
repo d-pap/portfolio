@@ -66,12 +66,8 @@ The coach keeps context between conversations in layers. Each conversation is co
 
 I'm testing how well this memory handles corrections and whether the patterns it infers improve later replies.
 
-<VideoFigure src="/projects/sprout/loops/sprout-memory-study-4x3.mp4" poster="/projects/sprout/loops/sprout-memory-study-4x3.jpg" width={1200} height={900} caption="memory [motion study]" />
-
 ## evals
 
 Each evaluation starts from a question, such as whether retrieval finds useful sources or whether a correction carries into the next conversation. The harness runs fixed conversation cases and scores them with a judge model that is separate from the chat model. Ablation arms turn off one source of context at a time, and memory designs are compared in a factorial setup, so each factor's effect can be read on its own. In memory bakeoffs, every arm replays the same canonical transcript, which removes the variance of generating a fresh conversation for each arm. Each run prints its estimated cost before it starts.
 
 I read the saved responses alongside the scores, because an automated judge can miss problems. The suites run on DeepEval and promptfoo.
-
-<VideoFigure src="/projects/sprout/loops/sprout-evaluation-study-16x9.mp4" poster="/projects/sprout/loops/sprout-evaluation-study-16x9.jpg" width={1200} height={675} caption="evaluation [motion study]" />
