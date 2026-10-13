@@ -53,11 +53,11 @@ test("links into Derek's Notion render as their text; public notion.site pages k
     { type: "text", plain_text: "workspace", href: "https://www.notion.so/derek/Desk-3f744376cf9081a7bab9e01c8e85cd49" },
     { type: "text", plain_text: "bare", href: "https://notion.so/3f744376cf9081a7bab9e01c8e85cd49" },
     { type: "text", plain_text: "published", href: "https://derek.notion.site/Desk-3f744376cf9081a7bab9e01c8e85cd49" },
-    { type: "text", plain_text: "site", href: "https://derekpapierski.com/notes" },
+    { type: "text", plain_text: "site", href: "https://derekpap.com/notes" },
   ]), [
     { text: "relative" }, { text: "workspace" }, { text: "bare" },
     { text: "published", href: "https://derek.notion.site/Desk-3f744376cf9081a7bab9e01c8e85cd49" },
-    { text: "site", href: "https://derekpapierski.com/notes" },
+    { text: "site", href: "https://derekpap.com/notes" },
   ]);
 });
 

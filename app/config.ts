@@ -1,5 +1,7 @@
 export const metaData = {
-  baseUrl: "https://derekpapierski.com/",
+  baseUrl: "https://derekpap.com/",
+  // Still owned and redirected to baseUrl, so links to these count as links within the site.
+  aliases: ["https://derekpapierski.com/"],
   title: "Derek Papierski",
   name: "Derek",
   ogImage: "/og-image.png",
@@ -10,7 +12,7 @@ export const metaData = {
 export const socialLinks = {
   github: "https://github.com/d-pap",
   linkedin: "https://www.linkedin.com/in/derekpapierski/",
-  email: "mailto:derek@derekpapierski.com",
+  email: "mailto:derek@derekpap.com",
 };
 
 export const teams = ["Michigan Medicine", "iLabs", "UM–Dearborn", "Freelance"];

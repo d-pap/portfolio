@@ -33,7 +33,7 @@ export async function BackPlane() {
         <div className="back-side">
           <div>
             <p className="label back-ask">have something in mind?</p>
-            <CopyEmail href={socialLinks.email} address="derek@derekpapierski.com" />
+            <CopyEmail href={socialLinks.email} address="derek@derekpap.com" />
           </div>
           {updated && <p className="label back-updated">updated {updated}</p>}
         </div>

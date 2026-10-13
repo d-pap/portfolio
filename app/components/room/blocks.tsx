@@ -7,11 +7,12 @@ import { optimizable } from "app/lib/notion/images";
 import type { Block, Inline } from "app/lib/notion/blocks";
 
 const SITE = new URL(metaData.baseUrl).origin;
+const OWN = new Set([SITE, ...metaData.aliases.map((url) => new URL(url).origin)]);
 
 /** A link within the site opens in place, like every other link on it; anything else opens a new tab. */
 function opens(href: string): { target?: string; rel?: string } {
   try {
-    if (new URL(href, SITE).origin === SITE) return {};
+    if (OWN.has(new URL(href, SITE).origin)) return {};
   } catch {
     // Not a URL the browser could follow either; treat it as outside.
   }

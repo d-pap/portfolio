@@ -53,7 +53,7 @@ type Fetched = { json: any | null; gaveUp: boolean };
 async function getJson(url: string, retryBaseMs: number): Promise<Fetched> {
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
-      const response = await fetch(url, { headers: { "User-Agent": "derekpapierski.com bookshelf" }, signal: AbortSignal.timeout(8000) });
+      const response = await fetch(url, { headers: { "User-Agent": "derekpap.com bookshelf" }, signal: AbortSignal.timeout(8000) });
       if (response.ok) return { json: await response.json(), gaveUp: false };
       if (response.status !== 429 && response.status < 500) return { json: null, gaveUp: false };
     } catch {

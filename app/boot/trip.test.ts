@@ -10,7 +10,7 @@ type Trip = {
   frameWipe: (type: string, edge: number, lift: number, height: number) => { offset: number; clipPath: string }[] | null;
 };
 const { transitionType, liftDistance, roomOf, sheetEdge, frameWipe } = (globalThis as unknown as { __trip: Trip }).__trip;
-const at = (p: string) => `https://derekpapierski.com${p}`;
+const at = (p: string) => `https://derekpap.com${p}`;
 
 test("front pages to a room go behind the work", () => {
   assert.equal(transitionType(at("/"), at("/bookshelf")), "to-back");
