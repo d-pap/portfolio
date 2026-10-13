@@ -1,0 +1,10 @@
+/* Plain rows on the sheet, between the white stages: area, the question it asks, how many cases. */
+.coverage { border-bottom: 1px solid var(--line); }
+.coverage-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) auto; gap: 24px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); font-size: var(--size-base); }
+.coverage-question { color: var(--muted); }
+.coverage-cases { white-space: nowrap; }
+
+@media (max-width: 899px) {
+  .coverage-row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; }
+  .coverage-question { grid-row: 2; grid-column: 1 / -1; }
+}

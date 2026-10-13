@@ -4,6 +4,8 @@ import { slugify } from "app/lib/headings";
 import { VideoFigure } from "./case/video-figure";
 import { Figure } from "./case/figure";
 import { EvalChecks } from "./evidence/eval-checks";
+import { EvalCoverage } from "./evidence/eval-coverage";
+import { QuestionTrace } from "./evidence/question-trace";
 import { MemoryDiagram } from "./evidence/memory-diagram";
 import { PlatformDiagram } from "./evidence/platform-diagram";
 import { RoutingDiagram } from "./evidence/routing-diagram";
@@ -32,6 +34,8 @@ const components = {
   VideoFigure,
   RoutingDiagram,
   EvalChecks,
+  EvalCoverage,
+  QuestionTrace,
   PlatformDiagram,
   MemoryDiagram,
 };
