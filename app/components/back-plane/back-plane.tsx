@@ -20,7 +20,9 @@ export async function BackPlane() {
             {rooms.map((room) => (
               <li key={room}>
                 <a className="door" data-room={room} href={`/${room}`} style={{ "--door": `door-${room}` } as CSSProperties}>
-                  <span className="door-word door-type">{room}</span>
+                  {/* trip.js marks the words that stay put (view-transition-name: none) as the page is revealed, which can
+                      be before React hydrates. */}
+                  <span className="door-word door-type" suppressHydrationWarning>{room}</span>
                 </a>
               </li>
             ))}
