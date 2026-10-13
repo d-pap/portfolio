@@ -10,6 +10,9 @@
 
 # next.js
 /.next/
+/.next-preview/
+/.next-build/
+/.next-media-review/
 /out/
 
 # production
@@ -28,6 +31,7 @@ yarn-error.log*
 
 # env files
 .env
+.env*.local
 
 # vercel
 .vercel
@@ -39,3 +43,18 @@ next-env.d.ts
 
 # project docs (specs/plans) stay local
 docs/
+
+# local browser checks and package cache
+.playwright-mcp/
+.pnpm-store/
+
+# brainstorming mockups stay local
+.superpowers/
+.impeccable/
+
+# local-only test media
+public/**/_local-*
+
+# generated
+app/lib/media-colors.json
+.env*

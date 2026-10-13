@@ -1,0 +1,18 @@
+{
+  "created": "2026-10-08",
+  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/08/01a11d13-cd05-7d71-9e9c-c1fc51747fa2/renew-motion",
+  "assets": [
+    {
+      "name": "codecoach-landing-4x5",
+      "kind": "videos",
+      "src": "/projects/codecoach/videos/codecoach-landing-4x5.mp4",
+      "poster": "/projects/codecoach/videos/codecoach-landing-4x5.jpg",
+      "width": 960,
+      "height": 1200,
+      "duration": 12.0,
+      "fps": 60,
+      "bytes": 2488775,
+      "description": "Edited scroll study reconstructed from two public landing-page viewport captures, October 2026. Not authenticated workspace footage."
+    }
+  ]
+}

@@ -1,99 +1,20 @@
 ---
-title: "Using Social Media to Boost Advertising Strategy"
+title: Gaming sentiment analysis
+shortTitle: Gaming sentiment analysis
+summary: What players say about games, through sentiment classification
+area: data analysis
+role: Data analysis & modeling
+period: "2024"
+context: Independent project
+stack: Python, pandas, scikit-learn, TensorFlow, Keras
+status: Completed analysis
+repository: https://github.com/d-pap/NLP-sentiment-analysis
 publishedAt: "2024-08-21"
-summary: "Using NLP to guide ad targeting strategies and boost engagement by aligning campaigns with user pain points."
-tags: "Data Analysis, NLP, Marketing"
-image: "/doc-analysis.png"
+index: earlier
+order: 2
+kind: analysis
 ---
 
-<Image
-  src="/socialmedia.jpg"
-  alt="Social media image"
-  width={640}
-  height={500}
-/>
+I analyzed about 61,000 tweets about CS:GO and other games to compare player sentiment and find recurring complaints, framed as a hypothetical marketing brief for Valve. Cheating, streaming, and cosmetic items stood out as topics worth investigating.
 
-[www.github.com/d-pap/NLP-sentiment-analysis](https://github.com/d-pap/NLP-sentiment-analysis)
-
-[www.medium.com/@dpapcodes](https://medium.com/@dpapcodes/twitter-sentiment-analysis-and-marketing-fa5ab6b6c46b)
-
-## Summary
-
-I analyzed **61,000 tweets** about CS:GO and competitor games, built a **94.7% accurate** sentiment analysis model, and used the insights to suggest targeted marketing strategies. The goal: help gaming companies attract and retain more players by understanding their frustrations and interests.
-
-## Insights
-
-Approaching this as if I worked at Valve (makers of CS:GO), I found three key insights:
-
-1. **Cheating frustrates CS:GO players the most**  
-   _Recommendation:_ Regularly highlight Valve’s anti-cheat actions publicly.
-
-2. **Players love Twitch content and cosmetic items ("skins")**  
-   _Recommendation:_ Run more Twitch events and giveaways, similar to competitor successes (Apex, Valorant).
-
-3. **Many competitor players (Call of Duty, PUBG, Fortnite, Rainbow Six) are highly frustrated**  
-   _Recommendation:_ Use targeted ads highlighting CS:GO’s smoother updates, strong stability, and availability in markets like India, where PUBG was banned.
-
-<Callout emoji="💡">
-  To see how I got this, check out my [GitHub
-  Repository](https://github.com/d-pap/NLP-sentiment-analysis) or [read my
-  Medium
-  article](https://medium.com/@dpapcodes/twitter-sentiment-analysis-and-marketing-fa5ab6b6c46b)
-</Callout>
-
-## Potential Business Impact
-
-To see the financial benefit of implementing targeted sentiment-driven advertising, consider this scenario:
-
-**Audience.** Suppose Valve targets social media users expressing frustration with competitors.
-
-- From roughly **32 million monthly active CS:GO users** (ActivePlayer.io, 2024), a conservative assumption is that Valve’s marketing efforts could reach **5% (1.6 million)** of users who are dissatisfied with competitor games.
-
-**Conversion assumption.** With targeted and relevant ads, it's reasonable to assume **2%** of these users could be converted into new or returning active CS:GO players each month.
-
-- Monthly new players gained: **1.6 million users x 2% conversion = 32,000 new players/month**
-
-**Revenue impact (reasonable assumption).** CS:GO primarily generates revenue through cosmetic items and keys, with estimated average revenue per paying user (ARPPU) around **\$5 per month** (Newzoo Cosmetics Report, 2023).
-
-- Monthly revenue gain: **32,000 players × \$5 ARPPU = \$160,000 per month**
-- Annual revenue gain: **\$160,000 × 12 months = \$1.92 million annually**
-
-Even with conservative assumptions, leveraging sentiment analysis to better target frustrated competitor audiences can yield a significant revenue uplift.
-
-## How to Use It
-
-- Deploy sentiment analysis in daily social listening for real-time targeting.
-- Implement targeted ad tests to measure real-world campaign effectiveness (CTR, conversion rates).
-- Expand analysis to additional platforms (Reddit, YouTube) for richer audience insights.
-
-## Tools
-
-- Python, pandas, scikit-learn (data prep & NLP analysis)
-- TensorFlow, Keras (model building)
-- Matplotlib, Seaborn (visualizations)
-
-## Behind the Scenes
-
-<ImageGrid
-  columns={2}
-  images={[
-    { src: "/nlp-tweets.png", alt: "Photo1", href: "#" },
-    { src: "/nlp-bar.png", alt: "Photo1", href: "#" },
-    { src: "/nlp-model.png", alt: "Photo1", href: "#" },
-  ]}
-/>
-
-I tested several NLP models (Logistic Regression, Gradient Boosting, MLP Neural Network) and selected an MLP model because it achieved the highest accuracy (**94.7%**). High accuracy means we reliably understand player sentiment and effectively target ads.
-
-Why sentiment analysis?
-
-- Identifies real-time player frustrations.
-- Helps marketing create relevant, timely ads.
-- Significantly improves ad effectiveness (higher click rates, conversions).
-
-Future steps could expand the analysis to platforms like Reddit and YouTube, adding richer insights.
-
-## Want More?
-
-- [See full technical details on GitHub](https://github.com/d-pap/NLP-sentiment-analysis)
-- [Read my in-depth Medium article](https://medium.com/@dpapcodes/twitter-sentiment-analysis-and-marketing-fa5ab6b6c46b)
+A multilayer perceptron classified sentiment with 94.7% accuracy in the original analysis. That score describes the classifier; whether a campaign based on it would work would need its own test.

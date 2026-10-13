@@ -1,0 +1,103 @@
+.case-hero { position: relative; margin-top: 12px; }
+.case-hero-stage {
+  position: relative;
+  height: 80vh;
+  min-height: 520px;
+  border-radius: 6px;
+  overflow: hidden;
+  view-transition-name: var(--vt);
+}
+.case-hero-caption { color: var(--ink); margin-top: 8px; text-align: right; }
+.case-hero-text { height: 56vh; min-height: 360px; display: grid; place-items: center; }
+.case-wordmark { font-size: clamp(56px, 9vw, 132px); letter-spacing: -.04em; line-height: 1; }
+
+.case-body { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding-top: 36px; }
+.case-id { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
+.case-title { font-size: 17px; font-weight: 400; }
+.case-subtitle { margin-top: 4px; }
+.case-links { margin-top: 20px; display: grid; gap: 4px; font-size: 14px; }
+.case-links-note { color: var(--muted); }
+.case-summary { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.45; max-width: 32ch; }
+.case-sections { margin-top: 28px; }
+.case-sections ul { display: grid; gap: 4px; font-size: 14px; }
+.case-sections a { position: relative; display: inline-block; padding-left: 14px; color: var(--muted); transition: color 160ms; }
+.case-sections a:hover { color: var(--ink); }
+.case-sections a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .72em;
+  width: 8px;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+.case-sections a.is-active { color: var(--ink); }
+.case-sections a.is-active::before { transform: scaleX(1); }
+.case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 24px); }
+.case-context { display: none; }
+
+.case-lede { font-size: var(--size-lede); line-height: 1.55; }
+.case-lede p + p { margin-top: 12px; }
+.case-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.case-facts dt { margin-bottom: 4px; }
+.case-facts dd { font-size: 14.5px; line-height: 1.5; }
+
+.case-flow { margin-top: 72px; }
+.case-flow > .flow-label { margin: 56px 0 10px; }
+.case-flow > .flow-label:first-child { margin-top: 0; }
+.case-flow > p { font-size: var(--size-body); line-height: 1.7; max-width: 62ch; }
+.case-flow > p + p { margin-top: 14px; }
+.case-flow > .fig { margin-top: 40px; }
+.case-flow > .fig + p { margin-top: 28px; }
+.case-lede a, .case-flow a { text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 4px; }
+.case-lede a:hover, .case-flow a:hover { text-decoration-color: currentColor; }
+.case-next { display: inline-flex; align-items: baseline; margin-top: 96px; }
+
+/* At 900px and up the caption sits over the white stage (a sibling, outside .stage), so it takes the light ink. */
+@media (min-width: 900px) {
+  .case-hero-caption { color: #161615; }
+}
+
+@media (min-width: 1100px) {
+  .case-lede { column-count: 2; column-gap: 24px; }
+}
+@media (max-width: 899px) {
+  .case-sections { display: none; }
+  .case-context {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 36px;
+    padding: 0 var(--gutter);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity 160ms, transform 200ms var(--ease-out);
+  }
+  .case-context.is-shown { opacity: 1; transform: none; pointer-events: auto; }
+  .case-context-summary { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+  .case-main, .case-flow > .flow-label { scroll-margin-top: calc(var(--header-h) + 36px + 20px); }
+  .case-hero-stage { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  /* Reframe only the white canvas; the full phone remains inside the stage. */
+  .case-hero-stage.is-composition { aspect-ratio: 4 / 5; }
+  .case-hero-stage.is-composition .media-composition { width: 160%; max-width: none; left: -30%; }
+  .case-hero-text { height: 40vh; aspect-ratio: auto; }
+  .case-hero-caption { position: static; margin-top: 8px; text-align: right; }
+  .case-body { display: block; }
+  .case-id { position: static; margin-bottom: 24px; }
+  .case-title { font-size: 21px; }
+  .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

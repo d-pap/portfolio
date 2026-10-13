@@ -1,0 +1,5 @@
+.home-label { margin-bottom: 18px; }
+.home-earlier { margin-top: 112px; }
+.home-earlier-list { max-width: 640px; }
+.home-earlier-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; }
+.home-earlier-row:hover .home-earlier-name { text-decoration: underline; text-underline-offset: 4px; }

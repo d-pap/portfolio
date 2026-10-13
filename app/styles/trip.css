@@ -1,0 +1,83 @@
+/* Cross-document view transitions. Every navigation is a full page load, so these rules are the only thing that
+   keeps the frame still and carries the work, the doorway words, and the rooms between pages. */
+@view-transition { navigation: auto; }
+::view-transition-group(*) { animation-duration: var(--t-move); animation-timing-function: var(--ease-in-out); }
+::view-transition-group(frame) { z-index: 50; }
+
+/* Names that exist only during a trip. Tiles and heroes drop theirs so they leave with the sheet. */
+html:active-view-transition-type(to-back, to-front) .sheet { view-transition-name: sheet; }
+html:active-view-transition-type(to-back, to-front) .door-word,
+html:active-view-transition-type(to-back, to-front) .room-title { view-transition-name: var(--door); view-transition-class: door; }
+html:active-view-transition-type(to-back, to-front) .room-body { view-transition-name: room-body; }
+html:active-view-transition-type(to-back, to-front) .tile-media.is-main,
+html:active-view-transition-type(to-back, to-front) .case-hero-stage { view-transition-name: none; }
+
+/* Shared by both directions. The sheet moves under the boot script's control (app/boot/trip.js). */
+html:active-view-transition-type(to-back, to-front)::view-transition-group(root) { animation: none; }
+html:active-view-transition-type(to-back, to-front)::view-transition-old(sheet),
+html:active-view-transition-type(to-back, to-front)::view-transition-new(sheet) { animation: none; }
+html:active-view-transition-type(to-back, to-front)::view-transition-group(sheet) { z-index: 20; }
+html:active-view-transition-type(to-back, to-front)::view-transition-group(room-body) { z-index: 10; }
+html:active-view-transition-type(to-back, to-front)::view-transition-group(*.door) {
+  z-index: 30;
+  animation-duration: var(--t-surface);
+  animation-timing-function: var(--ease-surface);
+}
+html:active-view-transition-type(to-back, to-front)::view-transition-old(*.door),
+html:active-view-transition-type(to-back, to-front)::view-transition-new(*.door) { animation-duration: var(--t-surface); }
+/* The frame takes the plane's color along the sheet's edge: its old snapshot stays put and trip.js wipes the new one in
+   over it, so neither runs the usual crossfade (or its plus-lighter blend). */
+html:active-view-transition-type(to-back, to-front)::view-transition-old(frame),
+html:active-view-transition-type(to-back, to-front)::view-transition-new(frame) { animation: none; }
+
+/* Going behind: the back plane's text leaves, the lime room is already there, the room's contents arrive late. */
+html:active-view-transition-type(to-back)::view-transition-old(root) { animation: trip-out 160ms linear both; z-index: 1; }
+html:active-view-transition-type(to-back)::view-transition-new(root) { animation: none; }
+html:active-view-transition-type(to-back)::view-transition-group(*.door),
+html:active-view-transition-type(to-back)::view-transition-old(*.door),
+html:active-view-transition-type(to-back)::view-transition-new(*.door) { animation-delay: 40ms; }
+html:active-view-transition-type(to-back)::view-transition-new(room-body) { animation: trip-rise 460ms var(--ease-out) calc(var(--t-surface) * .62) both; }
+
+/* Coming back: the room's contents leave, the sheet drops back, and the back plane's text returns once it's covered. */
+html:active-view-transition-type(to-front)::view-transition-old(room-body) { animation: trip-out 160ms linear both; }
+html:active-view-transition-type(to-front)::view-transition-old(root) { animation: none; }
+html:active-view-transition-type(to-front)::view-transition-new(root) { animation: trip-in 320ms linear calc(var(--t-surface) * .7) both; }
+
+/* A doorway under the sheet doesn't fly (app/boot/trip.js), so the title has no partner: it leaves or arrives with
+   the room's contents instead. */
+html:active-view-transition-type(to-back)::view-transition-new(*.door):only-child { animation: trip-rise 460ms var(--ease-out) calc(var(--t-surface) * .62) both; }
+html:active-view-transition-type(to-front)::view-transition-old(*.door):only-child { animation: trip-out 160ms linear both; }
+
+/* Back to a front page that isn't at its end skips the trip there, but the room has already named its title and
+   contents: they leave with the room instead of fading over the page. */
+html:active-view-transition:not(:active-view-transition-type(to-back, to-front))::view-transition-old(*.door),
+html:active-view-transition:not(:active-view-transition-type(to-back, to-front))::view-transition-old(room-body) {
+  animation: trip-out 160ms linear both;
+}
+
+/* Inside a room: the frame, title, filters, and list stay exactly where they are; only the open entry changes. The
+   still parts swap without a crossfade, and the list's crossfade only moves the lit row. */
+html:active-view-transition-type(within-room) .room-title { view-transition-name: room-title; }
+html:active-view-transition-type(within-room) .reader-filters { view-transition-name: room-filters; }
+html:active-view-transition-type(within-room) .reader-list { view-transition-name: room-list; }
+html:active-view-transition-type(within-room) .reader-entry { view-transition-name: room-reader; }
+html:active-view-transition-type(within-room)::view-transition-old(root),
+html:active-view-transition-type(within-room)::view-transition-new(root),
+html:active-view-transition-type(within-room)::view-transition-old(frame),
+html:active-view-transition-type(within-room)::view-transition-new(frame),
+html:active-view-transition-type(within-room)::view-transition-old(room-title),
+html:active-view-transition-type(within-room)::view-transition-new(room-title),
+html:active-view-transition-type(within-room)::view-transition-old(room-filters),
+html:active-view-transition-type(within-room)::view-transition-new(room-filters) { animation: none; }
+html:active-view-transition-type(within-room)::view-transition-group(room-reader) { animation: none; }
+html:active-view-transition-type(within-room)::view-transition-old(room-reader),
+html:active-view-transition-type(within-room)::view-transition-new(room-reader) { height: auto; width: 100%; object-fit: none; object-position: top left; }
+/* The old entry fades out exactly where it was on screen: when the new entry sits higher or lower (the new page opens
+   scrolled less, or Back restores another scroll), trip.js sets --reader-from to the difference. It isn't clipped to
+   the new entry's box, which would cut off its top line where the list sticks; the frame covers anything above. */
+html:active-view-transition-type(within-room)::view-transition-old(room-reader) { animation: trip-out 120ms linear both; transform: translateY(var(--reader-from, 0px)); }
+html:active-view-transition-type(within-room)::view-transition-new(room-reader) { animation: trip-rise 360ms var(--ease-out) 80ms both; }
+
+@keyframes trip-out { to { opacity: 0; } }
+@keyframes trip-in { from { opacity: 0; } }
+@keyframes trip-rise { from { opacity: 0; transform: translateY(14px); } }

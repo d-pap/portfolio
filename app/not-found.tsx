@@ -1,19 +1,17 @@
-import type { Metadata } from "next";
+import { Frame } from "app/components/frame";
 
-export const metadata: Metadata = {
-  title: "404",
-  description: "Error 404",
-};
+export const metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
-    <section>
-      <h1 className="font-medium text-2xl mb-8">
-        404 - Page not found
-      </h1>
-      <p className="mb-4">
-        Oops! The page you're looking for doesn't seem to exist.
-      </p>
-    </section>
+    <>
+      <Frame plane="front" />
+      <section className="page empty-page">
+        <p className="label">404</p>
+        <h1>Nothing here.</h1>
+        <p>This page may have moved.</p>
+        <a className="text-link" href="/">back home</a>
+      </section>
+    </>
   );
 }

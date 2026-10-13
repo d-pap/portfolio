@@ -1,0 +1,8 @@
+# Home grid: three hand-placed columns, each listed top to bottom.
+# A main tile is the entry's slug; a section tile is "<slug>#<section id>".
+# Engineering work leads row one. After any change run `npm test`:
+# app/lib/grid.content.test.ts checks the spacing rules at the 1440px and 1024px column widths.
+columns:
+  - [renew#platform, sprout#rag-pipeline, renew#redesign, stitches#collection]
+  - [sprout, renew, sprout#evals]
+  - [codecoach, sprout#long-term-memory, stitches, codecoach#brand-identity]

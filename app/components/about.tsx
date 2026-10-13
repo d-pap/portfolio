@@ -1,0 +1,34 @@
+import type { CSSProperties } from "react";
+import { socialLinks, teams } from "app/config";
+import { getAbout } from "app/lib/content";
+import { Arrow } from "./arrow";
+import { WorkPlay } from "./work-play";
+import "./about.css";
+
+export function About() {
+  return (
+    <section className="about" aria-labelledby="about-heading">
+      <h1 className="visually-hidden">Derek Papierski</h1>
+      <div className="about-main">
+        <div className="about-text" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
+          <h2 id="about-heading" className="label about-label">about</h2>
+          <WorkPlay parts={getAbout()} />
+        </div>
+        <div className="about-teams" data-enter="" style={{ "--enter-i": 2 } as CSSProperties}>
+          <h2 className="label about-label">teams</h2>
+          <ul>
+            {teams.map((team) => <li key={team}>{team}</li>)}
+          </ul>
+        </div>
+      </div>
+      <div className="about-links" data-enter="" style={{ "--enter-i": 3 } as CSSProperties}>
+        <h2 className="label about-label">links</h2>
+        <ul>
+          <li><a href={socialLinks.email}>email<Arrow /></a></li>
+          <li><a href={socialLinks.linkedin} target="_blank" rel="noreferrer">linkedin<Arrow /></a></li>
+          <li><a href={socialLinks.github} target="_blank" rel="noreferrer">github<Arrow /></a></li>
+        </ul>
+      </div>
+    </section>
+  );
+}

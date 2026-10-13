@@ -1,0 +1,73 @@
+/* The list on the left, the open entry on the right. No rules or markers: size, weight, and space carry it. */
+.reader { display: grid; grid-template-columns: 340px minmax(0, 1fr); column-gap: 96px; align-items: start; }
+.reader-side { position: sticky; top: calc(var(--header-h) + 32px); }
+.reader-filters { display: flex; gap: 16px; margin-bottom: 26px; }
+.reader-filters button { color: var(--plane-muted); text-underline-offset: 4px; transition: color var(--t-quick); }
+.reader-filters button:hover { color: var(--plane-ink); }
+/* "all" is lit until a filter is chosen; each filter's own rules are rendered with the list (reader.tsx). */
+.reader-filters [data-filter="all"] { color: var(--plane-ink); text-decoration: underline; }
+.reader-list { display: grid; gap: 4px; }
+.reader-row { display: block; padding: 9px 0; }
+.reader-row-title { display: block; font-size: 18px; line-height: 1.25; letter-spacing: -0.012em; color: var(--plane-muted); text-wrap: balance; transition: color 180ms; }
+.reader-row-sub { display: block; margin-top: 3px; font-size: 13px; line-height: 1.4; color: rgba(22, 22, 21, .56); transition: color 180ms; }
+.reader-row:hover .reader-row-title, .reader-row.on .reader-row-title { color: var(--plane-ink); }
+.reader-row.on .reader-row-sub { color: var(--plane-muted); }
+.reader-back { display: none; margin-bottom: 24px; color: var(--plane-muted); }
+
+.entry-title { font-size: 32px; line-height: 1.08; letter-spacing: -0.022em; font-weight: 400; max-width: 560px; text-wrap: balance; }
+.entry-sub { margin-top: 10px; color: var(--plane-muted); }
+.entry-label { margin-top: 40px; color: rgba(22, 22, 21, .56); }
+.entry-source { margin-top: 14px; color: rgba(22, 22, 21, .56); }
+.entry-body { margin-top: 36px; }
+.book-head { display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 36px; align-items: end; }
+.book-cover { position: relative; aspect-ratio: 2 / 3; border-radius: 3px; overflow: hidden; background: rgba(22, 22, 21, .07); box-shadow: 0 1px 1px rgba(0, 0, 0, .12), 0 12px 28px -12px rgba(0, 0, 0, .4); }
+.book-cover img { object-fit: cover; }
+.book-card { position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; font-size: 14px; line-height: 1.3; }
+.book-card span:last-child { color: var(--plane-muted); font-size: 12px; }
+
+.prose { max-width: 620px; margin-top: 10px; font-size: 17px; line-height: 1.62; text-wrap: pretty; }
+/* No browser margins: a block that opens the body, a quote, a toggle, or a callout sits flush, and the space between
+   blocks comes from the rules below. :where keeps these selectors as light as `.prose > * + *`, so order decides
+   between them, and headings and rules keep their own margins wherever they sit. */
+.prose :where(h4, ol, blockquote, pre) { margin: 0; }
+.prose > * + * { margin-top: 14px; }
+.prose :where(blockquote, details, .callout > div) > * + * { margin-top: 14px; }
+.prose h2, .prose h3, .prose h4 { font-size: 17px; font-weight: 700; margin-top: 30px; }
+.prose h2 { font-size: 20px; letter-spacing: -0.01em; }
+.prose ul, .prose ol { padding-left: 20px; }
+.prose ul { list-style: disc; }
+.prose ul ul { list-style: circle; }
+.prose li + li { margin-top: 6px; }
+.prose li > * + * { margin-top: 6px; }
+.prose li > ul, .prose li > ol { margin-top: 6px; }
+.prose a { text-decoration: underline; text-decoration-color: var(--plane-line); text-underline-offset: 3px; transition: text-decoration-color var(--t-quick); }
+.prose a:hover { text-decoration-color: currentColor; }
+.prose code { font: 0.86em/1 var(--font-mono); background: rgba(22, 22, 21, .07); padding: 2px 5px; border-radius: 4px; }
+.prose blockquote { padding-left: 18px; border-left: 2px solid var(--plane-ink); }
+.prose hr { border: 0; height: 1px; background: var(--plane-line); margin: 32px 0; }
+.prose details summary { cursor: pointer; }
+.callout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 14px 16px; border-radius: 6px; background: rgba(22, 22, 21, .07); }
+.code pre { font: 13px/1.6 var(--font-mono); background: rgba(22, 22, 21, .07); border-radius: 6px; padding: 14px 16px; overflow-x: auto; }
+.code pre code { background: none; padding: 0; font-size: inherit; }
+.code figcaption, .entry-image figcaption { margin-top: 8px; color: var(--plane-muted); }
+.entry-image img { max-width: 100%; height: auto; border-radius: 4px; }
+.link-block .link-arrow { width: 9px; height: 9px; margin-left: 3px; vertical-align: .45em; color: var(--accent-ink); }
+/* sugar-high's token colors, from the plane's own palette: ink for the code, muted for punctuation and properties, and
+   the accent for strings, as on the back plane's link arrows. */
+.code { --sh-keyword: var(--plane-ink); --sh-class: var(--plane-ink); --sh-identifier: var(--plane-ink); --sh-entity: var(--plane-ink); --sh-property: var(--plane-muted); --sh-jsxliterals: var(--plane-muted); --sh-sign: var(--plane-muted); --sh-string: var(--accent-ink); --sh-comment: rgba(22, 22, 21, .56); }
+
+/* Switching entries keeps the list where it was (app/boot/trip.js), so even a short entry leaves the page room to
+   scroll until the list sticks. */
+@media (min-width: 900px) {
+  .reader-entry { min-height: calc(100vh - var(--header-h) - 32px); }
+}
+
+@media (max-width: 899px) {
+  .reader { grid-template-columns: 1fr; }
+  .reader-side { position: static; }
+  .reader[data-view="index"] .reader-entry { display: none; }
+  .reader[data-view="entry"] .reader-side { display: none; }
+  .reader[data-view="entry"] .reader-back { display: inline-block; }
+  .book-head { grid-template-columns: 120px minmax(0, 1fr); gap: 20px; }
+  .entry-title { font-size: 26px; }
+}

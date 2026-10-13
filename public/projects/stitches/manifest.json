@@ -1,0 +1,18 @@
+{
+  "created": "2026-10-08",
+  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/08/01a11d13-cd05-7d71-9e9c-c1fc51747fa2/renew-motion",
+  "assets": [
+    {
+      "name": "stitches-before-after-loop-4x3",
+      "kind": "loops",
+      "src": "/projects/stitches/loops/stitches-before-after-loop-4x3.mp4",
+      "poster": "/projects/stitches/loops/stitches-before-after-loop-4x3.jpg",
+      "width": 1200,
+      "height": 900,
+      "duration": 4.8,
+      "fps": 60,
+      "bytes": 421897,
+      "description": "Wipe between archived original and September 2026 development preview. Both actual site captures."
+    }
+  ]
+}

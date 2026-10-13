@@ -1,0 +1,15 @@
+/* Rooms are lime all the way out, including the canvas past the page's edges. */
+html:has(main.room) { background: var(--plane); }
+main.room {
+  flex: 1 0 auto;
+  background: var(--plane);
+  color: var(--plane-ink);
+  --ink: var(--plane-ink);
+  --muted: var(--plane-muted);
+  --line: var(--plane-line);
+  --faint: var(--plane-line);
+  --wash: rgba(22, 22, 21, .08);
+}
+main.room ::selection { background: var(--plane-ink); color: var(--plane); }
+.room-page { padding-top: 56px; padding-bottom: 120px; }
+.room-body { margin-top: 40px; }
