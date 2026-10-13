@@ -18,7 +18,7 @@ export function PlatformDiagram() {
       <text className="r-sub" x="150" y="34">react native</text>
       <rect className="r-box r-box-acc" x="95" y="80" width="110" height="42" rx="7" />
       <text x="150" y="93">api</text>
-      <text className="r-sub" x="150" y="110">php · auth</text>
+      <text className="r-sub" x="150" y="110">php, auth</text>
       <rect className="r-box" x="5" y="156" width="90" height="42" rx="7" />
       <text x="50" y="169">mysql</text>
       <text className="r-sub" x="50" y="186">app data</text>

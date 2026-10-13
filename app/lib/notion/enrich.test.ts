@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { IncompleteLookup, NO_LOOKUP as none, cleanOpenLibraryDescription, lookupBook, mergeBook, pickGoogleMatch, resolveIsbn, stripHtml, type Lookup } from "./enrich.ts";
+import { IncompleteLookup, NO_LOOKUP as none, cleanGoogleDescription, cleanOpenLibraryDescription, lookupBook, mergeBook, pickGoogleMatch, resolveIsbn, stripHtml, type Lookup } from "./enrich.ts";
 const kings = { title: "The Way of Kings", author: "Brandon Sanderson", isbn: "9780765365279" };
 const item = (title: string, authors: string[], description?: string, isbn?: string) => ({ volumeInfo: { title, authors, description, industryIdentifiers: isbn ? [{ identifier: isbn }] : [] } });
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status });
@@ -155,4 +155,10 @@ test("an ISBN Open Library doesn't list takes the year and cover from the matchi
       assert.deepEqual([found.year, found.coverId], [2003, 12725620]);
     },
   );
+});
+
+test("Google blurbs lose the wrapping quotes and the publisher's sign-off", () => {
+  assert.equal(cleanGoogleDescription(`"The war moves on. Dalinar leads."--Publisher's description.`), "The war moves on. Dalinar leads.");
+  assert.equal(cleanGoogleDescription(`“A curly one.” -- Publisher’s Description`), "A curly one.");
+  assert.equal(cleanGoogleDescription(`Plain text with a "quote" inside.`), `Plain text with a "quote" inside.`);
 });

@@ -23,7 +23,7 @@ export default function Home() {
               <li key={entry.slug}>
                 <a className="home-earlier-row" href={`/work/${entry.slug}`}>
                   <span className="home-earlier-name">{entry.shortTitle}</span>
-                  <span className="label">{entry.kind} · {entry.period}</span>
+                  <span className="label">{entry.kind}, {entry.period}</span>
                 </a>
               </li>
             ))}

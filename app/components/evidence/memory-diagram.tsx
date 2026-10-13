@@ -20,7 +20,7 @@ export function MemoryDiagram() {
       <text className="r-sub" x="150" y="86">dated</text>
       <rect className="r-box r-box-acc" x="10" y="128" width="130" height="42" rx="7" />
       <text x="75" y="141">patterns</text>
-      <text className="r-sub" x="75" y="158">confidence · age</text>
+      <text className="r-sub" x="75" y="158">confidence, age</text>
       <rect className="r-box" x="160" y="128" width="130" height="42" rx="7" />
       <text x="225" y="141">clinical summary</text>
       <text className="r-sub" x="225" y="158">baseline</text>

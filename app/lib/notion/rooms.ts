@@ -43,7 +43,7 @@ async function lookup({ title, author, isbn }: { title: string; author: string; 
   const pinned = isbn ?? (await resolve(title, author));
   if (!pinned) return NO_LOOKUP;
   try {
-    return await unstable_cache(() => lookupBook({ title, author, isbn: pinned }), ["book-lookup-v3", pinned, title, author], { tags: [`book:isbn:${pinned}`], revalidate: MONTH })();
+    return await unstable_cache(() => lookupBook({ title, author, isbn: pinned }), ["book-lookup-v4", pinned, title, author], { tags: [`book:isbn:${pinned}`], revalidate: MONTH })();
   } catch (error) {
     if (error instanceof IncompleteLookup) return error.partial;
     throw error;

@@ -25,14 +25,14 @@
 .book-card { position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; font-size: 14px; line-height: 1.3; }
 .book-card span:last-child { color: var(--plane-muted); font-size: 12px; }
 
-.prose { max-width: 620px; margin-top: 10px; font-size: 17px; line-height: 1.62; text-wrap: pretty; }
+.prose { max-width: 620px; margin-top: 10px; font-size: var(--size-read); line-height: 1.62; text-wrap: pretty; }
 /* No browser margins: a block that opens the body, a quote, a toggle, or a callout sits flush, and the space between
    blocks comes from the rules below. :where keeps these selectors as light as `.prose > * + *`, so order decides
    between them, and headings and rules keep their own margins wherever they sit. */
 .prose :where(h4, ol, blockquote, pre) { margin: 0; }
 .prose > * + * { margin-top: 14px; }
 .prose :where(blockquote, details, .callout > div) > * + * { margin-top: 14px; }
-.prose h2, .prose h3, .prose h4 { font-size: 17px; font-weight: 700; margin-top: 30px; }
+.prose h2, .prose h3, .prose h4 { font-size: var(--size-read); font-weight: 700; margin-top: 30px; }
 .prose h2 { font-size: 20px; letter-spacing: -0.01em; }
 .prose ul, .prose ol { padding-left: 20px; }
 .prose ul { list-style: disc; }

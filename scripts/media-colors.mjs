@@ -1,5 +1,6 @@
-// Writes app/lib/media-colors.json: each project image's average color, painted under it while it loads. next.config.ts
-// runs it before `next dev` and `next build` however they're started; `pnpm test` runs this file directly.
+// Writes app/lib/media-colors.json: each project image's edge color, painted under it while it loads and wherever a
+// contained image doesn't reach. next.config.ts runs it before `next dev` and `next build` however they're started;
+// `pnpm test` runs this file directly.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,15 +18,31 @@ function* walk(dir) {
 
 const hex = (n) => Math.round(n).toString(16).padStart(2, "0");
 
+/** The average of an image's outermost pixels: what sits beside the bars when it's contained in a wider frame. */
+export async function edgeColor(input) {
+  // Transparent pixels count as the white stage they sit on.
+  const { data, info } = await sharp(input).flatten({ background: "#ffffff" }).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  const sum = [0, 0, 0];
+  let count = 0;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (y !== 0 && y !== height - 1 && x !== 0 && x !== width - 1) continue;
+      const i = (y * width + x) * channels;
+      for (let k = 0; k < 3; k++) sum[k] += data[i + k];
+      count++;
+    }
+  }
+  return `#${sum.map((total) => hex(total / count)).join("")}`;
+}
+
 export async function writeMediaColors(root = process.cwd()) {
   const PUBLIC = path.join(root, "public");
   const OUT = path.join(root, "app", "lib", "media-colors.json");
   const colors = {};
   for (const file of walk(path.join(PUBLIC, "projects"))) {
-    // Transparent pixels count as the white stage they sit on.
-    const { channels } = await sharp(file).flatten({ background: "#ffffff" }).stats();
     const key = "/" + path.relative(PUBLIC, file).split(path.sep).join("/");
-    colors[key] = `#${hex(channels[0].mean)}${hex(channels[1].mean)}${hex(channels[2].mean)}`;
+    colors[key] = await edgeColor(file);
   }
   const sorted = Object.fromEntries(Object.entries(colors).sort(([a], [b]) => a.localeCompare(b)));
   const json = JSON.stringify(sorted, null, 2) + "\n";

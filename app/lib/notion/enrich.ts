@@ -29,6 +29,13 @@ export function cleanOpenLibraryDescription(text: string): string {
   return text.replace(/\r/g, "").replace(/\(\[source\][^)]*\)/g, "").replace(/\n-{3,}[\s\S]*$/, "").replace(/\n{3,}/g, "\n\n").trim();
 }
 
+/** Google often wraps a publisher's blurb in quotes and signs it off with "--Publisher's description." */
+export function cleanGoogleDescription(text: string): string {
+  const unsigned = text.replace(/\s*-{2,}\s*Publisher['’]s description\.?\s*$/i, "").trim();
+  const quoted = /^["“]([\s\S]*)["”]$/.exec(unsigned);
+  return quoted && !/["“”]/.test(quoted[1]) ? quoted[1].trim() : unsigned;
+}
+
 const normalize = (title: string) => title.toLowerCase().split(":")[0].replace(/[^a-z0-9]+/g, " ").trim();
 const surname = (author: string) => author.trim().split(/\s+/).pop()!.toLowerCase();
 const isBook = (title: string | undefined, authors: string[] | undefined, book: Named) =>
@@ -116,7 +123,7 @@ export async function lookupBook(book: Book, { retryBaseMs = 800 }: { retryBaseM
     const google = await get(googleSearch(book, key));
     const match = pickGoogleMatch(google?.items ?? [], book)?.volumeInfo;
     if (match?.description) {
-      out.description = stripHtml(match.description);
+      out.description = cleanGoogleDescription(stripHtml(match.description));
       out.source = "google books";
     }
     if (!out.year && match?.publishedDate) out.year = Number(match.publishedDate.slice(0, 4)) || null;

@@ -18,14 +18,14 @@ hero:
   frames:
     - /projects/sprout/videos/sprout-conversation-4x5.jpg
   recording: /projects/sprout/videos/sprout-conversation-4x5.mp4
-  caption: a demonstration conversation with staged app data · october 2026
+  caption: a demonstration conversation with staged app data [october 2026]
 tile:
   shape: "4:5"
   media: { kind: cover, src: /projects/sprout/loops/sprout-sources-loop-4x5.jpg, recording: /projects/sprout/loops/sprout-sources-loop-4x5.mp4, fit: contain }
 sections:
   - id: rag-pipeline
     title: Sprout RAG Pipeline
-    label: retrieval · llm systems
+    label: retrieval, llm systems
     shape: "4:3"
     media: { kind: cover, src: /projects/sprout/loops/sprout-retrieval-study-4x3.jpg, recording: /projects/sprout/loops/sprout-retrieval-study-4x3.mp4, fit: contain }
   - id: long-term-memory
@@ -44,7 +44,7 @@ Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine st
 
 ## system design
 
-Sprout is a FastAPI service. A LangGraph graph runs each turn of a conversation, PostgreSQL with pgvector stores the corpus and the conversation memory, and every model call goes through the university's UM-GPT gateway. Each job in the graph has its own model setting with a fallback: classifying messages, reranking sources, writing background summaries, and periodic deep review. One job can move to a different model without changing the others.
+Sprout is a FastAPI service. A LangGraph graph runs each turn of a conversation, PostgreSQL with pgvector stores the corpus and the conversation memory, and every model call goes through the university's U-M GPT gateway. Each job in the graph has its own model setting with a fallback: classifying messages, reranking sources, writing background summaries, and periodic deep review. One job can move to a different model without changing the others.
 
 Every capability is a switch. A request lists the features it uses: retrieval, clinical context, memory, and app context. A study team turns on what its protocol calls for, and studies with different protocols share one service.
 
@@ -58,7 +58,7 @@ A small model then grades every candidate from 0 to 10 against the original ques
 
 Replies cite their sources, and medical facts have to come from the retrieved text.
 
-<VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="retrieval · motion study" />
+<VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="retrieval [motion study]" />
 
 ## long-term memory
 
@@ -66,7 +66,7 @@ The coach keeps context between conversations in layers. Each conversation is co
 
 I'm testing how well this memory handles corrections and whether the patterns it infers improve later replies.
 
-<VideoFigure src="/projects/sprout/loops/sprout-memory-study-4x3.mp4" poster="/projects/sprout/loops/sprout-memory-study-4x3.jpg" width={1200} height={900} caption="memory · motion study" />
+<VideoFigure src="/projects/sprout/loops/sprout-memory-study-4x3.mp4" poster="/projects/sprout/loops/sprout-memory-study-4x3.jpg" width={1200} height={900} caption="memory [motion study]" />
 
 ## evals
 
@@ -74,4 +74,4 @@ Each evaluation starts from a question, such as whether retrieval finds useful s
 
 I read the saved responses alongside the scores, because an automated judge can miss problems. The suites run on DeepEval and promptfoo.
 
-<VideoFigure src="/projects/sprout/loops/sprout-evaluation-study-16x9.mp4" poster="/projects/sprout/loops/sprout-evaluation-study-16x9.jpg" width={1200} height={675} caption="evaluation · motion study" />
+<VideoFigure src="/projects/sprout/loops/sprout-evaluation-study-16x9.mp4" poster="/projects/sprout/loops/sprout-evaluation-study-16x9.jpg" width={1200} height={675} caption="evaluation [motion study]" />

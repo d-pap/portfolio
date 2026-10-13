@@ -18,10 +18,9 @@
   --font-text: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: var(--font-fragment-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
-  --size-lede: 17px;
-  --size-body: 16px;
+  /* Three sizes carry all the text: reading text, everything else, and mono labels. Hierarchy comes from space. */
+  --size-read: 17px;
   --size-base: 15px;
-  --size-name: 21px;
   --size-label: 12px;
   /* Doorways and room titles share this size, so a word can fly from one to the other. */
   --door-size: 64px;
@@ -42,7 +41,6 @@
   --ease-out: cubic-bezier(.22, 1, .36, 1);
   --ease-in-out: cubic-bezier(.65, 0, .35, 1);
   --ease-surface: cubic-bezier(.7, 0, .2, 1);
-  --spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 
 @media (max-width: 899px) {

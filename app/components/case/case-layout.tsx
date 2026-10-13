@@ -33,7 +33,6 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
           <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} composition={entry.hero.type === "composition"}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
           </CaseHeroStage>
-          {entry.hero.caption && <figcaption className="label case-hero-caption">{entry.hero.caption}</figcaption>}
         </figure>
       ) : (
         <div className="case-hero" id="case-hero" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
@@ -47,7 +46,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
         <div className="case-id" data-case-id>
           <h1 className="case-title">{entry.title}</h1>
           <p className="case-summary">{entry.summary}</p>
-          <p className="label case-subtitle">{entry.area} · {entry.context}</p>
+          <p className="label case-subtitle">{entry.area}, {entry.context}</p>
           {(links.length > 0 || note) && (
             <ul className="case-links">
               {links.map((link) => (
