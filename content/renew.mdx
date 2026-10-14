@@ -19,47 +19,54 @@ hero:
   frames:
     - /projects/renew/videos/renew-overview-4x3.jpg
   recording: /projects/renew/videos/renew-overview-4x3.mp4
-  caption: home, goals, and modules [development build, october 2026]
+  caption: home, goals, and modules [october 2026]
 tile:
-  shape: "4:3"
+  shape: "1:1"
   media: { kind: cover, src: /projects/renew/loops/renew-mood-loop-4x5.jpg, recording: /projects/renew/loops/renew-mood-loop-4x5.mp4, fit: contain }
 sections:
-  - id: platform
-    title: RENEW Platform
-    label: backend, mobile infrastructure
-    shape: "1:1"
-    media: { kind: cover, src: /projects/renew/loops/renew-platform-study-1x1.jpg, recording: /projects/renew/loops/renew-platform-study-1x1.mp4, fit: contain }
   - id: redesign
     title: RENEW Redesign
     label: product design, react native
     shape: "4:5"
     media: { kind: cover, src: /projects/renew/loops/renew-chart-loop-4x5.jpg, recording: /projects/renew/loops/renew-chart-loop-4x5.mp4, fit: contain }
+  - id: upgrade
+    title: RENEW Upgrade
+    label: react native, expo
+    shape: "1:1"
+    media: { kind: cover, src: /projects/renew/stills/renew-release-1x1.webp }
+  - id: backend
+    title: RENEW Backend
+    label: php, mysql
+    shape: "4:3"
+    media: { kind: cover, src: /projects/renew/stills/renew-context-4x3.webp }
 ---
 
 RENEW is a Michigan Medicine study app for people living with scleroderma. It helps them set wellness goals, track how they're feeling, and work through lessons on fatigue self-management, and it includes [Sprout](/work/sprout), the AI health coach. I took over RENEW in September 2025 and own the app, its backend, and its releases.
 
-## platform
-
-I own RENEW's backend: a PHP and MySQL API on Michigan Medicine servers, with schema changes managed as Knex migrations.
-
-Every AI feature in the app runs on Sprout. With each message, the app sends the context the coach needs: the participant's health summary, their goals with schedules and recent check-offs, and the modules they're enrolled in. Conversation summaries are incremental, so resuming an old conversation sends only the new messages. User ids are namespaced by environment, which keeps development and production data apart, and the chat shows the sources Sprout cites.
-
-Sign-in uses one-time email codes, and every endpoint goes through the same authentication checks. In production, error responses hide internal details, and endpoints validate their input.
-
-On the client, TanStack Query caches server data and the tab screens load at startup, so switching tabs doesn't wait on the network. Lesson images and audio come from the RENEW WordPress site through a media proxy.
-
-I also keep the app current and ship it: three Expo upgrades, from SDK 50 to 57, an Android 15 target, scripted production deploys, and TestFlight and Play Store builds.
-
-<VideoFigure src="/projects/renew/loops/renew-platform-study-1x1.mp4" poster="/projects/renew/loops/renew-platform-study-1x1.jpg" width={900} height={900} caption="platform [motion study]" />
-
 ## redesign
 
-I'm redesigning the app screen by screen. Home is a new tab that opens with a daily check-in and a weekly mood trend. The goal composer asks one plain question per card, goals can repeat on chosen weekdays with a reminder, and goals have their own statistics screen. Long lessons have a table of contents and find. The chat screen, profile, and login were redesigned too.
-
-The public release doesn't include every screen shown here.
+I redesigned the app and rebuilt its screens in React Native. Home is a new tab that opens with a daily check-in and a weekly mood trend. The goal composer asks one plain question per card, goals can repeat on chosen weekdays with a reminder, and goals have their own statistics screen. Long lessons have a table of contents and find. The chat screen, profile, and login were redesigned too.
 
 <VideoFigure src="/projects/renew/videos/renew-statistics-4x5.mp4" poster="/projects/renew/videos/renew-statistics-4x5.jpg" width={960} height={1200} caption="goal statistics [demonstration data, october 2026]" />
 
-<VideoFigure src="/projects/renew/videos/renew-new-goal-4x5.mp4" poster="/projects/renew/videos/renew-new-goal-4x5.jpg" width={960} height={1200} caption="setting a goal [development build]" />
+<VideoFigure src="/projects/renew/videos/renew-new-goal-4x5.mp4" poster="/projects/renew/videos/renew-new-goal-4x5.jpg" width={960} height={1200} caption="setting a goal" />
 
-<VideoFigure src="/projects/renew/videos/renew-modules-4x5.mp4" poster="/projects/renew/videos/renew-modules-4x5.jpg" width={960} height={1200} caption="finding a lesson and reading an activity [development build]" />
+<VideoFigure src="/projects/renew/videos/renew-modules-4x5.mp4" poster="/projects/renew/videos/renew-modules-4x5.jpg" width={960} height={1200} caption="finding a lesson and reading an activity" />
+
+## upgrade
+
+I keep the app current and ship it. Three upgrades took RENEW from Expo SDK 50 to 57 between March and July 2026, and I raised the Android target to API level 36 (Android 16) for Google Play. Production deploys are scripted, and builds go out through TestFlight and the Play Store.
+
+Version 3.1.1 reached the App Store on October 10, 2026, with the new Home screen, the daily mood check-in, and goals with times, reminders, and notes.
+
+<Figure src="/projects/renew/stills/renew-release-figure.webp" alt="RENEW's App Store listing beside the release notes for version 3.1.1" width={1824} height={1080} caption="version 3.1.1 on the app store [october 2026]" />
+
+## backend
+
+I own RENEW's backend: a PHP and MySQL API on Michigan Medicine servers, with schema changes managed as Knex migrations. Sign-in uses one-time email codes, and every endpoint goes through the same authentication checks. In production, error responses hide internal details, and endpoints validate their input.
+
+The backend is also where RENEW connects to Sprout. A participant's study group decides which parts of the coach they get: answers from the health library, their health background, memory of past conversations, and what they're doing in the app. Their access window decides when the chat opens and closes. With each message, the backend adds their active goals, with schedules and recent check-offs, and the modules they're enrolled in. Sprout knows each participant only by an ID the backend assigns, never by their RENEW account.
+
+<Figure src="/projects/renew/stills/renew-context-figure.webp" alt="An excerpt of the request RENEW's backend sends to Sprout: the message, then the participant's active goals and enrolled modules, filled with made-up values" width={1824} height={1080} caption="what the backend adds to a message [synthetic values]" />
+
+On the app side, TanStack Query caches server data and the tab screens load at startup, so switching tabs doesn't wait on the network. Lesson images and audio come from the RENEW WordPress site through a media proxy.

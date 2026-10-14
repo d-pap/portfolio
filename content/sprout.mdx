@@ -40,7 +40,7 @@ sections:
     media: { kind: cover, src: /projects/sprout/loops/sprout-evaluation-study-16x9.jpg, recording: /projects/sprout/loops/sprout-evaluation-study-16x9.mp4, fit: contain }
 ---
 
-Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. The research is ongoing. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
+Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
 
 ## system design
 
@@ -65,8 +65,6 @@ Replies cite their sources, and medical facts have to come from the retrieved te
 ## long-term memory
 
 The coach keeps context between conversations in layers. Each conversation is condensed into a dated summary of what the person reported and what helped. Patterns the coach infers from those summaries go into a ledger that tracks each one's confidence and age, merges duplicates, and retires stale entries. A periodic deep review revisits the whole ledger. The clinical summary from the study's assessments is the baseline: self-reports describe how someone is doing now, and they don't override it.
-
-I'm testing how well this memory handles corrections and whether the patterns it infers improve later replies.
 
 ## evals
 

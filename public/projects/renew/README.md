@@ -1,11 +1,12 @@
 # RENEW portfolio media
 Prepared: 2026-10-08
 
-The 13 approved app MP4s and matching JPEG posters are preserved without re-encoding. A separate 4.8-second abstract Platform study was added on 2026-10-08.
+The 13 approved app MP4s and matching JPEG posters are preserved without re-encoding.
 
-- `loops/`: three thumbnail loop studies, each under five seconds, with a dissolve back to its starting state.
+- `loops/`: three thumbnail loops, each under five seconds, with a dissolve back to its starting state.
 - `videos/`: all ten tighter v3 edits for project detail pages and other placements.
 - `manifest.json`: ready-to-use site URLs, poster URLs, dimensions, durations, and descriptions.
+- `stills/`: the Upgrade and Backend images, added 2026-10-13. `renew-release-*` recomposes the public App Store listing with the 3.1.1 release notes (released 2026-10-10). `renew-context-*` is an excerpt of the request RENEW's backend sends to Sprout: real field names, made-up values. Each has a home tile (`1x1`, `4x3`) and a case-page figure (1824×1080).
 
 These are full-phone exports on plain white, silent H.264 at 60 fps. The loops retain native interaction speed; their return is an edited dissolve, not a recorded app action. Their final selection is still subject to review.
 
@@ -19,7 +20,7 @@ Files in this folder are served by the site at `/projects/renew/`. For example:
 ></video>
 ```
 
-The site now uses visible-only silent autoplay with no playback controls. Reduced-motion visitors see stills. The Platform study uses wordless black linework and orange on white, matching the Sprout motion studies.
+The site now uses visible-only silent autoplay with no playback controls. Reduced-motion visitors see stills.
 
 ## Thumbnail loops
 
@@ -28,7 +29,6 @@ The site now uses visible-only silent autoplay with no playback controls. Reduce
 | Completing a goal | 3.5s | [renew-completion-loop-4x5.mp4](loops/renew-completion-loop-4x5.mp4) | [JPEG](loops/renew-completion-loop-4x5.jpg) |
 | Mood check-in | 4.45s | [renew-mood-loop-4x5.mp4](loops/renew-mood-loop-4x5.mp4) | [JPEG](loops/renew-mood-loop-4x5.jpg) |
 | Chart study | 4.9s | [renew-chart-loop-4x5.mp4](loops/renew-chart-loop-4x5.mp4) | [JPEG](loops/renew-chart-loop-4x5.jpg) |
-| Platform motion study | 4.8s | [renew-platform-study-1x1.mp4](loops/renew-platform-study-1x1.mp4) | [JPEG](loops/renew-platform-study-1x1.jpg) |
 
 ## Longer collection — tighter v3 edits
 
