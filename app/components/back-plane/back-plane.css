@@ -15,17 +15,17 @@
   --line: var(--plane-line);
   --faint: var(--plane-line);
 }
-/* Same columns as the about block, so the back lines up with the front. */
 .back-in {
   min-height: var(--back-h);
-  padding-top: calc(var(--sheet-radius) + 56px);
-  padding-bottom: 32px;
+  padding-top: calc(var(--sheet-radius) + 76px);
+  padding-bottom: 40px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--margin-w);
-  column-gap: var(--margin-gap);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
 }
-.back-main { display: grid; grid-template-columns: minmax(0, 1fr) var(--team-w); column-gap: 24px; align-content: start; }
-.back-side { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+.back-main { grid-column: 3 / 9; }
+.back-side { grid-column: 10 / 13; align-self: end; }
+.back-doors li + li { margin-top: 12px; }
 
 /* The list's own line box matches the words, so no strut adds space between them. */
 .back-doors { font-size: var(--door-size); line-height: .98; }
@@ -37,23 +37,11 @@
 }
 .door:hover .door-word, .door:focus-visible .door-word { background-size: 100% 2px; }
 
-.back-links { display: grid; gap: 4px; align-content: start; }
-.back-ask { color: var(--plane-muted); margin-bottom: 8px; }
-.back-plane a:not(.door) {
-  text-decoration-line: underline;
-  text-decoration-color: var(--plane-line);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-  transition: text-decoration-color var(--t-quick);
-}
-.back-plane a:not(.door):hover { text-decoration-color: currentColor; }
-.back-links .link-arrow { width: 9px; height: 9px; margin-left: 2px; vertical-align: .45em; color: var(--accent-ink); }
 .back-updated { color: var(--plane-muted); }
-
-@media (max-width: 899px) {
-  .back-in { grid-template-columns: 1fr; row-gap: 28px; }
-  .back-main { grid-template-columns: 1fr; row-gap: 28px; }
-  .back-side { justify-content: start; }
+@media (max-width: 650px) {
+  .back-in { grid-template-columns: repeat(6, minmax(0, 1fr)); padding-top: 76px; padding-bottom: 40px; }
+  .back-main { grid-column: 2 / 7; }
+  .back-side { grid-column: 2 / 7; }
 }
 
 /* Its contents rise into place as the sheet uncovers them (timeline in sheet.css). */
@@ -61,21 +49,3 @@
   .back-in { animation-name: settle; }
 }
 @keyframes settle { from { opacity: .35; transform: translateY(36px); } to { opacity: 1; transform: none; } }
-
-/* The underline is the box's bottom edge, so it follows the width as the words swap. */
-.back-plane a.copy-email { text-decoration: none; cursor: copy; }
-.copy-roll {
-  position: relative;
-  display: inline-block;
-  vertical-align: bottom;
-  height: 1.5em;
-  overflow: hidden;
-  white-space: nowrap;
-  border-bottom: 1px solid var(--plane-line);
-  transition: width 320ms var(--ease-out), border-color var(--t-quick);
-}
-.copy-email:hover .copy-roll { border-color: currentColor; }
-.copy-roll > span { display: block; transition: transform 320ms var(--ease-out), opacity var(--t-quick), filter var(--t-quick); }
-.copy-done { position: absolute; left: 0; top: 0; transform: translateY(100%); opacity: 0; filter: blur(3px); }
-.copy-email.is-copied .copy-address { transform: translateY(-100%); opacity: 0; filter: blur(3px); }
-.copy-email.is-copied .copy-done { transform: none; opacity: 1; filter: none; }

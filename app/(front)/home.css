@@ -1,5 +1,18 @@
+body:has(.home) { --gutter: 36px; --page-max: 1600px; --sheet-radius: 12px; --lime-peek: 12px; --back-h: 430px; overflow-anchor: none; }
+.sheet:has(.home) { padding-bottom: 0; }
 .home-label { margin-bottom: 18px; }
-.home-earlier { margin-top: 112px; }
+.home-earlier { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; margin-top: 140px; }
+.home-earlier > div { grid-column: 7 / 13; }
 .home-earlier-list { max-width: 640px; }
 .home-earlier-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; }
 .home-earlier-row:hover .home-earlier-name { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 1000px) {
+  body:has(.home) { --gutter: 24px; }
+  .home-earlier > div { grid-column: 5 / 13; }
+}
+@media (max-width: 650px) {
+  body:has(.home) { --gutter: 20px; --back-h: 360px; --lime-peek: 10px; }
+  .home-earlier { display: block; margin-top: 84px; }
+  .home-earlier-row { align-items: start; }
+  .home-earlier-row .label { text-align: right; }
+}

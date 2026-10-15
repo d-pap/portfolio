@@ -10,8 +10,8 @@ import { mediaColor } from "app/lib/media-colors";
 import { SHAPES } from "app/lib/tiles";
 import "./tile.css";
 
-const COVER_SIZES = "(max-width: 899px) 92vw, 31vw";
-const STAGE_SIZES = "(max-width: 899px) 40vw, 14vw";
+const COVER_SIZES = "(max-width: 650px) 90vw, (max-width: 1600px) 50vw, 760px";
+const STAGE_SIZES = "(max-width: 650px) 40vw, 24vw";
 
 function TileMediaView({ media, priority }: { media: Tile["media"]; priority: boolean }) {
   switch (media.kind) {
@@ -59,10 +59,12 @@ export function WorkTile({ tile, priority = false, enter }: { tile: Tile; priori
           <TileMediaView media={tile.media} priority={priority} />
         </div>
       </div>
-      <h3 className="tile-title">
-        <a className="tile-link" href={tile.href} aria-describedby={labelId}>{tile.title}</a>
-      </h3>
-      <p id={labelId} className="label tile-label">{tile.label}</p>
+      <div className="tile-caption">
+        <h3 className="tile-title">
+          <a className="tile-link" href={tile.href} aria-describedby={labelId}>{tile.title}</a>
+        </h3>
+        <p id={labelId} className="tile-label">{tile.label}</p>
+      </div>
     </article>
   );
 }

@@ -1,0 +1,37 @@
+.ending {
+  height: calc(100svh - var(--header-h) - var(--lime-peek));
+  min-height: 300px;
+  margin-top: 98px;
+  padding: 0 var(--gutter);
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.ending-copy { position: sticky; top: calc(var(--header-h) + 24px); font-size: 19px; font-weight: 600; line-height: 1.55; letter-spacing: -.15px; text-align: center; color: #f5f5f2; }
+/* As lime opens, keep the final line in the middle of the dark area still visible below the masthead. */
+@supports (animation-timeline: view()) {
+  .ending-copy {
+    position: static;
+    animation: ending-rise linear both;
+    animation-timeline: --reveal;
+    animation-range: cover var(--lime-peek) cover calc(var(--back-h) - var(--sheet-radius));
+  }
+}
+@keyframes ending-rise {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc((var(--back-h) - var(--sheet-radius) - var(--lime-peek)) / 2)); }
+}
+.ending-copy > span:not(:first-child) { display: none; }
+html[data-bump-step="1"] .ending-copy > span,
+html[data-bump-step="2"] .ending-copy > span { display: none; }
+html[data-bump-step="1"] .ending-copy > span:nth-child(2),
+html[data-bump-step="2"] .ending-copy > span:nth-child(3) { display: inline; }
+.ending-next { display: none; position: absolute; inset: 0; width: 100%; height: 100%; cursor: default; }
+html[data-ending="holding"] .ending-next { display: block; }
+.ending-next:focus-visible { outline-offset: -12px; }
+html[data-ending="waiting"], html[data-ending="holding"] { overscroll-behavior-y: none; }
+html[data-ending="waiting"] .back-in, html[data-ending="holding"] .back-in { visibility: hidden; }
+@media (max-width: 650px) {
+  .ending { margin-top: 65px; }
+  .ending-copy { font-size: 18px; }
+}

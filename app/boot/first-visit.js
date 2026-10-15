@@ -3,8 +3,7 @@
 (function () {
   if (typeof window === "undefined") return;
   var root = document.documentElement;
-  // Elements in the hidden layout (.work-grid or .work-list) never animate, so this waits until no "enter" animation is
-  // left rather than counting [data-enter] elements.
+  // Wait until every entrance finishes, including staggered elements.
   function settled(event) {
     if (event && event.animationName !== "enter") return;
     var left = document.getAnimations().some(function (animation) { return animation.animationName === "enter"; });

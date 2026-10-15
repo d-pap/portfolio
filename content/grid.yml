@@ -1,8 +1,12 @@
-# Home grid: three hand-placed columns, each listed top to bottom.
-# A main tile is the entry's slug; a section tile is "<slug>#<section id>".
-# The two main products lead row one. After any change run `npm test`:
-# app/lib/grid.content.test.ts checks the spacing rules at the 1440px and 1024px column widths.
-columns:
-  - [renew, stitches, renew#backend]
-  - [sprout, renew#upgrade, sprout#rag-pipeline]
-  - [codecoach, sprout#long-term-memory, renew#redesign, sprout#evals]
+# Reading order. Unequal widths and offsets are set in app/components/work/tile.css.
+tiles:
+  - renew
+  - codecoach
+  - stitches
+  - sprout
+  - renew#upgrade
+  - sprout#rag-pipeline
+  - sprout#long-term-memory
+  - renew#backend
+  - renew#redesign
+  - sprout#evals

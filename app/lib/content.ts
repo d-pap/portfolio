@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import { parseAbout, type AboutPart } from "./about";
 import { parseReading, type Book } from "./reading";
 import { parseEntry, sortEntries, type Entry } from "./entries";
 import { parseGridFile, resolveGrid, type Grid } from "./grid";
@@ -22,8 +21,8 @@ export function getIndex(): { main: Entry[]; earlier: Entry[] } {
   return sortEntries(getEntries());
 }
 
-export function getAbout(): AboutPart[] {
-  return parseAbout(fs.readFileSync(path.join(CONTENT, "about.txt"), "utf8"));
+export function getAbout(): string[] {
+  return fs.readFileSync(path.join(CONTENT, "about.txt"), "utf8").trim().split(/\n\s*\n/).map((paragraph) => paragraph.replace(/\s+/g, " "));
 }
 
 export function getReading(): Book[] {

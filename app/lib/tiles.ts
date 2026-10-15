@@ -1,4 +1,4 @@
-/** Tile shapes as width / height. The grid's spacing rules are computed from these. */
+/** Tile shapes as width / height. */
 export const SHAPES = { "4:5": 4 / 5, "1:1": 1, "4:3": 4 / 3, "3:2": 3 / 2, "16:9": 16 / 9 } as const;
 export type Shape = keyof typeof SHAPES;
 

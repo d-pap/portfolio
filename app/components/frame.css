@@ -1,29 +1,12 @@
 .frame { position: sticky; top: 0; z-index: 40; background: var(--paper); color: var(--ink); view-transition-name: frame; }
 .frame[data-plane="back"] { background: var(--plane); color: var(--plane-ink); --muted: var(--plane-muted); --line: var(--plane-line); }
-.frame-in {
-  position: relative;
-  height: var(--header-h);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--margin-w);
-  column-gap: var(--margin-gap);
-  align-items: center;
-}
-.frame-in::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
-/* The role starts its own column so the about block's teams list can line up under it. */
-.frame-main { display: grid; grid-template-columns: minmax(0, 1fr) var(--team-w); column-gap: 24px; align-items: center; min-width: 0; }
-.frame-side { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; }
-.frame-role, .frame-location { color: var(--muted); }
+.frame-in { position: relative; height: var(--header-h); display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.frame-in::after { content: ""; position: absolute; left: var(--gutter); right: var(--gutter); bottom: 0; height: 1px; background: var(--line); }
+.frame-side { display: flex; align-items: center; }
+.frame-email { font-size: 13px; color: var(--muted); }
 .frame-close { width: 36px; height: 36px; margin-right: -8px; display: grid; place-items: center; border-radius: 50%; color: inherit; transition: background var(--t-quick); }
 .frame-close:hover { background: var(--wash); }
 .frame[data-plane="back"] .frame-close:hover { background: rgba(22, 22, 21, .08); }
-
-@media (max-width: 899px) {
-  .frame-main { grid-template-columns: minmax(0, 1fr); }
-  .frame-in { grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; }
-  .frame-role, .frame-location { display: none; }
-}
-
-/* No edge at the top of a page, where nothing sits under the frame; it fades in over the first 12px of scroll. */
 @supports (animation-timeline: scroll()) {
   .frame-in::after { animation: hairline linear both; animation-timeline: scroll(root); animation-range: 0px 12px; }
 }

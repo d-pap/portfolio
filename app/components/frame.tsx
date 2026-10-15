@@ -2,6 +2,7 @@
 
 import type { CSSProperties, MouseEvent } from "react";
 import { usePathname } from "next/navigation";
+import { socialLinks } from "app/config";
 import "./frame.css";
 
 const FRONT = /^\/($|work\/)/;
@@ -32,10 +33,9 @@ export function Frame({ plane }: { plane: "front" | "back" }) {
       <div className="frame-in page">
         <div className="frame-main">
           <a className="frame-name" href="/">Derek Papierski</a>
-          <span className="frame-role">AI &amp; software engineer</span>
         </div>
         <div className="frame-side">
-          <span className="frame-location">Michigan</span>
+          {!away && <a className="frame-email" href={socialLinks.email}>email</a>}
           {away && (
             <a className="frame-close" href="/" onClick={close} aria-label="Close and return">
               <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
