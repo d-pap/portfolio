@@ -1,7 +1,104 @@
 {
-  "created": "2026-10-08",
-  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/08/01a11d13-cd05-7d71-9e9c-c1fc51747fa2/renew-motion",
+  "created": "2026-10-20",
+  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/20/01a15a49-a73d-70f3-b6d7-f5a1b847f132",
+  "sourceCommit": "38d2d38d478ac129df102e4fc14cb83fc5f7cde7",
+  "description": "Original React interface captured locally. Illustrative data, scripted coaching, simulated Run and Submit. Result values verified with Python. Discussion records and resume details are fictional. Architecture reflects the original cloud app.",
   "assets": [
+    {
+      "src": "/projects/codecoach/images/codecoach-landing-screen.webp",
+      "width": 1440,
+      "height": 900,
+      "bytes": 475112
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-development-loop-poster.webp",
+      "width": 1440,
+      "height": 1080,
+      "bytes": 164486
+    },
+    {
+      "src": "/projects/codecoach/videos/codecoach-development-loop.mp4",
+      "width": 1440,
+      "height": 1080,
+      "duration": 20,
+      "fps": 60,
+      "bytes": 617609
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-workspace.webp",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 226936
+    },
+    {
+      "src": "/projects/codecoach/videos/codecoach-coaching.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 14,
+      "fps": 60,
+      "bytes": 553044
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-coaching-poster.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 212480,
+      "sourceAsset": "codecoach-film-poster.webp"
+    },
+    {
+      "src": "/projects/codecoach/videos/codecoach-execution.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 16,
+      "fps": 60,
+      "bytes": 367013
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-execution-poster.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 192658
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-submission.webp",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 252226
+    },
+    {
+      "src": "/projects/codecoach/videos/codecoach-courses.mp4",
+      "width": 1920,
+      "height": 1080,
+      "duration": 7,
+      "fps": 60,
+      "bytes": 239124
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-courses-poster.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 135876
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-discussions.webp",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 209018
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-resume-builder.webp",
+      "width": 1920,
+      "height": 1200,
+      "bytes": 196220
+    },
+    {
+      "src": "/projects/codecoach/images/codecoach-architecture.svg",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 4282
+    }
+  ],
+  "archived": [
     {
       "name": "codecoach-landing-4x5",
       "kind": "videos",
@@ -9,10 +106,11 @@
       "poster": "/projects/codecoach/videos/codecoach-landing-4x5.jpg",
       "width": 960,
       "height": 1200,
-      "duration": 12.0,
+      "duration": 12,
       "fps": 60,
       "bytes": 2488775,
-      "description": "Edited scroll study reconstructed from two public landing-page viewport captures, October 2026. Not authenticated workspace footage."
+      "description": "Edited scroll study reconstructed from two public landing-page viewport captures, October 2026. Not authenticated workspace footage.",
+      "status": "superseded"
     }
   ]
 }

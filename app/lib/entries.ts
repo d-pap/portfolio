@@ -5,7 +5,7 @@ import { DIAGRAMS, MAX_TILE_TITLE, SHAPES, type DiagramName, type MainTile, type
 export type EntryIndex = "main" | "earlier" | "hidden";
 export type EntryKind = "project" | "role" | "analysis";
 /** A logo hero centers one image (usually an SVG) on the white stage, like a cover. */
-export type Hero = { type: "phones" | "screen" | "logo" | "composition"; frames: string[]; recording?: string; caption?: string };
+export type Hero = { type: "phones" | "screen" | "logo" | "composition"; frames: string[]; recording?: string; caption?: string; aspectRatio?: number };
 export type Entry = {
   slug: string;
   title: string;
@@ -121,7 +121,10 @@ function parseHero(value: unknown, where: string): Hero | undefined {
   }
   if (h.recording !== undefined && h.type === "logo") throw new Error(`${where}: hero.recording needs a "phones", "screen", or "composition" hero`);
   if (h.caption !== undefined && typeof h.caption !== "string") throw new Error(`${where}: hero.caption must be text`);
-  return { type: h.type, frames: frames as string[], recording: h.recording as string | undefined, caption: h.caption as string | undefined };
+  if (h.aspectRatio !== undefined && (typeof h.aspectRatio !== "number" || !Number.isFinite(h.aspectRatio) || h.aspectRatio <= 0)) {
+    throw new Error(`${where}: hero.aspectRatio must be a positive number`);
+  }
+  return { type: h.type, frames: frames as string[], recording: h.recording as string | undefined, caption: h.caption as string | undefined, ...(h.aspectRatio !== undefined ? { aspectRatio: h.aspectRatio as number } : {}) };
 }
 
 function parseShape(value: unknown, at: string): Shape {
