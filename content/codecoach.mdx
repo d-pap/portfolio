@@ -6,7 +6,7 @@ area: coding practice platform
 role: Design & full-stack development
 period: 2024 – 2025
 context: University of Michigan–Dearborn
-stack: React, AWS Lambda, API Gateway, MongoDB, OpenAI, Judge0
+stack: React, JavaScript, Node.js, AWS, AWS Lambda, API Gateway, MongoDB, OpenAI
 status: Completed student project
 repository: https://github.com/d-pap/codecoach
 publishedAt: "2024-08-20"
@@ -14,55 +14,125 @@ index: main
 order: 4
 kind: project
 hero:
-  type: screen
+  type: composition
   frames:
-    - /projects/cc-home-screen.webp
-  caption: practice home [2024]
+    - /projects/codecoach/images/codecoach-development-loop-poster.webp
+  recording: /projects/codecoach/videos/codecoach-development-loop.mp4
+  aspectRatio: 1.3333333333333333
+  caption: Code Coach — ask for a hint, edit, and run
 tile:
   shape: "3:2"
-  media: { kind: cover, src: /projects/codecoach/videos/codecoach-landing-4x5.jpg, recording: /projects/codecoach/videos/codecoach-landing-4x5.mp4, fit: contain }
+  media:
+    kind: cover
+    src: /projects/codecoach/images/codecoach-development-loop-poster.webp
+    recording: /projects/codecoach/videos/codecoach-development-loop.mp4
+    fit: contain
 ---
 
-Code Coach is a practice platform for the University of Michigan–Dearborn ACM chapter. Students prepare for ICPC contests and technical interviews with practice problems, an in-browser editor, code execution, and an AI assistant in one place. It was a three-person senior design project. I designed it, made the logo, and built most of the frontend and backend.
+I built Code Coach with two classmates for the University of Michigan–Dearborn ACM chapter. It was our senior design project: a place to practice for programming contests and technical interviews. I designed the site and logo, and built most of the frontend and backend.
+
+The idea was to keep the problem, code, and help in the same place. You could work through a solution, ask a question when you got stuck, and try the next idea without leaving the page.
 
 ## the workspace
 
-Students browse ICPC problems by difficulty, year, and region, or FAANG-style interview questions by category. The problem page puts the statement, an editor, and the assistant side by side. Code runs through Judge0, and the assistant receives the problem and the student's current solution, so its hints are about their code. The platform also has an interview-prep area with a resume builder, discussion forums, and course pages where instructors group problems for a class.
+Students could browse ICPC problems by year and region, or interview questions by category. Once you picked a problem, the statement stayed beside the editor. You could switch languages and themes, enter a test case, and run your code right there.
 
 <Figure
-  src="/projects/cc-compiler.webp"
-  alt="The problem-solving workspace with a code editor"
-  width={1440}
-  height={930}
-  caption="the workspace"
+  src="/projects/codecoach/images/codecoach-workspace.webp"
+  alt="A coding problem beside the Python editor, with test input and output below"
+  width={1920}
+  height={1200}
+  caption="the problem and editor, side by side"
 />
+
+## getting unstuck
+
+The assistant received the problem and the code in your editor along with your question. That meant you could ask about the part you were working on without copying everything into a separate chat. In this example, it explains how to update a sliding window instead of adding up the same values again.
+
+<VideoFigure
+  src="/projects/codecoach/videos/codecoach-coaching.mp4"
+  poster="/projects/codecoach/images/codecoach-coaching-poster.webp"
+  width={1920}
+  height={1080}
+  caption="asking for a hint without leaving the problem"
+/>
+
+## running and submitting code
+
+Run let you try an input and inspect the output. The clip below finishes the solution, runs the sample, then checks an all-negative input. That second case matters: starting the best sum at zero would give the wrong answer.
+
+<VideoFigure
+  src="/projects/codecoach/videos/codecoach-execution.mp4"
+  poster="/projects/codecoach/images/codecoach-execution-poster.webp"
+  width={1920}
+  height={1080}
+  caption="editing the solution and testing two inputs"
+/>
+
+Submit saved the code and its result to your account. The result panel showed the execution status, output, memory use, and execution time.
 
 <Figure
-  src="/projects/cc-aichat.webp"
-  alt="AI help next to the coding problem"
-  width={1440}
-  height={930}
-  caption="help with context from the problem and the code"
+  src="/projects/codecoach/images/codecoach-submission.webp"
+  alt="The submission result panel showing Accepted and output 13; performance measurements are unavailable in this local demo"
+  width={1920}
+  height={1200}
+  caption="the submission result in the workspace"
 />
+
+## practicing together
+
+Courses gave instructors a way to group problems into practice sets. Students could open a course and go straight into one of its problems.
+
+<VideoFigure
+  src="/projects/codecoach/videos/codecoach-courses.mp4"
+  poster="/projects/codecoach/images/codecoach-courses-poster.webp"
+  width={1920}
+  height={1080}
+  caption="courses and practice sets"
+/>
+
+Each problem also had a discussion tab. Students could compare approaches, point out edge cases, and like helpful comments while keeping their code open beside the conversation.
 
 <Figure
-  src="/projects/cc-resume-screen.webp"
-  alt="The Code Coach resume builder"
-  width={1440}
-  height={930}
-  caption="resume builder"
+  src="/projects/codecoach/images/codecoach-discussions.webp"
+  alt="Sample discussion comments about sliding windows and negative inputs, with like counts and the code editor alongside"
+  width={1920}
+  height={1200}
+  caption="discussing a problem · sample conversation"
 />
 
-## brand identity
+## beyond coding problems
 
-I made the Code Coach logo: a mark of two angle brackets around a dot, set beside a lowercase wordmark. The interface uses a minimal palette and works from phones to desktops.
+Interview preparation also included a résumé builder. You could enter your experience, education, projects, and skills, then add a job description to tailor the draft. The generated text could be copied and edited.
 
-<Figure caption="the logo">
-  <img src="/projects/codecoach-logo.svg" alt="The Code Coach logo: two angle brackets around a dot, beside the lowercase wordmark codecoach" />
-</Figure>
+<Figure
+  src="/projects/codecoach/images/codecoach-resume-builder.webp"
+  alt="The résumé builder form with a sample professional summary and work experience"
+  width={1920}
+  height={1200}
+  caption="the résumé builder"
+/>
 
-<VideoFigure src="/projects/codecoach/videos/codecoach-landing-4x5.mp4" poster="/projects/codecoach/videos/codecoach-landing-4x5.jpg" width={960} height={1200} caption="the public landing page [edited scroll study, october 2026]" />
+## design and implementation
 
-## implementation
+I handled the visual design, from the landing page to the coding workspace. I made the logo from two angle brackets around a dot, paired with a lowercase wordmark. The workspace is quieter than the landing page, with most of the space given to the problem and code.
 
-The frontend is React, deployed to Netlify from GitHub. The backend is serverless: API Gateway routes requests to Lambda functions, and MongoDB Atlas stores users, problems, submissions, and courses through Mongoose. Judge0 runs submitted code in a sandbox and returns its output, runtime, and memory use. The AI help uses the OpenAI API through the university's U-M GPT service.
+<Figure
+  src="/projects/codecoach/images/codecoach-landing-screen.webp"
+  alt="Code Coach's public landing page, with its logo, introduction, and programming illustrations"
+  width={1440}
+  height={900}
+  caption="the landing page"
+/>
+
+The frontend is React, hosted on Netlify. Cognito handles sign-in, API Gateway routes requests to Node.js functions on Lambda, and MongoDB stores the users, problems, courses, discussions, and submissions. Code execution goes through Judge0. The assistant uses OpenAI through the university's U-M GPT service.
+
+<Figure
+  src="/projects/codecoach/images/codecoach-architecture.svg"
+  alt="React on Netlify connects to Cognito for authentication, API Gateway and Lambda for application data and AI requests, and directly to Judge0 for code execution. Lambda connects to MongoDB and U-M Maizey."
+  width={1920}
+  height={1080}
+  caption="how the original application fits together"
+/>
+
+These images and videos come from a local demo of the original app. The problems, conversations, and résumé details are sample content; coaching and code execution are simulated. The diagram shows the original cloud setup.

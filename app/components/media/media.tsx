@@ -4,7 +4,7 @@ import { mediaColor } from "app/lib/media-colors";
 import "./media.css";
 
 type MediaProps = { hero: Hero; sizes: string; priority?: boolean; label?: string };
-type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recording?: string; sizes: string; priority: boolean; offset?: boolean };
+type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recording?: string; sizes: string; priority: boolean; offset?: boolean; aspectRatio?: number };
 
 // Fills its nearest positioned ancestor (position: absolute; inset: 0), so the host
 // must be position: relative with a definite size.
@@ -27,8 +27,8 @@ export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   }
   if (hero.type === "screen") {
     return (
-      <div className="media">
-        <Device kind="screen" src={hero.frames[0]} alt={label ?? ""} recording={hero.recording} sizes={sizes} priority={priority} />
+      <div className="media" style={hero.aspectRatio ? { containerType: "inline-size" } : undefined}>
+        <Device kind="screen" src={hero.frames[0]} alt={label ?? ""} recording={hero.recording} sizes={sizes} priority={priority} aspectRatio={hero.aspectRatio} />
       </div>
     );
   }
@@ -41,9 +41,9 @@ export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   );
 }
 
-function Device({ kind, src, alt, recording, sizes, priority, offset }: DeviceProps) {
+function Device({ kind, src, alt, recording, sizes, priority, offset, aspectRatio }: DeviceProps) {
   return (
-    <div className={`device device-${kind}${offset ? " device-offset" : ""}`} style={{ background: mediaColor(src) }}>
+    <div className={`device device-${kind}${offset ? " device-offset" : ""}`} style={{ background: mediaColor(src), ...(aspectRatio ? { aspectRatio, height: `min(82%, calc(90cqw / ${aspectRatio}))`, flexShrink: 0 } : {}) }}>
       {recording ? (
         <video className="device-video" src={recording} poster={src} muted loop playsInline preload="none" aria-label={alt || undefined} />
       ) : (
