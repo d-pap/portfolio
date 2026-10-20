@@ -19,6 +19,6 @@
     "incremental": true,
     "plugins": [{ "name": "next" }]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-env.d.ts", ".next-preview/types/**/*.ts", ".next-build/types/**/*.ts"],
+  "include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next-env.d.ts", ".next-preview/types/**/*.ts", ".next-build/types/**/*.ts", ".next-ascii-build/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
