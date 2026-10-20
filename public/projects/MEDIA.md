@@ -6,7 +6,7 @@ Updated 2026-10-20. Production-ready MP4s and matching posters are grouped by pr
 | --- | --- | --- |
 | RENEW | Mood loop; chart loop for Redesign; App Store release still for Upgrade; app-context still for Backend | App overview; Statistics, new goal, and modules films; release and app-context stills |
 | Sprout | Sources interaction; wordless retrieval, memory, and evaluation studies | Conversation film; three abstract motion studies |
-| Code Coach | Approved 20-second hint → edit → run loop | Landing-page hero; workspace, submission, discussion, and résumé stills; coaching, execution, and courses videos; architecture diagram |
+| Code Coach | Approved 20-second hint → edit → run loop | Matching development-loop hero; landing page, workspace, submission, discussion, and résumé stills; coaching, execution, and courses videos; architecture diagram |
 | Stitches | Existing homepage and collection photography | Before/after wipe plus the redesigned homepage and collection images |
 
 All films and loops silently autoplay and repeat without playback controls, including case-page films. Playback stops offscreen or when the tab is hidden. Code Coach's approved homepage loop runs for 20 seconds to show a complete development sequence.

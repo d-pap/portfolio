@@ -33,7 +33,7 @@ export function CaseLayout({ entry, next }: { entry: Entry; next?: Entry }) {
       <ContextBar title={entry.shortTitle} summary={entry.summary} sections={sections} />
       {entry.hero ? (
         <figure className="case-hero" id="case-hero" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>
-          <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} composition={entry.hero.type === "composition"}>
+          <CaseHeroStage hasRecording={Boolean(entry.hero.recording)} composition={entry.hero.type === "composition"} aspectRatio={entry.hero.type === "composition" ? entry.hero.aspectRatio : undefined}>
             <Media hero={entry.hero} label={entry.hero.caption ?? entry.title} sizes={entry.hero.type === "phones" ? "(max-width: 899px) 30vw, 30vh" : "(max-width: 899px) 90vw, 95vh"} priority />
           </CaseHeroStage>
         </figure>

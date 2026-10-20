@@ -14,11 +14,12 @@ index: main
 order: 4
 kind: project
 hero:
-  type: screen
+  type: composition
   frames:
-    - /projects/codecoach/images/codecoach-landing-screen.webp
-  aspectRatio: 1.6
-  caption: Code Coach's public landing page
+    - /projects/codecoach/images/codecoach-development-loop-poster.webp
+  recording: /projects/codecoach/videos/codecoach-development-loop.mp4
+  aspectRatio: 1.3333333333333333
+  caption: Code Coach — ask for a hint, edit, and run
 tile:
   shape: "3:2"
   media:
@@ -114,7 +115,15 @@ Interview preparation also included a résumé builder. You could enter your exp
 
 ## design and implementation
 
-I handled the visual design, from the landing page at the top of this page to the coding workspace. I made the logo from two angle brackets around a dot, paired with a lowercase wordmark. The workspace is quieter than the landing page, with most of the space given to the problem and code.
+I handled the visual design, from the landing page to the coding workspace. I made the logo from two angle brackets around a dot, paired with a lowercase wordmark. The workspace is quieter than the landing page, with most of the space given to the problem and code.
+
+<Figure
+  src="/projects/codecoach/images/codecoach-landing-screen.webp"
+  alt="Code Coach's public landing page, with its logo, introduction, and programming illustrations"
+  width={1440}
+  height={900}
+  caption="the landing page"
+/>
 
 The frontend is React, hosted on Netlify. Cognito handles sign-in, API Gateway routes requests to Lambda, and MongoDB stores the users, problems, courses, discussions, and submissions. Code execution goes through Judge0. The assistant uses OpenAI through the university's U-M GPT service.
 
