@@ -1,30 +1,144 @@
-.frame { position: sticky; top: 0; z-index: 40; background: var(--paper); color: var(--ink); view-transition-name: frame; }
-.frame[data-plane="back"] { background: var(--plane); color: var(--plane-ink); --muted: var(--plane-muted); --line: var(--plane-line); }
-.frame-in {
-  position: relative;
-  height: var(--header-h);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--margin-w);
-  column-gap: var(--margin-gap);
+.frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-h);
+  padding: 0 var(--gutter);
+  font-size: var(--portfolio-text-size);
+  line-height: 1.4;
+  color: var(--ink);
+  view-transition-name: frame;
 }
-.frame-in::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--line); }
-/* The role starts its own column so the about block's teams list can line up under it. */
-.frame-main { display: grid; grid-template-columns: minmax(0, 1fr) var(--team-w); column-gap: 24px; align-items: center; min-width: 0; }
-.frame-side { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 0; }
-.frame-role, .frame-location { color: var(--muted); }
-.frame-close { width: 36px; height: 36px; margin-right: -8px; display: grid; place-items: center; border-radius: 50%; color: inherit; transition: background var(--t-quick); }
-.frame-close:hover { background: var(--wash); }
-.frame[data-plane="back"] .frame-close:hover { background: rgba(22, 22, 21, .08); }
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    var(--paper) 10%,
+    color-mix(in srgb, var(--paper) 92%, transparent) 68%,
+    transparent
+  );
+}
+.frame-main,
+.frame-side {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+}
+.frame-side {
+  gap: 18px;
+}
+.frame a:hover,
+.frame button:hover {
+  text-decoration: line-through;
+}
+.frame-name {
+  white-space: nowrap;
+}
+.info-panel {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  width: 100%;
+  height: calc(100dvh - var(--header-h));
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0 var(--gutter);
+  border: 0;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.93);
+  color: var(--ink);
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  transition:
+    opacity 220ms ease,
+    clip-path 420ms var(--ease-out),
+    display 420ms allow-discrete,
+    overlay 420ms allow-discrete;
+}
+.info-panel:popover-open {
+  opacity: 1;
+  clip-path: inset(0);
+}
+@starting-style {
+  .info-panel:popover-open {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+.info-panel::backdrop {
+  background: transparent;
+  pointer-events: none;
+}
+.info-content {
+  width: min(475px, 100%);
+  padding: 44px 0 70px;
+  font-size: var(--portfolio-text-size);
+  line-height: 1.45;
+}
+.info-content p + p {
+  margin-top: 22px;
+}
+.info-links,
+.info-pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 28px;
+}
+.info-close {
+  position: absolute;
+  top: 20px;
+  right: var(--gutter);
+  font-size: var(--portfolio-text-size);
+  line-height: 1.45;
+}
+.info-close:hover {
+  text-decoration: line-through;
+}
+html:has(.info-panel:popover-open) .frame::before {
+  background: var(--paper);
+}
+.info-content a:hover,
+.info-content button:hover {
+  text-decoration: line-through;
+}
+.frame button[aria-expanded="true"] {
+  text-decoration: line-through;
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-panel {
+    transition: none;
+  }
+}
+@media (max-width: 599px) {
+  .frame {
+    font-size: 14px;
+    gap: 8px;
+  }
+  .frame-main {
+    gap: 4px;
+  }
+  .frame-side {
+    gap: 10px;
+  }
+  .frame-side a:first-child:not(:last-child) {
+    display: none;
+  }
+  .info-content {
+    padding-top: 58px;
+  }
+}
 
-@media (max-width: 899px) {
-  .frame-main { grid-template-columns: minmax(0, 1fr); }
-  .frame-in { grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; }
-  .frame-role, .frame-location { display: none; }
+@media (max-width: 370px) {
+  .frame {
+    font-size: 12px;
+  }
 }
-
-/* No edge at the top of a page, where nothing sits under the frame; it fades in over the first 12px of scroll. */
-@supports (animation-timeline: scroll()) {
-  .frame-in::after { animation: hairline linear both; animation-timeline: scroll(root); animation-range: 0px 12px; }
-}
-@keyframes hairline { from { opacity: 0; } to { opacity: 1; } }
