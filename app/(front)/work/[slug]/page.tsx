@@ -23,8 +23,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: entry.title,
     description: entry.summary,
     alternates: { canonical: `/work/${slug}` },
-    openGraph: { title: entry.title, description: entry.summary, type: "article", url: `/work/${slug}`, images },
-    twitter: { card: "summary_large_image", title: entry.title, description: entry.summary, images },
+    openGraph: {
+      title: entry.title,
+      description: entry.summary,
+      type: "article",
+      url: `/work/${slug}`,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: entry.title,
+      description: entry.summary,
+      images,
+    },
   };
 }
 
@@ -34,6 +45,12 @@ export default async function CasePage({ params }: Props) {
   const entry = entries.find((item) => item.slug === slug);
   if (!entry) notFound();
   const { main, earlier } = sortEntries(entries);
+  const ordered = [...main, ...earlier];
+  const position = ordered.findIndex((item) => item.slug === slug);
+  const previous =
+    ordered.length > 1
+      ? ordered[(position + ordered.length - 1) % ordered.length]
+      : undefined;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -44,8 +61,17 @@ export default async function CasePage({ params }: Props) {
   };
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
-      <CaseLayout entry={entry} next={nextEntry([...main, ...earlier], slug)} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <CaseLayout
+        entry={entry}
+        previous={previous}
+        next={nextEntry(ordered, slug)}
+      />
     </>
   );
 }

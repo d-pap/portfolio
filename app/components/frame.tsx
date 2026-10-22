@@ -1,50 +1,98 @@
 "use client";
 
-import type { CSSProperties, MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import { usePathname } from "next/navigation";
+import { metaData, socialLinks } from "app/config";
 import "./frame.css";
 
-const FRONT = /^\/($|work\/)/;
-
-/**
- * The same small masthead on every page. Every navigation is a full page load, so it "stays put" because it
- * carries the view-transition name `frame` (frame.css): the browser sees the same box before and after.
- */
 export function Frame({ plane }: { plane: "front" | "back" }) {
   const pathname = usePathname();
+  const [infoOpen, setInfoOpen] = useState(false);
   const away = pathname !== "/";
-
-  // Going back (instead of loading a new page) restores where the visitor was, so leaving a room returns to the
-  // footer they came from and leaving a project returns to its place in the grid. A project reached from another
-  // project's "next" link goes home instead; Back would land at the bottom of the previous one.
   function close(event: MouseEvent<HTMLAnchorElement>) {
     if (!document.referrer) return;
     const from = new URL(document.referrer);
-    const cameFrom = plane === "back" ? FRONT.test(from.pathname) : from.pathname === "/";
-    if (from.origin === window.location.origin && cameFrom && from.pathname !== window.location.pathname && window.history.length > 1) {
+    if (
+      from.origin === location.origin &&
+      from.pathname === "/" &&
+      history.length > 1
+    ) {
       event.preventDefault();
-      window.history.back();
+      history.back();
     }
   }
-
   return (
-    <header className="frame" data-plane={plane} data-enter="" style={{ "--enter-i": 0 } as CSSProperties}>
-      <div className="frame-in page">
-        <div className="frame-main">
-          <a className="frame-name" href="/">Derek Papierski</a>
-          <span className="frame-role">AI &amp; software engineer</span>
-        </div>
+    <>
+      <header className="frame" data-plane={plane}>
+        <nav className="frame-main" aria-label="Main navigation">
+          <a className="frame-name" href="/">
+            Derek Papierski
+          </a>
+          <button
+            type="button"
+            popoverTarget="info-panel"
+            popoverTargetAction="toggle"
+            aria-expanded={infoOpen}
+            aria-controls="info-panel"
+          >
+            (info)
+          </button>
+          <a href={away ? "/#projects" : "#projects"}>(projects)</a>
+        </nav>
         <div className="frame-side">
-          <span className="frame-location">Michigan</span>
           {away && (
-            <a className="frame-close" href="/" onClick={close} aria-label="Close and return">
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <path d="m4 4 12 12M16 4 4 16" stroke="currentColor" strokeWidth="1.4" />
-              </svg>
+            <a href="/#projects" onClick={close}>
+              (back)
             </a>
           )}
+          <a href={socialLinks.email}>(email me)</a>
+        </div>
+      </header>
+      <div
+        id="info-panel"
+        popover="auto"
+        className="info-panel"
+        onToggle={(event) =>
+          setInfoOpen(event.currentTarget.matches(":popover-open"))
+        }
+        aria-labelledby="info-title"
+        onClick={(event) => {
+          // The translucent area outside the copy is a dismissal surface.
+          if (event.target === event.currentTarget) event.currentTarget.hidePopover();
+        }}
+      >
+        <button
+          type="button"
+          className="info-close"
+          popoverTarget="info-panel"
+          popoverTargetAction="hide"
+        >
+          (close)
+        </button>
+        <div className="info-content">
+          <h2 id="info-title" className="visually-hidden">
+            About Derek
+          </h2>
+          <p>{metaData.description}</p>
+          <p>
+            Outside of work, I carve and build things out of wood, mostly by
+            hand. I read a lot, usually more than one book at a time.
+          </p>
+          <nav className="info-pages" aria-label="Personal pages">
+            <a href="/notes">(notes)</a>
+            <a href="/bookshelf">(bookshelf)</a>
+          </nav>
+          <div className="info-links">
+            <a href={socialLinks.email}>hello@derekpap.com</a>
+            <a href={socialLinks.github} target="_blank" rel="noreferrer">
+              github ↗
+            </a>
+            <a href={socialLinks.linkedin} target="_blank" rel="noreferrer">
+              linkedin ↗
+            </a>
+          </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }
