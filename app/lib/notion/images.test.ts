@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { blobKey, coverKey, optimizable } from "./images.ts";
+import { blobKey, blobUrl, coverKey, optimizable } from "./images.ts";
 
 test("keys name the block and its edit, so an edited image gets a new copy and an unchanged one never re-uploads", () => {
   assert.equal(
@@ -21,4 +21,9 @@ test("next/image optimizes only the hosts next.config.ts allows", () => {
   assert.equal(optimizable("https://covers.openlibrary.org/b/id/7-L.jpg"), true);
   // A Notion link, used directly when there is no Blob token, would make next/image throw.
   assert.equal(optimizable("https://prod-files-secure.s3.us-west-2.amazonaws.com/x/desk.jpg"), false);
+});
+
+test("a blob key's public URL comes from the store id in the token", () => {
+  assert.equal(blobUrl("covers/x.jpg", "vercel_blob_rw_RtJhOk1aSm83TuYk_secret"), "https://rtjhok1asm83tuyk.public.blob.vercel-storage.com/covers/x.jpg");
+  assert.equal(blobUrl("covers/x.jpg", "not-a-token"), null);
 });
