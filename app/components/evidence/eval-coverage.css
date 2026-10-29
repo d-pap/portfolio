@@ -1,6 +1,7 @@
 /* Plain rows on the sheet, between the white stages: area, the question it asks, how many cases. */
 .coverage { border-bottom: 1px solid var(--line); }
 .coverage-row { display: grid; grid-template-columns: 200px minmax(0, 1fr) auto; gap: 24px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--line); font-size: var(--size-base); }
+.coverage-row dt { font-weight: 700; }
 .coverage-question { color: var(--muted); }
 .coverage-cases { white-space: nowrap; }
 

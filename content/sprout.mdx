@@ -2,7 +2,7 @@
 title: Sprout
 shortTitle: Sprout
 summary: An AI health coach inside RENEW
-area: ai health coach
+area: AI health coach
 role: System design & AI engineering
 period: 2025 – present
 context: Michigan Medicine
@@ -25,24 +25,24 @@ tile:
 sections:
   - id: rag-pipeline
     title: Sprout RAG Pipeline
-    label: retrieval, llm systems
+    label: Retrieval, LLM systems
     shape: "4:3"
     media: { kind: cover, src: /projects/sprout/loops/sprout-retrieval-study-4x3.jpg, recording: /projects/sprout/loops/sprout-retrieval-study-4x3.mp4, fit: contain }
   - id: long-term-memory
     title: Sprout Long-Term Memory
-    label: llm systems
+    label: LLM systems
     shape: "4:3"
     media: { kind: cover, src: /projects/sprout/loops/sprout-memory-study-4x3.jpg, recording: /projects/sprout/loops/sprout-memory-study-4x3.mp4, fit: contain }
   - id: evals
     title: Sprout Evals
-    label: llm evaluation
+    label: LLM evaluation
     shape: "16:9"
     media: { kind: cover, src: /projects/sprout/loops/sprout-evaluation-study-16x9.jpg, recording: /projects/sprout/loops/sprout-evaluation-study-16x9.mp4, fit: contain }
 ---
 
 Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
 
-## system design
+## System design
 
 Sprout is a FastAPI service. A LangGraph graph runs each turn of a conversation, PostgreSQL with pgvector stores the corpus and the conversation memory, and every model call goes through the university's U-M GPT gateway. Each job in the graph has its own model setting with a fallback: classifying messages, reranking sources, writing background summaries, and periodic deep review. One job can move to a different model without changing the others.
 
@@ -50,7 +50,7 @@ Every capability is a switch. A request lists the features it uses: retrieval, c
 
 <QuestionTrace />
 
-## rag pipeline
+## RAG pipeline
 
 A classifier reads each message first. It decides whether the message needs evidence and, when it does, rewrites it into a search query. Conversational turns skip retrieval.
 
@@ -62,11 +62,11 @@ Replies cite their sources, and medical facts have to come from the retrieved te
 
 <VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="retrieval [motion study]" />
 
-## long-term memory
+## Long-term memory
 
 The coach keeps context between conversations in layers. Each conversation is condensed into a dated summary of what the person reported and what helped. Patterns the coach infers from those summaries go into a ledger that tracks each one's confidence and age, merges duplicates, and retires stale entries. A periodic deep review revisits the whole ledger. The clinical summary from the study's assessments is the baseline: self-reports describe how someone is doing now, and they don't override it.
 
-## evals
+## Evals
 
 Each evaluation starts from a question, such as whether retrieval finds useful sources or whether a correction carries into the next conversation. The harness runs fixed conversation cases and scores them with a judge model that is separate from the chat model. Ablation arms turn off one source of context at a time, and memory designs are compared in a factorial setup, so each factor's effect can be read on its own. In memory bakeoffs, every arm replays the same canonical transcript, which removes the variance of generating a fresh conversation for each arm. Each run prints its estimated cost before it starts.
 

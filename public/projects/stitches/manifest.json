@@ -1,7 +1,74 @@
 {
   "created": "2026-10-08",
-  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/08/01a11d13-cd05-7d71-9e9c-c1fc51747fa2/renew-motion",
+  "updated": "2026-10-29",
+  "sourceWorkspace": "/Users/derek/.codex/visualizations/2026/10/29/01a18858-dc77-70c2-9282-1d9422006c96/stitches-redesign",
+  "sourceRepository": "d-pap/stitchesdollproject",
+  "sourceBranch": "design-refinement-v2",
+  "sourceCommit": "1bd882574dadc474e8672dcaf3c08de86c56dda7",
+  "description": "Actual local captures of the October 2026 Stitches redesign proposal. Original UI, images, collection data, globe, filters, and story disclosure. Development version; final client assets and CMS remain open.",
   "assets": [
+    {
+      "src": "/projects/stitches/images/stitches-collection-loop-poster.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 87732
+    },
+    {
+      "src": "/projects/stitches/images/stitches-detail.webp",
+      "width": 1440,
+      "height": 1080,
+      "bytes": 106558
+    },
+    {
+      "src": "/projects/stitches/images/stitches-gallery.webp",
+      "width": 1440,
+      "height": 1080,
+      "bytes": 75266
+    },
+    {
+      "src": "/projects/stitches/images/stitches-home.webp",
+      "width": 1440,
+      "height": 792,
+      "bytes": 91182
+    },
+    {
+      "src": "/projects/stitches/images/stitches-mobile.webp",
+      "width": 780,
+      "height": 2100,
+      "bytes": 129832
+    },
+    {
+      "src": "/projects/stitches/images/stitches-reach.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 57756
+    },
+    {
+      "src": "/projects/stitches/images/stitches-redesign-loop-poster.webp",
+      "width": 1440,
+      "height": 960,
+      "bytes": 124920
+    },
+    {
+      "src": "/projects/stitches/videos/stitches-collection-loop.mp4",
+      "poster": "/projects/stitches/images/stitches-collection-loop-poster.webp",
+      "width": 1440,
+      "height": 960,
+      "duration": 13,
+      "fps": 30,
+      "bytes": 320048,
+      "description": "Search for Mom → expand and read her story → return to the unfiltered collection."
+    },
+    {
+      "src": "/projects/stitches/videos/stitches-redesign-loop.mp4",
+      "poster": "/projects/stitches/images/stitches-redesign-loop-poster.webp",
+      "width": 1440,
+      "height": 960,
+      "duration": 16,
+      "fps": 30,
+      "bytes": 2516022,
+      "description": "Homepage → country-linked stories in India and South Africa → homepage."
+    },
     {
       "name": "stitches-before-after-loop-4x3",
       "kind": "loops",
@@ -12,7 +79,8 @@
       "duration": 4.8,
       "fps": 60,
       "bytes": 421897,
-      "description": "Wipe between archived original and September 2026 development preview. Both actual site captures."
+      "description": "Archived September 2026 comparison; superseded by the October redesign captures and no longer referenced by the portfolio.",
+      "status": "archived"
     }
   ]
 }

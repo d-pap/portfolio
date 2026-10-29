@@ -62,12 +62,12 @@ export function CaseLayout({
           </p>
           <dl>
             <div>
-              <dt>with</dt>
+              <dt>With</dt>
               <dd>{entry.context}</dd>
             </div>
             {entry.stack && (
               <div>
-                <dt>{entry.kind === "role" ? "tools" : "stack"}</dt>
+                <dt>{entry.kind === "role" ? "Tools" : "Stack"}</dt>
                 <dd>{entry.stack}</dd>
               </div>
             )}
@@ -91,7 +91,7 @@ export function CaseLayout({
               <nav aria-label="Project sections">
                 {sections.map((section) => (
                   <a key={section.id} href={`#${section.id}`}>
-                    {section.text}
+                    {section.text.toLowerCase()}
                   </a>
                 ))}
               </nav>
@@ -105,6 +105,7 @@ export function CaseLayout({
           <CaseHeroStage
             hasRecording={Boolean(entry.hero.recording)}
             composition={entry.hero.type === "composition"}
+            aspectRatio={entry.hero.aspectRatio}
           >
             <Media
               hero={entry.hero}

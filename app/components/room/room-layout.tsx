@@ -9,7 +9,7 @@ export function RoomLayout({ room, children }: { room: Room; children: ReactNode
       {/* Holds the first paint until the title exists, so the flying word always has somewhere to land.
           `blocking` isn't in React's types yet, hence the spread (same as case-layout.tsx). */}
       <link rel="expect" href="#room-title" {...{ blocking: "render" }} />
-      <h1 id="room-title" className="room-title door-type" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>{room}</h1>
+      <h1 id="room-title" className="room-title door-type" data-enter="" style={{ "--enter-i": 1 } as CSSProperties}>{room === "notes" ? "Notes" : "Bookshelf"}</h1>
       <div className="room-body" data-enter="" style={{ "--enter-i": 2 } as CSSProperties}>{children}</div>
     </div>
   );

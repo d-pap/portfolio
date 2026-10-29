@@ -1,0 +1,64 @@
+---
+title: SpeakLab
+shortTitle: SpeakLab
+summary: Impromptu technical speaking practice with local AI feedback
+area: Technical speaking practice
+role: Product & full-stack development
+period: 2026 – present
+context: Personal project
+stack: React, TypeScript, Python, FastAPI
+status: In development
+repository: https://github.com/d-pap/speaklab
+availability: In development
+publishedAt: "2026-10-29"
+index: main
+order: 5
+kind: project
+hero:
+  type: logo
+  frames:
+    - /projects/speaklab/wordmark.svg
+  caption: SpeakLab
+tile:
+  shape: "3:2"
+  media:
+    kind: cover
+    src: /projects/speaklab/wordmark.svg
+    fit: contain
+---
+
+SpeakLab is a personal project for practicing how I explain technical ideas out loud. Pick a topic, record an explanation without preparing, review feedback on the content and delivery, then try again. Transcription and AI feedback run locally.
+
+Recognizing a concept when I read about it is different from explaining it clearly to someone else. I wanted a way to practice that second part, hear where an explanation falls apart, and use the gaps to decide what to work on next.
+
+## Practice before preparation
+
+A session starts with a technical prompt and a recording. Reference material stays hidden until the first attempt is saved, so the explanation captures what I can actually put into words on the spot.
+
+Afterward, short reference sections focus on concepts the explanation missed or only partly covered. An optional tutor can answer follow-up questions using the topic references and the first attempt. Then the notes disappear for a second recording. Both attempts remain available side by side, with their audio, transcripts, and feedback.
+
+Review dates bring topics back for another unprepared attempt on a later day. A smoother second explanation is useful, but returning to the topic later gives me a better sense of what stuck.
+
+## Feedback you can inspect
+
+The technical review separates concepts explained correctly, partly explained, left out, and stated incorrectly. Leaving something out should lead to a different suggestion from making an inaccurate claim.
+
+The model selects evidence from transcript excerpts, and the backend checks those references before saving the assessment. Proposed factual corrections receive another model review; if that check fails, they are marked unverified. I can also correct a transcription and run the analysis again, with earlier feedback preserved for comparison.
+
+Those checks make the feedback easier to inspect. They do not establish that the model's judgment is right, and calibrating that judgment against real explanations is ongoing work.
+
+## Listening to delivery
+
+SpeakLab measures speaking rate, pauses, relative loudness, and pitch, with passages to replay alongside the measurements. The aim is to help me hear choices in an explanation: where I rush, where a pause gives an idea room, or where a change in pace might help.
+
+The measurements stay separate from subjective coaching. More variation is not automatically better, and a pitch range cannot tell me whether an explanation held someone's attention. Recording conditions and transcription errors also affect what the app can measure.
+
+## Running locally
+
+The frontend is React and TypeScript, with a Python FastAPI backend and SQLite for practice history. whisper.cpp handles transcription, Ollama runs the assessment and tutor models, and NumPy and Praat handle audio analysis. Recordings, transcripts, and model inference stay on the machine hosting the app.
+
+Audio is saved before analysis begins. If a model is unavailable or a job is interrupted, the recording remains available and analysis can be retried. Recording, playback, reference material, and review scheduling work independently of the models.
+
+## Ongoing work
+
+The practice loop is built, and I'm refining the feedback, topic material, and interface through use. The next step is more individualized vocal coaching grounded in the recorded audio and transcript. Evaluating the quality of that coaching remains part of the project.

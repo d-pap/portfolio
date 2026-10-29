@@ -24,6 +24,7 @@
 
 .qt-evidence { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
 .qt-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 24px; font-size: var(--size-base); }
+.qt-head, .qt-top > span:first-child, .qt-search dt { font-weight: 700; }
 .qt-selection { position: relative; height: 240px; }
 .qt-marks { position: absolute; top: 0; left: 0; overflow: visible; }
 .qt-mark { stroke: #d8d8d0; stroke-width: 2; }

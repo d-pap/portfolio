@@ -25,12 +25,12 @@ export async function BookView({ book }: { book: BookEntry }) {
       </div>
       {body.length > 0 ? (
         <>
-          <p className="label entry-label">notes</p>
+          <p className="label entry-label">Notes</p>
           <Blocks blocks={body} />
         </>
       ) : book.description ? (
         <>
-          <p className="label entry-label">about this book</p>
+          <p className="label entry-label">About this book</p>
           <div className="prose">{book.description.text.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}</div>
           {book.description.source !== "notion" && <p className="label entry-source">description from {book.description.source}</p>}
         </>

@@ -22,8 +22,11 @@
   flex: 1;
   padding-top: var(--header-h);
 }
-html:has(.ascii-home) {
-  scroll-snap-type: y proximity;
+/* Touch momentum gets caught on snap points and flings land short, so snapping is for mice and trackpads only. */
+@media (pointer: fine) {
+  html:has(.ascii-home) {
+    scroll-snap-type: y proximity;
+  }
 }
 html:has(.info-panel:popover-open) {
   overflow: hidden;
@@ -63,7 +66,7 @@ html:has(.info-panel:popover-open) {
 }
 .index-group h3 {
   font-size: var(--portfolio-text-size);
-  font-weight: 400;
+  font-weight: 700;
   color: #74766f;
   line-height: 1.5;
   padding-bottom: 8px;
@@ -85,6 +88,7 @@ html:has(.info-panel:popover-open) {
   display: flex;
   align-items: baseline;
   gap: 4px;
+  font-weight: 700;
 }
 .index-row:hover .index-name,
 .index-row:focus-visible .index-name {
@@ -201,6 +205,7 @@ html:has(.info-panel:popover-open) {
 }
 .ascii-case-heading h1 {
   font: inherit;
+  font-weight: 700;
   color: #74766f;
 }
 .ascii-case-heading nav {
@@ -239,6 +244,7 @@ html:has(.info-panel:popover-open) {
 }
 .ascii-case-details dt {
   min-width: 32px;
+  font-weight: 700;
 }
 .ascii-case-links {
   margin-top: 18px;
@@ -289,6 +295,7 @@ html:has(.info-panel:popover-open) {
 }
 .ascii-case .case-flow > .flow-label {
   font: inherit;
+  font-weight: 700;
   margin-top: 48px;
   scroll-margin-top: 85px;
 }
@@ -306,6 +313,7 @@ html:has(.info-panel:popover-open) {
 }
 .room .room-title {
   font-size: 32px;
+  font-weight: 700;
   letter-spacing: -0.025em;
 }
 .room .reader-list {

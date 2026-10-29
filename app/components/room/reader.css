@@ -14,9 +14,9 @@
 .reader-row.on .reader-row-sub { color: var(--plane-muted); }
 .reader-back { display: none; margin-bottom: 24px; color: var(--plane-muted); }
 
-.entry-title { font-size: 32px; line-height: 1.08; letter-spacing: -0.022em; font-weight: 400; max-width: 560px; text-wrap: balance; }
+.entry-title { font-size: 32px; line-height: 1.08; letter-spacing: -0.022em; font-weight: 700; max-width: 560px; text-wrap: balance; }
 .entry-sub { margin-top: 10px; color: var(--plane-muted); }
-.entry-label { margin-top: 40px; color: rgba(22, 22, 21, .56); }
+.entry-label { margin-top: 40px; color: rgba(22, 22, 21, .56); font-weight: 700; }
 .entry-source { margin-top: 14px; color: rgba(22, 22, 21, .56); }
 .entry-body { margin-top: 36px; }
 .book-head { display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 36px; align-items: end; }
@@ -34,6 +34,7 @@
 .prose :where(blockquote, details, .callout > div) > * + * { margin-top: 14px; }
 .prose h2, .prose h3, .prose h4 { font-size: var(--size-read); font-weight: 700; margin-top: 30px; }
 .prose h2 { font-size: 20px; letter-spacing: -0.01em; }
+.prose :is(h2, h3, h4)::first-letter { text-transform: uppercase; }
 .prose ul, .prose ol { padding-left: 20px; }
 .prose ul { list-style: disc; }
 .prose ul ul { list-style: circle; }

@@ -52,7 +52,7 @@ a:hover .link-arrow { transform: translate(2px, -2px); }
 }
 
 .empty-page { padding-block: 96px; }
-.empty-page h1 { font-size: 24px; font-weight: 400; margin: 12px 0; }
+.empty-page h1 { font-size: 24px; font-weight: 700; margin: 12px 0; }
 .empty-page p:not(.label) { color: var(--muted); margin-bottom: 16px; }
 
 /* First page of a visit: the frame, then the intro, then the first tiles settle in, 55ms apart (app/boot/first-visit.js).

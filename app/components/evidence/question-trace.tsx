@@ -92,7 +92,7 @@ export function QuestionTrace() {
     <figure className="fig fig-trace">
       <figcaption className="label fig-caption">one question through Sprout [{trace.id}]</figcaption>
       <div className="fig-stage stage qt">
-        <div className="qt-top label"><span>request trace</span><span className="qt-date">[{trace.id}, {trace.date}]</span></div>
+        <div className="qt-top label"><span>Request trace</span><span className="qt-date">[{trace.id}, {trace.date}]</span></div>
         <p className="qt-question"><span className="qt-arrow" aria-hidden="true">↳</span>{trace.question}</p>
 
         <div className="qt-route" ref={route} role="img" aria-label="The question is classified as a health question, so it is searched and answered with sources; conversational turns take a direct branch instead.">
@@ -109,11 +109,11 @@ export function QuestionTrace() {
           <span className="label qt-branch">direct response [other turns]</span>
         </div>
 
-        <dl className="qt-search"><dt className="label">rewritten search</dt><dd>{trace.search}</dd></dl>
+        <dl className="qt-search"><dt className="label">Rewritten search</dt><dd>{trace.search}</dd></dl>
 
         <div className="qt-evidence">
           <section>
-            <p className="qt-head">rerank <span className="label">{counts.candidates} → {counts.passages} passages</span></p>
+            <p className="qt-head">Rerank <span className="label">{counts.candidates} → {counts.passages} passages</span></p>
             <div className="qt-selection">
               <svg className="qt-marks" viewBox="0 0 172 240" width="172" height="240" aria-hidden="true">
                 <g className="qt-threads" ref={threads}>
@@ -145,7 +145,7 @@ export function QuestionTrace() {
           </section>
 
           <section ref={answer}>
-            <p className="qt-head">reply <span className="label">[excerpt]</span></p>
+            <p className="qt-head">Reply <span className="label">[excerpt]</span></p>
             <blockquote className="qt-reply">
               <p>The sources I have say certain systemic-sclerosis-specific autoantibodies can appear <mark>several months to years before the clinical onset</mark> of systemic sclerosis. <span className="qt-cite">[1]</span></p>
               <p>What the sources don’t provide is a single “typical” time interval from antibodies to symptoms for most people.</p>

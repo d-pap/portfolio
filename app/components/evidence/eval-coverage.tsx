@@ -5,11 +5,11 @@ import "./eval-coverage.css";
  * results can be published from the ongoing study is undecided, so nothing here says what passed.
  */
 const AREAS = [
-  { area: "software behavior", question: "Does each request receive the intended context?", cases: "442 tests, 5 live" },
-  { area: "retrieval and answers", question: "Does the reply stay within the retrieved evidence?", cases: "28 cases" },
-  { area: "summaries and routing", question: "Does a correction survive into a fresh conversation?", cases: "65 cases" },
-  { area: "coaching inferences", question: "Does a rejected interpretation stop shaping replies?", cases: "20 cases" },
-  { area: "safety", question: "Does the reply follow the required response behavior?", cases: "20 cases" },
+  { area: "Software behavior", question: "Does each request receive the intended context?", cases: "442 tests, 5 live" },
+  { area: "Retrieval and answers", question: "Does the reply stay within the retrieved evidence?", cases: "28 cases" },
+  { area: "Summaries and routing", question: "Does a correction survive into a fresh conversation?", cases: "65 cases" },
+  { area: "Coaching inferences", question: "Does a rejected interpretation stop shaping replies?", cases: "20 cases" },
+  { area: "Safety", question: "Does the reply follow the required response behavior?", cases: "20 cases" },
 ];
 
 export function EvalCoverage() {

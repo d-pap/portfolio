@@ -4,5 +4,5 @@
 # app/lib/grid.content.test.ts checks the spacing rules at the 1440px and 1024px column widths.
 columns:
   - [renew, stitches, renew#backend]
-  - [sprout, renew#upgrade, sprout#rag-pipeline]
-  - [codecoach, sprout#long-term-memory, renew#redesign, sprout#evals]
+  - [sprout, renew#upgrade, sprout#rag-pipeline, speaklab]
+  - [codecoach, sprout#long-term-memory, renew#redesign, sprout#evals, pe-tracker]

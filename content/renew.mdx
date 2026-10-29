@@ -2,7 +2,7 @@
 title: RENEW
 shortTitle: RENEW
 summary: A study app for managing fatigue with scleroderma
-area: scleroderma study app
+area: Scleroderma study app
 role: Engineering & product design
 period: 2025 – present
 context: Michigan Medicine
@@ -26,24 +26,24 @@ tile:
 sections:
   - id: redesign
     title: RENEW Redesign
-    label: product design, react native
+    label: Product design, React Native
     shape: "4:5"
     media: { kind: cover, src: /projects/renew/loops/renew-chart-loop-4x5.jpg, recording: /projects/renew/loops/renew-chart-loop-4x5.mp4, fit: contain }
   - id: upgrade
     title: RENEW Upgrade
-    label: react native, expo
+    label: React Native, Expo
     shape: "1:1"
     media: { kind: cover, src: /projects/renew/stills/renew-release-1x1.webp }
   - id: backend
     title: RENEW Backend
-    label: php, mysql
+    label: PHP, MySQL
     shape: "4:3"
     media: { kind: cover, src: /projects/renew/stills/renew-context-4x3.webp }
 ---
 
 RENEW is a Michigan Medicine study app for people living with scleroderma. It helps them set wellness goals, track how they're feeling, and work through lessons on fatigue self-management, and it includes [Sprout](/work/sprout), the AI health coach. I took over RENEW in September 2025 and own the app, its backend, and its releases.
 
-## redesign
+## Redesign
 
 I redesigned the app and rebuilt its screens in React Native. Home is a new tab that opens with a daily check-in and a weekly mood trend. The goal composer asks one plain question per card, goals can repeat on chosen weekdays with a reminder, and goals have their own statistics screen. Long lessons have a table of contents and find. The chat screen, profile, and login were redesigned too.
 
@@ -53,7 +53,7 @@ I redesigned the app and rebuilt its screens in React Native. Home is a new tab 
 
 <VideoFigure src="/projects/renew/videos/renew-modules-4x5.mp4" poster="/projects/renew/videos/renew-modules-4x5.jpg" width={960} height={1200} caption="finding a lesson and reading an activity" />
 
-## upgrade
+## Upgrade
 
 I keep the app current and ship it. Three upgrades took RENEW from Expo SDK 50 to 57 between March and July 2026, and I raised the Android target to API level 36 (Android 16) for Google Play. Production deploys are scripted, and builds go out through TestFlight and the Play Store.
 
@@ -61,7 +61,7 @@ Version 3.1.1 reached the App Store on October 10, 2026, with the new Home scree
 
 <Figure src="/projects/renew/stills/renew-release-figure.webp" alt="RENEW's App Store listing beside the release notes for version 3.1.1" width={1824} height={1080} caption="version 3.1.1 on the app store [october 2026]" />
 
-## backend
+## Backend
 
 I own RENEW's backend: a PHP and MySQL API on Michigan Medicine servers, with schema changes managed as Knex migrations. Sign-in uses one-time email codes, and every endpoint goes through the same authentication checks. In production, error responses hide internal details, and endpoints validate their input.
 
