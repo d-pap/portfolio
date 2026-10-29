@@ -1,10 +1,26 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { IndexGroup, IndexRow } from "app/lib/project-index";
+import { mediaColor } from "app/lib/media-colors";
+import { mediaSize } from "app/lib/media-sizes";
 import { useMotion } from "./motion";
 
-function Preview({ row, inline = false }: { row: IndexRow; inline?: boolean }) {
+// Inline previews span the text column: the viewport less its gutters on phones and tablets, so 100vw errs a little large.
+const INLINE_SIZES = "100vw";
+// A film starts once it has been mostly on screen this long, so a fast scroll past it doesn't start a download.
+const PLAY_DELAY = 150;
+
+function Preview({
+  row,
+  inline = false,
+  warm = false,
+}: {
+  row: IndexRow;
+  inline?: boolean;
+  warm?: boolean;
+}) {
   const video = useRef<HTMLVideoElement>(null);
   const { paused } = useMotion();
   useEffect(() => {
@@ -12,57 +28,110 @@ function Preview({ row, inline = false }: { row: IndexRow; inline?: boolean }) {
     if (!element) return;
     let mounted = true;
     let visible = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const update = () => {
+      clearTimeout(timer);
       if (visible && !document.hidden && !paused) {
-        element
-          .play()
-          .then(() => {
-            if (!mounted || !visible || document.hidden || paused)
-              element.pause();
-          })
-          .catch(() => {});
+        timer = setTimeout(() => {
+          element
+            .play()
+            .then(() => {
+              if (!mounted || !visible || document.hidden || paused)
+                element.pause();
+            })
+            .catch(() => {});
+        }, inline ? PLAY_DELAY : 0);
       } else element.pause();
     };
-    const observer = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      update();
-    });
+    // The film stays transparent over its poster until it has a frame to show.
+    const playing = () => element.setAttribute("data-playing", "");
+    element.addEventListener("playing", playing);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        update();
+      },
+      { threshold: [0, 0.5] },
+    );
     observer.observe(element);
     document.addEventListener("visibilitychange", update);
     return () => {
       mounted = false;
+      clearTimeout(timer);
       element.pause();
+      element.removeEventListener("playing", playing);
       observer.disconnect();
       document.removeEventListener("visibilitychange", update);
     };
-  }, [row.id, paused]);
+  }, [row.id, paused, inline]);
+  const preview = row.preview;
+  const size = preview && mediaSize(preview.image);
   return (
     <figure className={inline ? "index-preview is-inline" : "index-preview"}>
-      {row.preview && (
+      {preview && (
         <a
           className="index-preview-media"
           href={row.href}
           aria-label={`View ${row.title}`}
+          style={inline ? { background: mediaColor(preview.image) } : undefined}
         >
-          {row.preview.video ? (
+          {inline ? (
+            <>
+              {/* Phones get a resized image that holds its space, fades in over its edge color, and is fetched ahead
+                  of the scroll once the page has loaded (warm). A film's poster is this image, so posters load
+                  lazily too instead of all at once. */}
+              {size && !preview.image.endsWith(".svg") ? (
+                <Image
+                  className="arrive"
+                  suppressHydrationWarning
+                  src={preview.image}
+                  alt={preview.video ? "" : `${row.title} project preview`}
+                  width={size[0]}
+                  height={size[1]}
+                  sizes={INLINE_SIZES}
+                  loading={warm ? "eager" : "lazy"}
+                />
+              ) : (
+                <img
+                  src={preview.image}
+                  alt={preview.video ? "" : `${row.title} project preview`}
+                  width={size?.[0]}
+                  height={size?.[1]}
+                  decoding="async"
+                  loading={warm ? "eager" : "lazy"}
+                />
+              )}
+              {preview.video && (
+                <video
+                  ref={video}
+                  className="index-preview-film"
+                  src={preview.video}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  aria-hidden
+                />
+              )}
+            </>
+          ) : preview.video ? (
             <video
               ref={video}
-              src={row.preview.video}
-              poster={row.preview.image}
+              src={preview.video}
+              poster={preview.image}
               muted
               loop
               playsInline
               preload="none"
-              aria-hidden={inline ? true : undefined}
               aria-label={`${row.title} preview`}
             />
           ) : (
             /* Native images avoid an optimizer round trip when moving quickly between rows. */
             <img
-              src={row.preview.image}
+              src={preview.image}
               alt={`${row.title} project preview`}
               decoding="async"
-              loading={inline ? "lazy" : "eager"}
+              loading="eager"
             />
           )}
         </a>
@@ -75,6 +144,22 @@ function Preview({ row, inline = false }: { row: IndexRow; inline?: boolean }) {
 export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
   const [active, setActive] = useState<IndexRow | null>(null);
   const [finePointer, setFinePointer] = useState(false);
+  // Once the page has loaded, inline previews stop waiting for the scroll: they're small, and fetching them all
+  // ahead means a fast flick down the list finds them ready.
+  const [warm, setWarm] = useState(false);
+  useEffect(() => {
+    if (finePointer) return;
+    let idle: number | undefined;
+    const start = () => {
+      idle = (window.requestIdleCallback ?? ((fn: () => void) => window.setTimeout(fn, 200)))(() => setWarm(true));
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      if (idle !== undefined) (window.cancelIdleCallback ?? window.clearTimeout)(idle);
+    };
+  }, [finePointer]);
   useEffect(() => {
     const query = matchMedia(
       "(min-width: 1000px) and (hover: hover) and (pointer: fine)",
@@ -141,7 +226,7 @@ export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
                     <span className="index-area">{row.area}</span>
                     <span className="index-role">{row.role}</span>
                   </a>
-                  {!finePointer && <Preview row={row} inline />}
+                  {!finePointer && <Preview row={row} inline warm={warm} />}
                 </li>
               ))}
             </ul>

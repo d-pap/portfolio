@@ -58,6 +58,7 @@ public/**/_local-*
 
 # generated
 app/lib/media-colors.json
+app/lib/media-sizes.json
 .env*
 
 critique-response.md

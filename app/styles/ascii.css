@@ -150,6 +150,19 @@ html:has(.info-panel:popover-open) {
 .index-preview.is-inline img {
   max-height: none;
 }
+.index-preview.is-inline .index-preview-media {
+  position: relative;
+}
+/* The film covers its poster image and stays clear until it has a frame to show. */
+.index-preview.is-inline .index-preview-film {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+}
+.index-preview.is-inline .index-preview-film[data-playing] {
+  opacity: 1;
+}
 .index-preview.is-inline figcaption {
   color: var(--ink);
   margin-top: 18px;

@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   // /blog slug, need them in their traced files too. Pages refreshed on request read content/ as well.
   outputFileTracingIncludes: { "/*": ["app/boot/*.js", "app/styles/trip.css", "content/**/*"] },
   images: {
+    // AVIF first: the phone-sized project previews come out a fraction of the size of the source files.
+    formats: ["image/avif", "image/webp"],
+    // Project images rarely change, so optimized copies are kept for a week instead of being re-checked every minute.
+    minimumCacheTTL: 60 * 60 * 24 * 7,
     remotePatterns: [
       { protocol: "https", hostname: "covers.openlibrary.org", pathname: "/b/**" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
