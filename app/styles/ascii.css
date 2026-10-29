@@ -88,7 +88,6 @@ html:has(.info-panel:popover-open) {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  font-weight: 700;
 }
 .index-row:hover .index-name,
 .index-row:focus-visible .index-name {
