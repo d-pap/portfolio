@@ -1,5 +1,5 @@
 import { BlobNotFoundError, head, put } from "@vercel/blob";
-import { blobKey } from "./images.ts";
+import { blobKey, blobUrl } from "./images.ts";
 
 export type Mirrored = { url: string; width: number | null; height: number | null };
 type Size = { width: number | null; height: number | null };
@@ -22,6 +22,25 @@ async function tryDownload(url: string): Promise<File | null> {
     return await download(url);
   } catch {
     return null;
+  }
+}
+
+/**
+ * The copy already in Blob under `key`, or null when there is none. It is read through its public URL, which Blob's CDN
+ * answers without a metered operation; `head` counts as one every time, and the hourly refresh asked once per image.
+ * Throws on anything that may pass.
+ */
+async function findCopy(key: string): Promise<{ url: string; file: File | null } | null> {
+  const url = blobUrl(key, process.env.BLOB_READ_WRITE_TOKEN ?? "");
+  if (url) {
+    const file = await download(url);
+    return file ? { url, file } : null;
+  }
+  try {
+    return { url: (await head(key)).url, file: null };
+  } catch (error) {
+    if (error instanceof BlobNotFoundError) return null;
+    throw error;
   }
 }
 
@@ -56,16 +75,16 @@ export async function mirror(sourceUrl: string, id: string, edited: string): Pro
     return { url: sourceUrl, ...(file ? await measure(file.bytes) : UNKNOWN) };
   }
   const key = blobKey(id, edited, sourceUrl);
-  let copied: string | null = null;
+  let copied: Awaited<ReturnType<typeof findCopy>>;
   try {
-    copied = (await head(key)).url;
+    copied = await findCopy(key);
   } catch (error) {
-    if (!(error instanceof BlobNotFoundError)) throw new Error(`[notion] could not copy image ${id} to Blob`, { cause: error });
+    throw new Error(`[notion] could not copy image ${id} to Blob`, { cause: error });
   }
   if (copied) {
-    // The copy exists; only its size is unknown if this download fails.
-    const file = await tryDownload(copied);
-    return { url: copied, ...(file ? await measure(file.bytes) : UNKNOWN) };
+    // The copy exists; only its size is unknown if it couldn't be read.
+    const file = copied.file ?? (await tryDownload(copied.url));
+    return { url: copied.url, ...(file ? await measure(file.bytes) : UNKNOWN) };
   }
   try {
     const file = await download(sourceUrl);
@@ -86,11 +105,13 @@ export async function mirror(sourceUrl: string, id: string, edited: string): Pro
  * no copy yet and no source, or the source answers 4xx. Throws on anything that may pass.
  */
 export async function keepCover(key: string, sourceUrl: string | null): Promise<string | null> {
+  let copied: Awaited<ReturnType<typeof findCopy>>;
   try {
-    return (await head(key)).url;
+    copied = await findCopy(key);
   } catch (error) {
-    if (!(error instanceof BlobNotFoundError)) throw new Error(`[notion] could not check ${key} in Blob`, { cause: error });
+    throw new Error(`[notion] could not check ${key} in Blob`, { cause: error });
   }
+  if (copied) return copied.url;
   if (!sourceUrl) return null;
   const file = await download(sourceUrl);
   if (!file) return null;

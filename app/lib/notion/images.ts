@@ -14,6 +14,15 @@ export function blobKey(id: string, edited: string, sourceUrl: string): string {
   return `notion/${id.replace(/-/g, "")}-${Date.parse(edited) || 0}.${extension}`;
 }
 
+/**
+ * A Blob key's public URL, built the way the Blob SDK builds it: the store id is the fourth part of the read-write token
+ * (vercel_blob_rw_<store>_<secret>). Null for a token not in that shape.
+ */
+export function blobUrl(key: string, token: string): string | null {
+  const store = token.split("_")[3];
+  return token.startsWith("vercel_blob_rw_") && store ? `https://${store.toLowerCase()}.public.blob.vercel-storage.com/${key}` : null;
+}
+
 /** Hosts in next.config.ts `images.remotePatterns`. Anything else renders unoptimized rather than throwing. */
 export function optimizable(url: string): boolean {
   return /^https:\/\/(covers\.openlibrary\.org\/b\/|[a-z0-9]+\.public\.blob\.vercel-storage\.com\/)/.test(url);
