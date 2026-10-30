@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { Hero } from "app/lib/entries";
 import { mediaColor } from "app/lib/media-colors";
+import { mediaSize } from "app/lib/media-sizes";
+import { posterSrc } from "./poster";
 import "./media.css";
 
 type MediaProps = { hero: Hero; sizes: string; priority?: boolean; label?: string };
@@ -12,7 +14,7 @@ type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recordi
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   if (hero.type === "composition") {
     return <div className="media" style={{ background: mediaColor(hero.frames[0]) }}>{hero.recording ? (
-      <video className="media-composition" src={hero.recording} poster={hero.frames[0]} muted loop playsInline preload="none" aria-label={label || undefined} />
+      <video className="media-composition" src={hero.recording} poster={posterSrc(hero.frames[0], mediaSize(hero.frames[0]))} muted loop playsInline preload="none" aria-label={label || undefined} />
     ) : (
       <Image className={priority ? "media-composition" : "media-composition arrive"} suppressHydrationWarning src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
     )}</div>;
@@ -45,7 +47,7 @@ function Device({ kind, src, alt, recording, sizes, priority, offset, aspectRati
   return (
     <div className={`device device-${kind}${offset ? " device-offset" : ""}`} style={{ background: mediaColor(src), ...(aspectRatio ? { aspectRatio, height: `min(82%, calc(90cqw / ${aspectRatio}))`, flexShrink: 0 } : {}) }}>
       {recording ? (
-        <video className="device-video" src={recording} poster={src} muted loop playsInline preload="none" aria-label={alt || undefined} />
+        <video className="device-video" src={recording} poster={posterSrc(src, mediaSize(src))} muted loop playsInline preload="none" aria-label={alt || undefined} />
       ) : (
         <Image className={priority ? "device-image" : "device-image arrive"} suppressHydrationWarning src={src} alt={alt} fill sizes={sizes} priority={priority} />
       )}

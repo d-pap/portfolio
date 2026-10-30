@@ -1,5 +1,8 @@
 .fig-caption { margin-bottom: 10px; }
 .fig-stage { border-radius: 6px; overflow: hidden; }
+/* Screenshots and wide films stop at the height the portrait films use, on the text's left edge. The figure itself
+   narrows (--fig-ratio is set inline), so the caption and the rounded corners stay with the image. */
+.fig-screen, .fig-video.is-wide { width: min(100%, calc(720px * var(--fig-ratio))); }
 .fig-screen img { width: 100%; height: auto; }
 .fig-phone .fig-stage, .fig-custom .fig-stage {
   display: grid;

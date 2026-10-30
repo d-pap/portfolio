@@ -1,5 +1,6 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { mediaColor } from "app/lib/media-colors";
 import "./figure.css";
 
 type FigureProps = {
@@ -16,12 +17,14 @@ export function Figure({ caption, src, alt = "", width, height, kind = "screen",
   if (src && (!width || !height)) throw new Error(`<Figure src="${src}">: width and height are required`);
   if (!src && !children) throw new Error(`<Figure caption="${caption}">: needs src or children`);
   const variant = src ? kind : "custom";
+  const screen = Boolean(src) && kind === "screen";
   return (
-    <figure className={`fig fig-${variant}`}>
+    // A screen figure is as wide as its image at the capped height (figure.css), so its caption starts at the image.
+    <figure className={`fig fig-${variant}`} style={screen ? { "--fig-ratio": width! / height! } as CSSProperties : undefined}>
       <figcaption className="label fig-caption">{caption}</figcaption>
-      <div className={src && kind === "screen" ? "fig-stage" : "fig-stage stage"}>
+      <div className={screen ? "fig-stage" : "fig-stage stage"} style={screen ? { background: mediaColor(src!) } : undefined}>
         {src ? (
-          <Image src={src} alt={alt} width={width} height={height} sizes={kind === "phone" ? "(max-width: 899px) 70vw, 360px" : "(max-width: 899px) 100vw, 66vw"} />
+          <Image className="arrive" suppressHydrationWarning src={src} alt={alt} width={width} height={height} sizes={kind === "phone" ? "(max-width: 899px) 70vw, 360px" : "(max-width: 899px) 100vw, 66vw"} />
         ) : (
           children
         )}

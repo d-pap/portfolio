@@ -42,8 +42,10 @@ yarn-error.log*
 next-env.d.ts
 *SPROUT_RAG_SYSTEM_DOCUMENTATION*.md
 
-# project docs (specs/plans) stay local
+# project docs (specs/plans) and agent instructions stay local
 docs/
+AGENTS.md
+CLAUDE.md
 
 # local browser checks and package cache
 .playwright-mcp/
