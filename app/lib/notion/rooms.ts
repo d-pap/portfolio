@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import { getReading } from "app/lib/content";
 import { notionConfig } from "./client";
 import { queryPublished, readBlocks } from "./source";
+import { highlightCode } from "./highlight";
 import { parseBookPage, parseNotePage, type Parsed } from "./pages";
 import { assignSlugs } from "./slugs";
 import { orderBooks, orderNotes } from "./order";
@@ -150,8 +151,8 @@ export function loadBody(pageId: string, lastEditedTime: string): Promise<Block[
     if (!config) return [];
     const { blocks, skipped } = toBlocks(await readBlocks(config.token, pageId));
     if (skipped.length) console.warn(`[notion] page ${pageId}: skipped unsupported blocks (${[...new Set(skipped)].join(", ")})`);
-    return mirrorImages(blocks);
-  }, ["notion-body-v2", pageId, lastEditedTime], { tags: ["notion", `notion:page:${pageId}`], revalidate: HOUR })();
+    return highlightCode(await mirrorImages(blocks));
+  }, ["notion-body-v3", pageId, lastEditedTime], { tags: ["notion", `notion:page:${pageId}`], revalidate: HOUR })();
 }
 
 export async function roomsContent(): Promise<{ books: boolean; notes: boolean; latestEdit: string | null }> {

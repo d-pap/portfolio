@@ -43,12 +43,12 @@
 .prose li > ul, .prose li > ol { margin-top: 6px; }
 .prose a { text-decoration: underline; text-decoration-color: var(--plane-line); text-underline-offset: 3px; transition: text-decoration-color var(--t-quick); }
 .prose a:hover { text-decoration-color: currentColor; }
-.prose code { font: 0.86em/1 var(--font-mono); background: rgba(22, 22, 21, .07); padding: 2px 5px; border-radius: 4px; }
+.prose code { font: 0.85em/1 var(--font-code); background: rgba(22, 22, 21, .07); padding: 2px 5px; border-radius: 4px; }
 .prose blockquote { padding-left: 18px; border-left: 2px solid var(--plane-ink); }
 .prose hr { border: 0; height: 1px; background: var(--plane-line); margin: 32px 0; }
 .prose details summary { cursor: pointer; }
 .callout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 14px 16px; border-radius: 6px; background: rgba(22, 22, 21, .07); }
-.code pre { font: 13px/1.6 var(--font-mono); background: rgba(22, 22, 21, .07); border-radius: 6px; padding: 14px 16px; overflow-x: auto; }
+.code pre { font: 13px/1.6 var(--font-code); tab-size: 2; background: rgba(22, 22, 21, .07); border-radius: 6px; padding: 14px 16px; overflow-x: auto; }
 .code pre code { background: none; padding: 0; font-size: inherit; }
 .code figcaption, .entry-image figcaption { margin-top: 8px; color: var(--plane-muted); }
 .entry-image img { max-width: 100%; height: auto; border-radius: 4px; }
@@ -86,9 +86,6 @@
 .toc a:hover { color: var(--plane-ink); }
 .prose :is(h2, h3, h4)[id] { scroll-margin-top: calc(var(--header-h) + 24px); }
 
-/* sugar-high's token colors, from the plane's own palette: ink for the code, muted for punctuation and properties, and
-   the accent for strings, as on the back plane's link arrows. */
-.code { --sh-keyword: var(--plane-ink); --sh-class: var(--plane-ink); --sh-identifier: var(--plane-ink); --sh-entity: var(--plane-ink); --sh-property: var(--plane-muted); --sh-jsxliterals: var(--plane-muted); --sh-sign: var(--plane-muted); --sh-string: var(--accent-ink); --sh-comment: rgba(22, 22, 21, .56); }
 
 /* Switching entries keeps the list where it was (app/boot/trip.js), so even a short entry leaves the page room to
    scroll until the list sticks. */

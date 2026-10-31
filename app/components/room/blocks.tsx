@@ -1,7 +1,6 @@
 import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Image from "next/image";
 import katex from "katex";
-import { highlight } from "sugar-high";
 import { Arrow } from "app/components/arrow";
 import { metaData } from "app/config";
 import { optimizable } from "app/lib/notion/images";
@@ -70,8 +69,11 @@ function One({ block }: { block: Block }) {
     case "toggle":
       return <details open><summary><Text parts={block.summary} /></summary><Blocks blocks={block.children} bare /></details>;
     case "code":
-      // sugar-high escapes the source text; its spans carry token colors set in reader.css.
-      return <figure className="code"><pre data-language={block.language}><code dangerouslySetInnerHTML={{ __html: highlight(block.code) }} /></pre><Caption parts={block.caption} /></figure>;
+      // Shiki's HTML (highlight.ts) escapes the source and colors each token inline; a block it couldn't read shows plain.
+      return <figure className="code" data-language={block.language}>
+        {block.html ? <div dangerouslySetInnerHTML={{ __html: block.html }} /> : <pre><code>{block.code}</code></pre>}
+        <Caption parts={block.caption} />
+      </figure>;
     case "image": {
       const alt = plain(block.caption);
       // With its size known the page reserves the space, so nothing below moves when the image arrives.

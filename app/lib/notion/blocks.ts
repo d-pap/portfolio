@@ -11,7 +11,8 @@ export type Block =
   | { type: "quote"; text: Inline[]; children: Block[] }
   | { type: "callout"; icon?: string; text: Inline[]; children: Block[] }
   | { type: "toggle"; summary: Inline[]; children: Block[] }
-  | { type: "code"; language: string; code: string; caption: Inline[] }
+  // `html` is the highlighted code, added when the body is loaded (highlight.ts); without it the code shows plain.
+  | { type: "code"; language: string; code: string; caption: Inline[]; html?: string }
   | { type: "image"; id: string; edited: string; src: string; width?: number; height?: number; caption: Inline[] }
   | { type: "divider" }
   | { type: "link"; href: string; caption: Inline[] }

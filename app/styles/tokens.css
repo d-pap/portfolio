@@ -17,6 +17,8 @@
 
   --font-text: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --font-mono: Arial, Helvetica, sans-serif;
+  /* Code in notes is the one place the site leaves Arial: the system's monospace, the same family Notion uses. */
+  --font-code: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Three sizes carry all the text: reading text, everything else, and mono labels. Hierarchy comes from space. */
   --size-read: 17px;
