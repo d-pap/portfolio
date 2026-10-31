@@ -16,15 +16,15 @@
     "@vercel/analytics": "^1.4.1",
     "@vercel/blob": "2.8.1",
     "@vercel/speed-insights": "^1.1.0",
-    "next": "15.5.27",
+    "next": "15.5.28",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.9",
     "react-dom": "19.2.9",
     "sugar-high": "2.6.0",
     "typescript": "5.7.3",
-    "yaml": "^2.8.2"
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "sharp": "0.33.5"
+    "sharp": "0.35.5"
   }
 }
