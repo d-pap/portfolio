@@ -135,6 +135,8 @@ async function mirrorImages(blocks: Block[]): Promise<Block[]> {
       out.push({ ...block, src: url, ...(width && height ? { width, height } : {}) });
     }
     else if (block.type === "list") out.push({ ...block, items: await Promise.all(block.items.map(async (item) => ({ ...item, children: await mirrorImages(item.children) }))) });
+    else if (block.type === "todo") out.push({ ...block, items: await Promise.all(block.items.map(async (item) => ({ ...item, children: await mirrorImages(item.children) }))) });
+    else if (block.type === "columns") out.push({ ...block, columns: await Promise.all(block.columns.map(async (column) => ({ ...column, children: await mirrorImages(column.children) }))) });
     else if ("children" in block) out.push({ ...block, children: await mirrorImages(block.children) });
     else out.push(block);
   }
@@ -149,7 +151,7 @@ export function loadBody(pageId: string, lastEditedTime: string): Promise<Block[
     const { blocks, skipped } = toBlocks(await readBlocks(config.token, pageId));
     if (skipped.length) console.warn(`[notion] page ${pageId}: skipped unsupported blocks (${[...new Set(skipped)].join(", ")})`);
     return mirrorImages(blocks);
-  }, ["notion-body-v1", pageId, lastEditedTime], { tags: ["notion", `notion:page:${pageId}`], revalidate: HOUR })();
+  }, ["notion-body-v2", pageId, lastEditedTime], { tags: ["notion", `notion:page:${pageId}`], revalidate: HOUR })();
 }
 
 export async function roomsContent(): Promise<{ books: boolean; notes: boolean; latestEdit: string | null }> {

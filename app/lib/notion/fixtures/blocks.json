@@ -23,7 +23,32 @@
   { "object": "block", "id": "i2", "type": "image", "has_children": false, "last_edited_time": "2026-10-12T11:00:00.000Z", "image": { "type": "external", "external": { "url": "https://example.com/pic.png" }, "caption": [] } },
   { "object": "block", "id": "d1", "type": "divider", "has_children": false, "divider": {} },
   { "object": "block", "id": "bk", "type": "bookmark", "has_children": false, "bookmark": { "url": "https://rsms.me/", "caption": [{ "type": "text", "plain_text": "rsms" }] } },
-  { "object": "block", "id": "tb", "type": "table", "has_children": true, "table": { "table_width": 2 } },
-  { "object": "block", "id": "em", "type": "embed", "has_children": false, "embed": { "url": "https://example.com/" } },
-  { "object": "block", "id": "cp", "type": "child_page", "has_children": false, "child_page": { "title": "Sub" } }
+  { "object": "block", "id": "tb", "type": "table", "has_children": true, "table": { "table_width": 2, "has_column_header": true, "has_row_header": false },
+    "children": [
+      { "object": "block", "id": "tr1", "type": "table_row", "has_children": false, "table_row": { "cells": [[{ "type": "text", "plain_text": "Step" }], [{ "type": "text", "plain_text": "Time" }]] } },
+      { "object": "block", "id": "tr2", "type": "table_row", "has_children": false, "table_row": { "cells": [[{ "type": "text", "plain_text": "Classify" }], [{ "type": "text", "plain_text": "2.4 s", "annotations": { "bold": true } }]] } }
+    ] },
+  { "object": "block", "id": "em", "type": "embed", "has_children": false, "embed": { "url": "https://example.com/", "caption": [] } },
+  { "object": "block", "id": "cp", "type": "child_page", "has_children": false, "child_page": { "title": "Sub" } },
+  { "object": "block", "id": "cl", "type": "column_list", "has_children": true, "column_list": {},
+    "children": [
+      { "object": "block", "id": "co1", "type": "column", "has_children": true, "column": { "width_ratio": 0.6 },
+        "children": [
+          { "object": "block", "id": "cp1", "type": "paragraph", "has_children": false, "paragraph": { "rich_text": [{ "type": "text", "plain_text": "Left" }] } },
+          { "object": "block", "id": "ch2", "type": "heading_2", "has_children": false, "heading_2": { "rich_text": [{ "type": "text", "plain_text": "Top heading" }] } }
+        ] },
+      { "object": "block", "id": "co2", "type": "column", "has_children": true, "column": { "width_ratio": 0.4 },
+        "children": [
+          { "object": "block", "id": "ci", "type": "image", "has_children": false, "image": { "type": "external", "external": { "url": "https://example.com/col.png" }, "caption": [] } }
+        ] }
+    ] },
+  { "object": "block", "id": "td1", "type": "to_do", "has_children": false, "to_do": { "rich_text": [{ "type": "text", "plain_text": "Write the note" }], "checked": true } },
+  { "object": "block", "id": "td2", "type": "to_do", "has_children": false, "to_do": { "rich_text": [{ "type": "text", "plain_text": "Record the video" }], "checked": false } },
+  { "object": "block", "id": "eq", "type": "equation", "has_children": false, "equation": { "expression": "e = mc^2" } },
+  { "object": "block", "id": "toc", "type": "table_of_contents", "has_children": false, "table_of_contents": { "color": "default" } },
+  { "object": "block", "id": "v1", "type": "video", "has_children": false, "video": { "type": "external", "external": { "url": "https://media.example.com/notes/wait.mp4?v=2" }, "caption": [{ "type": "text", "plain_text": "The old wait." }] } },
+  { "object": "block", "id": "v2", "type": "video", "has_children": false, "video": { "type": "external", "external": { "url": "https://www.youtube.com/watch?v=abc" }, "caption": [] } },
+  { "object": "block", "id": "v3", "type": "video", "has_children": false, "video": { "type": "file", "file": { "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/x/clip.mp4" }, "caption": [] } },
+  { "object": "block", "id": "pm", "type": "paragraph", "has_children": false, "paragraph": { "rich_text": [{ "type": "text", "plain_text": "Speed is " }, { "type": "equation", "plain_text": "d/t", "equation": { "expression": "d/t" } }] } },
+  { "object": "block", "id": "te", "type": "table", "has_children": false, "table": { "table_width": 1, "has_column_header": false, "has_row_header": false } }
 ]

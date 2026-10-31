@@ -1,10 +1,12 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Image from "next/image";
+import katex from "katex";
 import { highlight } from "sugar-high";
 import { Arrow } from "app/components/arrow";
 import { metaData } from "app/config";
 import { optimizable } from "app/lib/notion/images";
 import type { Block, Inline } from "app/lib/notion/blocks";
+import { NoteVideo } from "./note-video";
 
 const SITE = new URL(metaData.baseUrl).origin;
 const OWN = new Set([SITE, ...metaData.aliases.map((url) => new URL(url).origin)]);
@@ -19,11 +21,16 @@ function opens(href: string): { target?: string; rel?: string } {
   return { target: "_blank", rel: "noreferrer" };
 }
 
+/** TeX as MathML, which browsers lay out on their own: no KaTeX stylesheet or fonts to load. A typo shows as red source. */
+function math(expression: string, display: boolean): string {
+  return katex.renderToString(expression, { output: "mathml", displayMode: display, throwOnError: false });
+}
+
 function Text({ parts }: { parts: Inline[] }) {
   return (
     <>
       {parts.map((part, i) => {
-        let node: ReactNode = part.text;
+        let node: ReactNode = part.math ? <span className="math" dangerouslySetInnerHTML={{ __html: math(part.text, false) }} /> : part.text;
         if (part.code) node = <code>{node}</code>;
         if (part.bold) node = <strong>{node}</strong>;
         if (part.italic) node = <em>{node}</em>;
@@ -48,12 +55,14 @@ function One({ block }: { block: Block }) {
       return block.text.length ? <p><Text parts={block.text} /></p> : null;
     case "heading": {
       const Tag = `h${block.level}` as "h2" | "h3" | "h4";
-      return <Tag><Text parts={block.text} /></Tag>;
+      return <Tag id={block.anchor}><Text parts={block.text} /></Tag>;
     }
     case "list": {
       const Tag = block.ordered ? "ol" : "ul";
       return <Tag>{block.items.map((item, i) => <li key={i}><Text parts={item.text} />{item.children.length > 0 && <Blocks blocks={item.children} bare />}</li>)}</Tag>;
     }
+    case "todo":
+      return <ul className="todo">{block.items.map((item, i) => <li key={i} className={item.checked ? "is-checked" : undefined}><span className="todo-box" aria-hidden="true" /><div><Text parts={item.text} />{item.children.length > 0 && <Blocks blocks={item.children} bare />}</div></li>)}</ul>;
     case "quote":
       return <blockquote><p><Text parts={block.text} /></p>{block.children.length > 0 && <Blocks blocks={block.children} bare />}</blockquote>;
     case "callout":
@@ -73,6 +82,32 @@ function One({ block }: { block: Block }) {
     }
     case "divider":
       return <hr />;
+    case "table": {
+      const [first, ...rest] = block.rows;
+      const body = block.header ? rest : block.rows;
+      const cell = (parts: Inline[], j: number, key: number) => block.rowHeader && j === 0
+        ? <th key={key} scope="row"><Text parts={parts} /></th>
+        : <td key={key}><Text parts={parts} /></td>;
+      // The wrapper scrolls sideways when a wide table meets a phone, so the page itself never does.
+      return <div className="table">
+        <table>
+          {block.header && <thead><tr>{first.map((parts, j) => <th key={j} scope="col"><Text parts={parts} /></th>)}</tr></thead>}
+          <tbody>{body.map((row, i) => <tr key={i}>{row.map((parts, j) => cell(parts, j, j))}</tr>)}</tbody>
+        </table>
+      </div>;
+    }
+    case "columns": {
+      const ratios = block.columns.map((column) => column.ratio ?? 1 / block.columns.length);
+      return <div className="columns" style={{ "--columns": ratios.map((r) => `minmax(0, ${r}fr)`).join(" ") } as CSSProperties}>
+        {block.columns.map((column, i) => <div key={i}><Blocks blocks={column.children} bare /></div>)}
+      </div>;
+    }
+    case "equation":
+      return <div className="equation" dangerouslySetInnerHTML={{ __html: math(block.expression, true) }} />;
+    case "video":
+      return <figure className="entry-video"><NoteVideo src={block.src} label={plain(block.caption)} /><Caption parts={block.caption} /></figure>;
+    case "toc":
+      return block.items.length ? <nav className="toc" aria-label="On this page"><ul>{block.items.map((item) => <li key={item.anchor} data-level={item.level}><a href={`#${item.anchor}`}>{item.text}</a></li>)}</ul></nav> : null;
     case "link":
       return <p className="link-block"><a href={block.href} {...opens(block.href)}>{plain(block.caption) || block.href.replace(/^https?:\/\//, "").replace(/\/$/, "")}<Arrow /></a></p>;
   }
