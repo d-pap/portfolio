@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   images: {
     // AVIF first: the phone-sized project previews come out a fraction of the size of the source files.
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 90],
     // Project images rarely change, so optimized copies are kept for a week instead of being re-checked every minute.
     minimumCacheTTL: 60 * 60 * 24 * 7,
     remotePatterns: [

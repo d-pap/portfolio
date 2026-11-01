@@ -3,6 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { slugify } from "app/lib/headings";
 import { VideoFigure } from "./case/video-figure";
 import { Figure } from "./case/figure";
+import { FigureGroup } from "./case/figure-group";
 import { EvalChecks } from "./evidence/eval-checks";
 import { EvalCoverage } from "./evidence/eval-coverage";
 import { QuestionTrace } from "./evidence/question-trace";
@@ -31,6 +32,7 @@ const components = {
   a: MdxLink,
   h2: SectionHeading,
   Figure,
+  FigureGroup,
   VideoFigure,
   RoutingDiagram,
   EvalChecks,

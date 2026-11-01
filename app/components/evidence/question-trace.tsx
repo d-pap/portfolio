@@ -90,10 +90,10 @@ export function QuestionTrace() {
 
   return (
     <figure className="fig fig-trace">
-      <figcaption className="label fig-caption">one question through Sprout [{trace.id}]</figcaption>
+      <figcaption className="label fig-caption">How Sprout answers a question</figcaption>
       <div className="fig-stage stage qt">
-        <div className="qt-top label"><span>Request trace</span><span className="qt-date">[{trace.id}, {trace.date}]</span></div>
-        <p className="qt-question"><span className="qt-arrow" aria-hidden="true">↳</span>{trace.question}</p>
+        <div className="qt-top label"><span>Question</span></div>
+        <p className="qt-question">{trace.question}</p>
 
         <div className="qt-route" ref={route} role="img" aria-label="The question is classified as a health question, so it is searched and answered with sources; conversational turns take a direct branch instead.">
           <svg className="qt-lines" viewBox="0 0 816 114" preserveAspectRatio="none" aria-hidden="true">
@@ -113,7 +113,7 @@ export function QuestionTrace() {
 
         <div className="qt-evidence">
           <section>
-            <p className="qt-head">Rerank <span className="label">{counts.candidates} → {counts.passages} passages</span></p>
+            <p className="qt-head">Rerank <span className="label">{counts.passages} of {counts.candidates} passages kept</span></p>
             <div className="qt-selection">
               <svg className="qt-marks" viewBox="0 0 172 240" width="172" height="240" aria-hidden="true">
                 <g className="qt-threads" ref={threads}>
@@ -145,12 +145,11 @@ export function QuestionTrace() {
           </section>
 
           <section ref={answer}>
-            <p className="qt-head">Reply <span className="label">[excerpt]</span></p>
+            <p className="qt-head">Reply</p>
             <blockquote className="qt-reply">
               <p>The sources I have say certain systemic-sclerosis-specific autoantibodies can appear <mark>several months to years before the clinical onset</mark> of systemic sclerosis. <span className="qt-cite">[1]</span></p>
               <p>What the sources don’t provide is a single “typical” time interval from antibodies to symptoms for most people.</p>
             </blockquote>
-            <p className="label qt-note">full reply: {trace.replyWords} words, cites {trace.cited.map((n) => `[${n}]`).join(" ")}</p>
           </section>
         </div>
 
@@ -164,7 +163,6 @@ export function QuestionTrace() {
         </ol>
 
         <div className="qt-foot">
-          <span className="label">saved development trace [public question]</span>
           <button type="button" className="label qt-replay" onClick={play}><span aria-hidden="true">↻</span> {playing ? "stop" : "replay trace"}</button>
         </div>
       </div>

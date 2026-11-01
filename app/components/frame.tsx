@@ -40,7 +40,7 @@ export function Frame({ plane }: { plane: "front" | "back" }) {
           <a href={away ? "/#projects" : "#projects"}>(projects)</a>
         </nav>
         <div className="frame-side">
-          {away && (
+          {away && !pathname.startsWith("/work/") && (
             <a href="/#projects" onClick={close}>
               (back)
             </a>
@@ -74,10 +74,6 @@ export function Frame({ plane }: { plane: "front" | "back" }) {
             About Derek
           </h2>
           <p>{metaData.description}</p>
-          <p>
-            Outside of work, I carve and build things out of wood, mostly by
-            hand. I read a lot, usually more than one book at a time.
-          </p>
           <nav className="info-pages" aria-label="Personal pages">
             <a href="/notes">(notes)</a>
             <a href="/bookshelf">(bookshelf)</a>

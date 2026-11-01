@@ -19,7 +19,7 @@ export default function Home() {
           how things work.
         </p>
       </section>
-      <ProjectIndex groups={projectIndex(main, earlier)} />
+      <ProjectIndex rows={projectIndex(main, earlier)} />
     </div>
   );
 }

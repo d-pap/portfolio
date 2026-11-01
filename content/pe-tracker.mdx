@@ -1,15 +1,16 @@
 ---
 title: PE Tracker
 shortTitle: PE Tracker
-summary: Tracing brand ownership through parent companies and dated public records
+summary: Searching brands and tracing who owns them
+previewDescription: Search for a brand and follow its parent companies, with sources for each connection. I built the data collectors, ownership graph, and search interface.
+topics: [Data engineering, Web development]
 area: Ownership research tool
 role: Data engineering & full-stack development
-period: 2026 – present
+period: "2026"
 context: Personal project
 stack: Python, JavaScript, CSS
 status: In development
 repository: https://github.com/d-pap/pe-checker
-availability: In development
 publishedAt: "2026-10-29"
 index: main
 order: 6
@@ -27,38 +28,28 @@ tile:
     fit: contain
 ---
 
-PE Tracker is a personal project for making the ownership behind a familiar brand easier to check. Search for a brand, follow its parent companies, and see the dated sources behind each connection, including links to private equity and other investment firms.
+I built PE Tracker to look up who owns a brand, including connections to private equity and other investment firms. It follows chains of parent companies and shows the sources behind each link.
 
-The name on a product or storefront often tells you very little about who controls the business. I wanted to make those relationships easier to follow, using an automated data pipeline rather than a list of companies I would have to maintain by hand.
+I built the data pipeline and search interface so the records can be refreshed automatically.
 
 ## Following ownership chains
 
-A brand can belong to a company that belongs to another company, with an investment firm several steps further up. The application follows those relationships through an ownership graph and presents the chain alongside the sources supporting it.
+A brand can belong to a company that belongs to another company, with an investment firm several steps further up. PE Tracker follows those relationships through an ownership graph and presents the chain alongside dated sources.
 
-Results distinguish private-equity ownership, other investment-firm ownership, corporate ownership, and cases where no ownership signals were found. Ownership history is kept separately from current control, so a previous acquisition does not automatically describe who owns the business now.
+Results distinguish private equity, other investment firms, and corporate ownership. Current control and ownership history are stored separately. Conflicting parent relationships stay visible with their supporting records.
 
 ## Reconciling public records
 
 The Python pipeline collects claims from Wikipedia, Wikidata, OpenStreetMap's Name Suggestion Index, USDA FoodData Central, SEC filings, and FTC notices. Each source has its own collector, with shared records for entities, ownership claims, dates, and provenance.
 
-The difficult part is deciding when records refer to the same business and what a source actually establishes. A shared identifier can join records; without one, a name match needs corroboration. Similar names and redirects are insufficient. A reported transaction or a minority stake also needs to stay distinct from evidence of current control.
-
-## Keeping uncertainty visible
-
-Every ownership link carries its evidence and dates. The graph retains earlier claims when a source changes, and conflicting parent relationships remain visible in the result rather than being silently discarded.
-
-Missing data is treated carefully. “No ownership signals found” means the available sources did not establish a relationship. It does not establish that a business is independently owned. The aim is to make the evidence inspectable without making the conclusion stronger than the records support.
+The difficult part is matching businesses across sources. A shared identifier can join records directly; name matches need corroboration. The pipeline also distinguishes acquisitions and minority stakes from current control, and keeps earlier claims when a source changes.
 
 ## A pipeline behind a static site
 
-The frontend is plain JavaScript and CSS. The pipeline produces static result data and a search index, split into small files so a lookup can load the relevant records without downloading the whole graph or querying every upstream source.
+The frontend is plain JavaScript and CSS. The pipeline produces static data and a search index, split into small files so a lookup loads only the records it needs.
 
-Before publishing, the build checks known reference cases, unexpected changes in claim counts, and large shifts in ownership classifications. A failed check blocks publication. If an individual collector fails, the pipeline keeps that source's previous records and reports the failure.
-
-GitHub Actions and GitHub Pages provide the scheduled-build and hosting setup. The graph's history is designed to live in a separate data branch, making changes between runs reviewable.
+Before publishing, the build checks known reference cases, claim counts, and shifts in ownership classifications. A failed check blocks publication. If a collector fails, the pipeline keeps that source's previous records.
 
 ## Ongoing work
 
-The first ownership-graph implementation is built around national brands and their parent companies. Public deployment and automated refresh setup are still pending.
-
-Later work includes local businesses and a separate evidence layer for changes after an acquisition. Ownership alone cannot establish that an owner changed a product's quality, price, or service; that question needs its own evidence.
+The first implementation covers national brands and their parent companies. Next are public deployment, automated refreshes, and local businesses.

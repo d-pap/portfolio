@@ -7,24 +7,26 @@
       "kind": "loops",
       "src": "/projects/sprout/loops/sprout-sources-loop-4x5.mp4",
       "poster": "/projects/sprout/loops/sprout-sources-loop-4x5.jpg",
-      "width": 960,
-      "height": 1200,
+      "width": 1920,
+      "height": 2400,
       "duration": 4.5,
       "fps": 60,
-      "bytes": 183406,
-      "description": "Actual app interaction; sources expand and close. Staged local demonstration data."
+      "bytes": 435716,
+      "description": "Actual app interaction; sources expand and close. Staged local demonstration data.",
+      "quality_revision": "2026-11-01-retina"
     },
     {
       "name": "sprout-conversation-4x5",
       "kind": "videos",
       "src": "/projects/sprout/videos/sprout-conversation-4x5.mp4",
       "poster": "/projects/sprout/videos/sprout-conversation-4x5.jpg",
-      "width": 960,
-      "height": 1200,
+      "width": 1920,
+      "height": 2400,
       "duration": 10.3,
       "fps": 60,
-      "bytes": 240635,
-      "description": "Actual Sprout response and sources; normal speed, edited pauses; staged local demonstration data."
+      "bytes": 580836,
+      "description": "Actual Sprout response and sources; normal speed, edited pauses; staged local demonstration data.",
+      "quality_revision": "2026-11-01-retina"
     },
     {
       "name": "sprout-retrieval-loop-4x3",
@@ -104,5 +106,7 @@
       "description": "Evaluation: paired fields move against a shared baseline. Abstract motion study; no text or measured data.",
       "status": "active"
     }
-  ]
+  ],
+  "updated": "2026-11-01",
+  "retina_hero_source": "/Users/derek/.codex/visualizations/2026/11/01/01a19786-ca60-7ce3-a6a6-f40f3cd45abe/retina-heroes"
 }

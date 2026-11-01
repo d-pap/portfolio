@@ -1,7 +1,7 @@
-import type { CSSProperties } from "react";
 import { Arrow } from "app/components/arrow";
 import { CustomMDX } from "app/components/mdx";
 import { CaseHeroStage } from "app/components/case/case-hero-stage";
+import { CaseSidebar } from "app/components/case/case-sidebar";
 import { Media } from "app/components/media/media";
 import { caseLinks, splitLede } from "app/lib/case";
 import { listHeadings } from "app/lib/headings";
@@ -22,87 +22,11 @@ export function CaseLayout({
   const sections = listHeadings(entry.body);
 
   return (
-    <article
-      className="case page ascii-case"
-      style={{ "--vt": `entry-${entry.slug}` } as CSSProperties}
-    >
-      <header className="ascii-case-heading">
-        <h1>{entry.title}</h1>
-        <nav aria-label="Browse projects">
-          {previous && (
-            <a
-              href={`/work/${previous.slug}`}
-              aria-label={`Previous project: ${previous.shortTitle}`}
-            >
-              (previous)
-            </a>
-          )}
-          {next && (
-            <a
-              href={`/work/${next.slug}`}
-              aria-label={`Next project: ${next.shortTitle}`}
-            >
-              (next)
-            </a>
-          )}
-        </nav>
-      </header>
-
-      <div className="ascii-case-intro" id="overview">
-        {lede && (
-          <div className="case-lede">
-            <CustomMDX source={lede} />
-          </div>
-        )}
-        <div className="ascii-case-details">
-          <p>
-            {entry.role}
-            <br />
-            {entry.period}
-          </p>
-          <dl>
-            <div>
-              <dt>With</dt>
-              <dd>{entry.context}</dd>
-            </div>
-            {entry.stack && (
-              <div>
-                <dt>{entry.kind === "role" ? "Tools" : "Stack"}</dt>
-                <dd>{entry.stack}</dd>
-              </div>
-            )}
-          </dl>
-          {(links.length > 0 || note) && (
-            <ul className="ascii-case-links">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} target="_blank" rel="noreferrer">
-                    {link.label}
-                    <Arrow />
-                  </a>
-                </li>
-              ))}
-              {note && <li className="case-links-note">{note}</li>}
-            </ul>
-          )}
-          {sections.length > 0 && (
-            <details className="ascii-case-contents">
-              <summary>(sections)</summary>
-              <nav aria-label="Project sections">
-                {sections.map((section) => (
-                  <a key={section.id} href={`#${section.id}`}>
-                    {section.text.toLowerCase()}
-                  </a>
-                ))}
-              </nav>
-            </details>
-          )}
-        </div>
-      </div>
-
+    <article className="case page ascii-case">
       {entry.hero && (
         <figure className="case-hero" id="case-hero">
           <CaseHeroStage
+            slug={entry.slug}
             hasRecording={Boolean(entry.hero.recording)}
             composition={entry.hero.type === "composition"}
             aspectRatio={entry.hero.aspectRatio}
@@ -116,17 +40,57 @@ export function CaseLayout({
           </CaseHeroStage>
         </figure>
       )}
-      {rest && (
-        <div className="case-flow">
-          <CustomMDX source={rest} />
+      <div className="case-body">
+        <CaseSidebar title={entry.title} sections={sections} />
+        <div className="case-main" id="overview">
+          {lede && (
+            <div className="case-lede">
+              <CustomMDX source={lede} />
+            </div>
+          )}
+          <dl className="case-facts">
+            <div>
+              <dt>Role</dt>
+              <dd>{entry.role}<span className="case-period">{entry.period}</span></dd>
+            </div>
+            <div>
+              <dt>With</dt>
+              <dd>{entry.context}</dd>
+            </div>
+            {entry.stack && (
+              <div className="case-fact-stack">
+                <dt>{entry.kind === "role" ? "Tools" : "Stack"}</dt>
+                <dd>{entry.stack}</dd>
+              </div>
+            )}
+          </dl>
+          {(links.length > 0 || note) && (
+            <ul className="case-links">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} target="_blank" rel="noreferrer">
+                    {link.label}<Arrow />
+                  </a>
+                </li>
+              ))}
+              {note && <li className="case-links-note">{note}</li>}
+            </ul>
+          )}
+          {rest && (
+            <div className="case-flow">
+              <CustomMDX source={rest} />
+            </div>
+          )}
+          <nav className="case-pagination" aria-label="Browse projects">
+            {previous && (
+              <a href={`/work/${previous.slug}`}>previous: {previous.shortTitle}</a>
+            )}
+            {next && (
+              <a href={`/work/${next.slug}`}>next: {next.shortTitle}<Arrow diagonal={false} /></a>
+            )}
+          </nav>
         </div>
-      )}
-      {next && (
-        <a className="case-next text-link" href={`/work/${next.slug}`}>
-          next: {next.shortTitle}
-          <Arrow diagonal={false} />
-        </a>
-      )}
+      </div>
     </article>
   );
 }

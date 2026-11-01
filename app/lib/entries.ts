@@ -4,6 +4,8 @@ import { DIAGRAMS, MAX_TILE_TITLE, SHAPES, type DiagramName, type MainTile, type
 
 export type EntryIndex = "main" | "earlier" | "hidden";
 export type EntryKind = "project" | "role" | "analysis";
+export const PROJECT_TOPICS = ["System design", "AI", "App development", "Web development", "Product design", "Data engineering", "Data analysis", "Machine learning"] as const;
+export type ProjectTopic = (typeof PROJECT_TOPICS)[number];
 /** A logo hero centers one image (usually an SVG) on the white stage, like a cover. */
 export type Hero = { type: "phones" | "screen" | "logo" | "composition"; frames: string[]; recording?: string; caption?: string; aspectRatio?: number };
 export type Entry = {
@@ -11,6 +13,8 @@ export type Entry = {
   title: string;
   shortTitle: string;
   summary: string;
+  previewDescription?: string;
+  topics: ProjectTopic[];
   area: string;
   role: string;
   period: string;
@@ -79,12 +83,19 @@ export function parseEntry(raw: string, slug: string): Entry {
     throw new Error(`${where}: "shortTitle" is the tile title and must be at most ${MAX_TILE_TITLE} characters`);
   }
   const sections = parseSections(d.sections, match[2], where);
+  const topics = d.topics ?? [];
+  if (!Array.isArray(topics) || topics.some((topic) => !(PROJECT_TOPICS as readonly unknown[]).includes(topic))) {
+    throw new Error(`${where}: "topics" must be a list drawn from ${PROJECT_TOPICS.join(", ")}`);
+  }
+  if (new Set(topics).size !== topics.length) throw new Error(`${where}: "topics" contains duplicates`);
 
   return {
     slug,
     title,
     shortTitle,
     summary: req("summary"),
+    previewDescription: opt("previewDescription"),
+    topics: topics as ProjectTopic[],
     area: req("area"),
     role: req("role"),
     period: req("period"),

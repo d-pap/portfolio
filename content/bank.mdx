@@ -1,7 +1,9 @@
 ---
-title: Bank customer churn
-shortTitle: Bank customer churn
-summary: Which bank customers leave, and a model to flag them
+title: Bank customer churn analysis
+shortTitle: Bank customer churn analysis
+summary: Finding patterns in customer churn and predicting who leaves
+previewDescription: An analysis of 10,000 bank customers to understand who leaves. I explored the data and trained a random forest, focusing on how many departing customers it could identify.
+topics: [Data analysis, Machine learning]
 area: Data analysis
 role: Data analysis & modeling
 period: "2024"
@@ -13,8 +15,22 @@ publishedAt: "2024-08-21"
 index: earlier
 order: 1
 kind: analysis
+tile:
+  shape: "3:2"
+  media:
+    kind: cover
+    src: /projects/bank/wordmark.svg
+    fit: contain
 ---
 
-I used a dataset of 10,000 bank customers to find which characteristics were associated with churn, then trained a model to predict it. Inactive customers and customers aged 41–70 left more often; customers with two products left less often.
+I analyzed a dataset of 10,000 bank customers to find patterns in customer churn and train a model to predict who would leave.
 
-A random forest reached about 85% accuracy and 46% recall on customers who left. Recall is the number that matters here, because a model that always predicts "stays" is already about 80% accurate.
+I used Python, pandas, and scikit-learn for the analysis and modeling.
+
+## Patterns in customer churn
+
+Inactive customers and customers aged 41–70 left more often. Customers with two products left less often.
+
+## Predicting who leaves
+
+A random forest reached about 85% accuracy and caught 46% of customers who left. I focused on recall because about 80% of customers stayed: predicting "stays" for everyone would already look accurate while missing every customer who left.

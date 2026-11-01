@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import type { IndexGroup, IndexRow } from "app/lib/project-index";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import type { IndexRow } from "app/lib/project-index";
 import { mediaColor } from "app/lib/media-colors";
 import { mediaSize } from "app/lib/media-sizes";
 import { useMotion } from "./motion";
@@ -11,18 +11,47 @@ import { useMotion } from "./motion";
 const INLINE_SIZES = "100vw";
 // A film starts once it has been mostly on screen this long, so a fast scroll past it doesn't start a download.
 const PLAY_DELAY = 150;
+const PREVIEW_QUERY = "(min-width: 1000px) and (hover: hover) and (pointer: fine)";
+const RETURN_PREVIEW = "portfolio-project-return";
 
 function Preview({
   row,
   inline = false,
   warm = false,
+  enabled = true,
 }: {
   row: IndexRow;
   inline?: boolean;
   warm?: boolean;
+  enabled?: boolean;
 }) {
+  const figure = useRef<HTMLElement>(null);
+  const picture = useRef<HTMLImageElement>(null);
   const video = useRef<HTMLVideoElement>(null);
+  const preview = row.preview;
   const { paused } = useMotion();
+  // Desktop previews stay in the HTML so Back can name the returning image before hydration. Only the selected
+  // preview gets a source; inactive films release their decoder. React leaves these source attributes to this effect
+  // and the navigation boot script, so hydration cannot reload a film in the middle of its transition.
+  useEffect(() => {
+    if (inline || !preview) return;
+    const film = video.current;
+    if (enabled) {
+      if (film) {
+        if (film.getAttribute("poster") !== preview.image) film.poster = preview.image;
+        if (film.getAttribute("src") !== preview.video) film.src = preview.video!;
+      }
+      if (picture.current?.getAttribute("src") !== preview.image && picture.current) picture.current.src = preview.image;
+      figure.current?.removeAttribute("data-project-restoring");
+    } else if (!figure.current?.hasAttribute("data-project-restoring")) {
+      figure.current?.style.removeProperty("animation");
+      if (film?.hasAttribute("src")) {
+        film.pause();
+        film.removeAttribute("src");
+        film.load();
+      }
+    }
+  }, [enabled, inline, preview]);
   useEffect(() => {
     const element = video.current;
     if (!element) return;
@@ -63,17 +92,18 @@ function Preview({
       observer.disconnect();
       document.removeEventListener("visibilitychange", update);
     };
-  }, [row.id, paused, inline]);
-  const preview = row.preview;
+  }, [row.id, paused, inline, enabled]);
   const size = preview && mediaSize(preview.image);
+  if (!preview) return null;
   return (
-    <figure className={inline ? "index-preview is-inline" : "index-preview"}>
+    <figure ref={figure} hidden={!inline && !enabled} suppressHydrationWarning className={inline ? "index-preview is-inline" : "index-preview"}>
       {preview && (
         <a
           className="index-preview-media"
+          data-project-preview={row.hasHero ? row.id : undefined}
           href={row.href}
           aria-label={`View ${row.title}`}
-          style={inline ? { background: mediaColor(preview.image) } : undefined}
+          style={{ "--preview-aspect": size ? size[0] / size[1] : 4 / 3, ...(inline ? { background: mediaColor(preview.image) } : {}) } as CSSProperties}
         >
           {inline ? (
             <>
@@ -89,6 +119,7 @@ function Preview({
                   width={size[0]}
                   height={size[1]}
                   sizes={INLINE_SIZES}
+                  quality={90}
                   loading={warm ? "eager" : "lazy"}
                 />
               ) : (
@@ -103,6 +134,7 @@ function Preview({
               )}
               {preview.video && (
                 <video
+                  suppressHydrationWarning
                   ref={video}
                   className="index-preview-film"
                   src={preview.video}
@@ -116,9 +148,12 @@ function Preview({
             </>
           ) : preview.video ? (
             <video
+              suppressHydrationWarning
               ref={video}
-              src={preview.video}
-              poster={preview.image}
+              data-src={preview.video}
+              data-poster={preview.image}
+              width={size?.[0]}
+              height={size?.[1]}
               muted
               loop
               playsInline
@@ -128,7 +163,11 @@ function Preview({
           ) : (
             /* Native images avoid an optimizer round trip when moving quickly between rows. */
             <img
-              src={preview.image}
+              suppressHydrationWarning
+              ref={picture}
+              data-src={preview.image}
+              width={size?.[0]}
+              height={size?.[1]}
               alt={`${row.title} project preview`}
               decoding="async"
               loading="eager"
@@ -136,17 +175,37 @@ function Preview({
           )}
         </a>
       )}
-      <figcaption>{row.summary}</figcaption>
+      <figcaption>
+        <p className="index-preview-description">{row.description}</p>
+        {row.topics.length > 0 && (
+          <ul className="index-topics" aria-label="Project topics">
+            {row.topics.map((topic) => <li key={topic}>{topic}</li>)}
+          </ul>
+        )}
+        {row.logos.length > 0 && (
+          <ul className="index-stack" aria-label="Technologies">
+            {row.logos.map((logo) => (
+              <li key={logo.name} title={logo.name}>
+                <svg viewBox="0 0 24 24" role="img" aria-label={logo.name}>
+                  <title>{logo.name}</title>
+                  <path d={logo.path} />
+                </svg>
+              </li>
+            ))}
+          </ul>
+        )}
+      </figcaption>
     </figure>
   );
 }
 
-export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
+export function ProjectIndex({ rows }: { rows: IndexRow[] }) {
   const [active, setActive] = useState<IndexRow | null>(null);
   const [finePointer, setFinePointer] = useState(false);
   // Once the page has loaded, inline previews stop waiting for the scroll: they're small, and fetching them all
   // ahead means a fast flick down the list finds them ready.
   const [warm, setWarm] = useState(false);
+  const returnSelection = useRef<string | null>(null);
   useEffect(() => {
     if (finePointer) return;
     let idle: number | undefined;
@@ -161,9 +220,7 @@ export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
     };
   }, [finePointer]);
   useEffect(() => {
-    const query = matchMedia(
-      "(min-width: 1000px) and (hover: hover) and (pointer: fine)",
-    );
+    const query = matchMedia(PREVIEW_QUERY);
     const update = () => {
       setFinePointer(query.matches);
       setActive(null);
@@ -172,69 +229,71 @@ export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
   }, []);
+  useEffect(() => {
+    const restore = (slug: string | null) => {
+      if (!matchMedia(PREVIEW_QUERY).matches) return;
+      const row = rows.find((row) => row.id === slug);
+      if (row) setActive(row);
+    };
+    const onReturn = (event: Event) => {
+      returnSelection.current = (event as CustomEvent<string>).detail;
+      restore(returnSelection.current);
+      try { sessionStorage.removeItem(RETURN_PREVIEW); } catch {}
+    };
+    window.addEventListener("project-preview-return", onReturn);
+    try {
+      returnSelection.current = sessionStorage.getItem(RETURN_PREVIEW) ?? returnSelection.current;
+      restore(returnSelection.current);
+      sessionStorage.removeItem(RETURN_PREVIEW);
+    } catch {}
+    return () => window.removeEventListener("project-preview-return", onReturn);
+  }, [rows]);
   return (
     <section
       className="project-index"
       id="projects"
       aria-labelledby="projects-heading"
-      onMouseLeave={() => {
-        if (!document.activeElement?.closest(".index-row")) setActive(null);
+      onMouseLeave={(event) => {
+        if (!event.currentTarget.contains(document.activeElement)) setActive(null);
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setActive(null);
       }}
     >
-      <h2 id="projects-heading" className="visually-hidden">
+      <h2 id="projects-heading" className="index-heading">
         Projects
       </h2>
-      <div
-        className="index-groups"
-        onBlur={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget))
-            setActive(null);
-        }}
-      >
-        {groups.map((group) => (
-          <section
-            className="index-group"
-            key={group.title}
-            aria-label={group.title}
-          >
-            <h3>{group.title}</h3>
-            <ul>
-              {group.rows.map((row) => (
-                <li
-                  key={row.id}
-                  className={
-                    active?.id === row.id
-                      ? "index-item is-active"
-                      : "index-item"
-                  }
-                >
-                  <a
-                    className="index-row"
-                    href={row.href}
-                    onPointerEnter={(event) => {
-                      if (event.pointerType !== "touch" && finePointer)
-                        setActive(row);
-                    }}
-                    onFocus={() => {
-                      if (finePointer) setActive(row);
-                    }}
-                  >
-                    <span className="index-name">
-                      {row.title}
-                    </span>
-                    <span className="index-period"><span className="visually-hidden">Project started </span>{row.period}</span>
-                    <span className="index-area">{row.area}</span>
-                    <span className="index-role">{row.role}</span>
-                  </a>
-                  {!finePointer && <Preview row={row} inline warm={warm} />}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+      <div className="index-list">
+        <ul>
+          {rows.map((row) => (
+            <li
+              key={row.id}
+              className={
+                active?.id === row.id ? "index-item is-active" : "index-item"
+              }
+            >
+              <a
+                className="index-row"
+                href={row.href}
+                onPointerEnter={(event) => {
+                  if (event.pointerType !== "touch" && finePointer)
+                    setActive(row);
+                }}
+                onFocus={() => {
+                  if (finePointer) setActive(row);
+                }}
+              >
+                <span className="index-name">{row.title}</span>
+                <span className="index-summary">{row.summary}</span>
+                <span className="index-period">{row.period}</span>
+              </a>
+              {!finePointer && <Preview row={row} inline warm={warm} />}
+            </li>
+          ))}
+        </ul>
       </div>
       <aside className="index-preview-column" aria-label="Project preview">
-        {active && finePointer && <Preview row={active} key={active.id} />}
+        {rows.map((row) => <Preview row={row} key={row.id} enabled={finePointer && active?.id === row.id} />)}
       </aside>
     </section>
   );

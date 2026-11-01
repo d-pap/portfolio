@@ -15,7 +15,7 @@ const AREAS = [
 export function EvalCoverage() {
   return (
     <figure className="fig fig-coverage">
-      <figcaption className="label fig-caption">development evaluation coverage [selected cases, 2026-09-21]</figcaption>
+      <figcaption className="label fig-caption">What the evaluations check</figcaption>
       <dl className="coverage">
         {AREAS.map(({ area, question, cases }) => (
           <div key={area} className="coverage-row">

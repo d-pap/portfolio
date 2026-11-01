@@ -1,15 +1,16 @@
 ---
 title: SpeakLab
 shortTitle: SpeakLab
-summary: A communication and learning tool powered by fully local AI
+summary: Speaking practice and technical learning with local AI
+previewDescription: I built SpeakLab to practice explaining technical ideas out loud. Its local AI pipeline transcribes recordings and gives feedback to guide the next attempt.
+topics: [System design, AI]
 area: Communication & learning tool
 role: System design & full-stack development
-period: 2026 – present
+period: "2026"
 context: Personal project
 stack: React, TypeScript, Python, FastAPI
 status: In development
 repository: https://github.com/d-pap/speaklab
-availability: In development
 publishedAt: "2026-10-29"
 index: main
 order: 5
@@ -27,48 +28,42 @@ tile:
     fit: contain
 ---
 
-SpeakLab is a communication and learning tool I built to practice explaining technical ideas out loud. It records an impromptu explanation, gives feedback on its accuracy and delivery, and uses the gaps to guide focused study before a second attempt.
+I built SpeakLab to practice explaining technical ideas out loud. You record an explanation from memory, get feedback on the content and delivery, study the gaps, and try again.
 
-I wanted to practice the moments when I have to explain something before I've had time to prepare. Speaking from memory makes gaps in my understanding audible. It also gives me something concrete to work on: how I organize a thought, choose an example, or keep an explanation moving when I'm unsure.
+I designed and built the app and its local AI pipeline, which runs on my own hardware.
 
 ## Explain, learn, explain again
 
-A session starts with a technical prompt. The first recording is an explanation off the top of your head, with reference material hidden. You work with what you know, including the parts you struggle to put into words.
+A session starts with a technical prompt and the reference material hidden. Speaking from memory makes it easier to notice what you understand and what you struggle to explain.
 
-SpeakLab reviews the explanation against the topic's reference concepts, separating what you explained accurately, partly explained, missed, or got wrong. It also offers communication feedback on structure, clarity, examples, and transitions, tied to passages from the transcript.
+SpeakLab compares the explanation with the topic's reference concepts and gives feedback on accuracy, structure, clarity, and examples. Each comment points to a passage in the transcript.
 
-Those gaps shape the learning session. Short reference sections focus on the concepts that need attention, and a local AI tutor can answer questions using the references and your first attempt. Then the notes disappear and you record again, explaining the topic in your own words while trying to apply the feedback on both content and delivery.
+The gaps shape a short study session, with reference material and an AI tutor that can use your first attempt to answer questions. Then the notes disappear and you record again, applying what you learned.
 
-Both recordings, transcripts, and assessments remain available for comparison. Review dates bring the topic back for another unprepared explanation later, so practice extends beyond the immediate second attempt.
+Both attempts stay available for comparison. Review dates bring the topic back for another explanation later.
 
 ## Hearing how you communicate
 
-Alongside the content review, SpeakLab analyzes speaking rate, pauses, relative loudness, pitch, and detected filler phrases. You can replay measured passages and listen for places where a change in pace, a pause, or a clearer transition could help an idea land.
+SpeakLab also measures speaking rate, pauses, loudness, pitch, and filler phrases. You can replay passages to hear where a change in pace or a clearer transition could help.
 
-I kept acoustic measurements separate from the model's interpretation of the explanation. NumPy and Praat measure the audio; the language model works with the transcript, references, and a summary of those measurements. The feedback gives you specific things to listen for and try, without turning “more variation” or “fewer pauses” into a universal goal.
+I use NumPy and Praat for the audio measurements. The language model works with the transcript, references, and a summary of those measurements to suggest specific things to try in the next recording.
 
-## A fully local AI pipeline
+## Local AI pipeline
 
-The React and TypeScript frontend records audio in the browser and sends it to a Python FastAPI backend. The server saves the recording, decodes it for analysis, and sends it through transcription, acoustic analysis, and model review.
+The React and TypeScript frontend records audio in the browser and sends it to a Python FastAPI backend. The server saves the recording before starting transcription, audio analysis, and model review.
 
-whisper.cpp handles speech recognition, and Ollama serves the language model for assessment and tutoring. The AI workload runs entirely on my own hardware, without hosted LLM or speech APIs. Transcription runs on the CPU to leave GPU memory for the language model; quantized weights and a bounded context window keep that model within the available memory.
+whisper.cpp handles transcription, and Ollama serves the language model for assessment and tutoring. Transcription runs on the CPU to leave GPU memory for the language model. Quantized weights and a bounded context window keep the model within the available memory.
 
-I also built checks around the model's output. Assessments follow a JSON schema validated with Pydantic, and supporting evidence must point to an actual transcript excerpt. The backend resolves those references to the original words. Invalid responses get one repair attempt, and proposed factual corrections receive another review. These checks make the feedback traceable while leaving room to question the model's judgment.
+Assessments follow a JSON schema validated with Pydantic. The backend checks that cited passages exist in the transcript, gives invalid responses one repair attempt, and sends proposed factual corrections through another model review.
 
 ## Running it on a server
 
-I deployed the app on a Windows PC inside a dedicated WSL2 Linux environment. FastAPI serves the built frontend, and systemd manages the application, Ollama, and whisper.cpp as separate services. The PC holds the models and practice data; my laptop runs the browser.
+The app runs on a Windows PC inside WSL2. FastAPI serves the built frontend, and systemd manages the app, Ollama, and whisper.cpp as separate services. The PC holds the models and practice data; my laptop and phone run the browser.
 
-I use SSH for remote administration and a tunnel for browser access from the laptop. Key authentication and a pinned server key establish the connection, and a background supervisor reconnects after interruptions. Forwarding the app to localhost also gives the browser the secure context needed for microphone recording.
+I use SSH for remote administration and a supervised tunnel that reconnects after interruptions. Tailscale Serve provides HTTPS access from my phone, including over cellular, so microphone recording works away from my desk.
 
-Tailscale connects the devices privately, and Tailscale Serve provides HTTPS access from my phone, including over cellular. The application and model services listen only on loopback, with explicit browser-origin checks at the app boundary. This lets me reach the server away from home while keeping its services off the public internet.
-
-## Keeping practice recoverable
-
-SQLite stores sessions, transcripts, assessments, tutor conversations, and review dates, with audio kept as separate files. A single background worker processes recordings, and audio is saved before analysis begins. If a service fails, the recording remains available and the failed analysis can be retried.
-
-Reanalysis preserves previous feedback versions and the model used, so I can revisit an explanation as the system changes. Recording, playback, reference material, and review scheduling also work when the AI services are unavailable.
+SQLite stores sessions, transcripts, feedback, tutor conversations, and review dates. Audio stays in separate files. Failed analysis can be retried from the saved recording, and reanalysis keeps earlier feedback versions for comparison.
 
 ## Ongoing work
 
-I'm refining the topic material, interface, and feedback through practice. The next step is more individualized vocal coaching that connects suggestions to specific moments in a recording, alongside continued checks of the model's factual and communication feedback.
+I'm using the app to refine the topic material, interface, and feedback. Next is more individualized vocal coaching, with suggestions tied to specific moments in a recording.

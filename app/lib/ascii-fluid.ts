@@ -46,15 +46,17 @@ export class AsciiFluid {
     this.source = new Float32Array(size);
     this.pressure = new Float32Array(size);
     this.divergence = new Float32Array(size);
+    const shapeScale = Math.max(1, Math.min(290, Math.min(width, height) / 3));
     for (let y = 0; y < this.rows; y++) {
       for (let x = 0; x < this.columns; x++) {
-        const nx = x * this.spacing / 290, ny = y * this.spacing / 290;
+        const nx = x * this.spacing / shapeScale, ny = y * this.spacing / shapeScale;
         const wx = nx + 1.6 * noise(nx * 0.7 + 8, ny * 0.7 + 3);
         const wy = ny + 1.6 * noise(nx * 0.7 + 2, ny * 0.7 + 9);
         const broad = noise(wx + 4, wy + 7);
         const detail = noise(wx * 2.8 + 9, wy * 2.8);
         const grain = noise(wx * 6, wy * 6 + 4);
-        const value = clamp((broad * 0.74 + detail * 0.2 + grain * 0.06 - 0.25) * 2.1);
+        // Threshold broad shapes into pigment and open channels so a drag has visible edges to carry.
+        const value = smooth(clamp((broad * 0.8 + detail * 0.16 + grain * 0.04 - 0.38) / 0.3));
         this.source[y * this.columns + x] = value;
       }
     }
@@ -138,21 +140,21 @@ export class AsciiFluid {
         const i = y * w + x;
         this.u[i] -= 0.5 * (this.pressure[i+1] - this.pressure[i-1]);
         this.v[i] -= 0.5 * (this.pressure[i+w] - this.pressure[i-w]);
-        // A slow divergence-free current keeps the field alive without input.
-        const ax = 2.2 * Math.sin(y * 0.075 + this.time * 0.12);
-        const ay = 1.7 * Math.cos(x * 0.065 - this.time * 0.1);
+        // Ambient flow stays visible without needing a pointer gesture.
+        const ax = 6.6 * Math.sin(y * 0.075 + this.time * 0.3);
+        const ay = 5.1 * Math.cos(x * 0.065 - this.time * 0.25);
         const carried = this.sample(this.ink, x - (this.u[i] + ax) * dt, y - (this.v[i] + ay) * dt);
         this.nextInk[i] = carried + (this.source[i] - carried) * dt * 0.045;
       }
     }
-    // Open pigment boundaries; the outer velocity ring stays at rest.
+    // Seed incoming pigment from the composition so dense edge ink cannot flood a small viewport.
     for (let x = 1; x < w - 1; x++) {
-      this.nextInk[x] = this.nextInk[x+w];
-      this.nextInk[(h-1)*w+x] = this.nextInk[(h-2)*w+x];
+      this.nextInk[x] = this.source[x];
+      this.nextInk[(h-1)*w+x] = this.source[(h-1)*w+x];
     }
     for (let y = 0; y < h; y++) {
-      this.nextInk[y*w] = this.nextInk[y*w+1];
-      this.nextInk[y*w+w-1] = this.nextInk[y*w+w-2];
+      this.nextInk[y*w] = this.source[y*w];
+      this.nextInk[y*w+w-1] = this.source[y*w+w-1];
     }
     [this.ink, this.nextInk] = [this.nextInk, this.ink];
   }
