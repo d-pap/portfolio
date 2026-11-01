@@ -197,20 +197,17 @@ export function ProjectIndex({ rows }: { rows: IndexRow[] }) {
       className="project-index"
       id="projects"
       aria-labelledby="projects-heading"
-      onMouseLeave={() => {
-        if (!document.activeElement?.closest(".index-row")) setActive(null);
+      onMouseLeave={(event) => {
+        if (!event.currentTarget.contains(document.activeElement)) setActive(null);
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setActive(null);
       }}
     >
       <h2 id="projects-heading" className="index-heading">
         Projects
       </h2>
-      <div
-        className="index-list"
-        onBlur={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget))
-            setActive(null);
-        }}
-      >
+      <div className="index-list">
         <ul>
           {rows.map((row) => (
             <li

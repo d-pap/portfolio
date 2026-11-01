@@ -10,8 +10,8 @@ export type CaseLink = { label: string; href: string };
 
 export function caseLinks(entry: Pick<Entry, "website" | "repository" | "availability">): { links: CaseLink[]; note?: string } {
   const links: CaseLink[] = [];
-  if (entry.website) links.push({ label: entry.website.includes("apps.apple.com") ? "App Store" : "visit site", href: entry.website });
-  if (entry.repository) links.push({ label: "source", href: entry.repository });
+  if (entry.website) links.push({ label: entry.website.includes("apps.apple.com") ? "App Store" : "Visit site", href: entry.website });
+  if (entry.repository) links.push({ label: "GitHub repository", href: entry.repository });
   return { links, note: entry.availability };
 }
 

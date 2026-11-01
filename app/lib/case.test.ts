@@ -28,8 +28,8 @@ test("caseLinks labels App Store, sites, and source", () => {
     note: "code is private",
   });
   assert.deepEqual(caseLinks({ website: "https://example.org", repository: "https://github.com/d-pap/x" }).links, [
-    { label: "visit site", href: "https://example.org" },
-    { label: "source", href: "https://github.com/d-pap/x" },
+    { label: "Visit site", href: "https://example.org" },
+    { label: "GitHub repository", href: "https://github.com/d-pap/x" },
   ]);
   assert.deepEqual(caseLinks({}), { links: [], note: undefined });
 });

@@ -90,7 +90,7 @@ export function QuestionTrace() {
 
   return (
     <figure className="fig fig-trace">
-      <figcaption className="label fig-caption">How Sprout answers a question</figcaption>
+      <figcaption className="label fig-caption">How Sprout answers a question.</figcaption>
       <div className="fig-stage stage qt">
         <div className="qt-top label"><span>Question</span></div>
         <p className="qt-question">{trace.question}</p>

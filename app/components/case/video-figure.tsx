@@ -11,7 +11,7 @@ export function VideoFigure({ src, poster, caption, width, height }: {
   const root = useRef<HTMLDivElement>(null);
   useLoopPlayback(root, true);
   const portrait = height > width;
-  // Portrait films keep their full-width white stage; wide ones size to the film like screen figures (figure.css).
+  // Supporting films retain their full composition inside the reading area.
   return <figure className={`fig fig-video${portrait ? "" : " is-wide"}`} style={portrait ? undefined : { "--fig-ratio": width / height } as CSSProperties}>
     <figcaption className="label fig-caption">{caption}</figcaption>
     <div ref={root} className={`fig-video-stage${portrait ? " is-portrait" : ""}`}>

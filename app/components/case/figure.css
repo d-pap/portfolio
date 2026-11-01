@@ -1,23 +1,20 @@
-.fig-caption { margin-bottom: 10px; }
-.fig-stage { border-radius: 6px; overflow: hidden; }
-/* Screenshots and wide films stop at the height the portrait films use, on the text's left edge. The figure itself
-   narrows (--fig-ratio is set inline), so the caption and the rounded corners stay with the image. */
-.fig-screen, .fig-video.is-wide { width: min(100%, calc(720px * var(--fig-ratio))); }
+.fig-caption { margin-bottom: 10px; font-size: 12px; line-height: 1.4; }
+.fig-stage { overflow: hidden; }
+/* Supporting media follows the explanation's column and stays smaller than the opening hero. */
+.fig-screen,
+.fig-video.is-wide { width: min(100%, calc(500px * var(--fig-ratio))); max-width: 960px; }
 .fig-screen img { width: 100%; height: auto; }
-.fig-phone .fig-stage, .fig-custom .fig-stage {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  place-items: center;
-  padding: clamp(24px, 5vw, 56px);
-}
-.fig-phone img { width: auto; height: min(620px, 72svh); border-radius: 6% / 2.8%; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 18px 40px -16px rgba(0, 0, 0, .4); }
+.fig-phone { width: min(100%, 400px); }
+.fig-phone .fig-stage,
+.fig-custom .fig-stage { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; padding: clamp(20px, 3vw, 40px); }
+.fig-phone img { width: auto; max-width: 100%; height: min(500px, 65svh); object-fit: contain; border-radius: 6% / 2.8%; box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 18px 40px -16px rgba(0, 0, 0, .4); }
 .fig-custom .fig-stage > * { width: 100%; max-width: 440px; }
-
-@media (max-width: 899px) {
+.fig-video:not(.is-wide) { width: min(100%, 400px); }
+.fig-video-stage { position: relative; background: #fff; overflow: hidden; }
+.fig-video-stage video { display: block; width: 100%; height: auto; object-fit: contain; }
+.fig-video-stage.is-portrait video { max-height: 500px; }
+.figure-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 400px)); align-items: start; gap: 28px 24px; max-width: 960px; }
+.figure-group > .fig { width: 100%; min-width: 0; }
+@media (max-width: 599px) {
   .fig-phone img { height: auto; width: min(260px, 100%); }
 }
-
-.fig-video-stage { position: relative; background: #fff; border-radius: 6px; overflow: hidden; }
-.fig-video-stage video { display: block; width: 100%; height: auto; object-fit: contain; }
-.fig-video-stage.is-portrait video { max-height: 720px; }
-@media (max-width: 899px) { .fig-video-stage.is-portrait video { max-height: 80svh; } }
