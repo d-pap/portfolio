@@ -53,6 +53,16 @@ test("fills optional fields with defaults", () => {
   assert.equal(entry.shortTitle, "Sprout");
   assert.equal(entry.order, 99);
   assert.equal(entry.kind, "project");
+  assert.deepEqual(entry.topics, []);
+});
+
+test("preview topics use the shared vocabulary", () => {
+  const entry = parseEntry(file(FRONT + "previewDescription: A service for research teams. I built the API.\ntopics: [System design, AI]\n"), "sprout");
+  assert.deepEqual(entry.topics, ["System design", "AI"]);
+  assert.equal(entry.previewDescription, "A service for research teams. I built the API.");
+  assert.throws(() => parseEntry(file(FRONT + "topics: [LLM systems]\n"), "sprout"), /topics.*list drawn from/);
+  assert.throws(() => parseEntry(file(FRONT + "topics: [AI, AI]\n"), "sprout"), /topics.*duplicates/);
+  assert.throws(() => parseEntry(file(FRONT + "topics: AI\n"), "sprout"), /topics.*list drawn from/);
 });
 
 test("numbers in text fields become strings", () => {

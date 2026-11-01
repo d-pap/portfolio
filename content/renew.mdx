@@ -1,15 +1,16 @@
 ---
-title: RENEW
-shortTitle: RENEW
-summary: A study app for managing fatigue with scleroderma
+title: RENEW Scleroderma
+shortTitle: RENEW Scleroderma
+summary: A mobile app for managing fatigue with scleroderma
+previewDescription: The Michigan Medicine app helps people with scleroderma manage fatigue. I redesigned its screens and maintain the React Native app, backend, and releases.
+topics: [App development, Product design]
 area: Scleroderma study app
 role: Engineering & product design
-period: 2025 – present
+period: 2025 - present
 context: Michigan Medicine
 stack: React Native, Expo, TypeScript, TanStack Query, PHP, MySQL
 status: Ongoing development
 website: https://apps.apple.com/us/app/renew-scleroderma/id1579955473
-availability: code is private to Michigan Medicine
 publishedAt: "2026-07-16"
 index: main
 order: 1
@@ -19,7 +20,7 @@ hero:
   frames:
     - /projects/renew/videos/renew-overview-4x3.jpg
   recording: /projects/renew/videos/renew-overview-4x3.mp4
-  caption: home, goals, and modules [october 2026]
+  caption: Home, goals, and lessons
 tile:
   shape: "1:1"
   media: { kind: cover, src: /projects/renew/videos/renew-overview-4x3.jpg, recording: /projects/renew/videos/renew-overview-4x3.mp4, fit: contain }
@@ -38,35 +39,33 @@ sections:
     title: RENEW Backend
     label: PHP, MySQL
     shape: "4:3"
-    media: { kind: cover, src: /projects/renew/stills/renew-context-4x3.webp }
+    media: { kind: cover, src: /projects/renew/videos/renew-overview-4x3.jpg }
 ---
 
-RENEW is a Michigan Medicine study app for people living with scleroderma. It helps them set wellness goals, track how they're feeling, and work through lessons on fatigue self-management, and it includes [Sprout](/work/sprout), the AI health coach. I took over RENEW in September 2025 and own the app, its backend, and its releases.
+RENEW Scleroderma is a Michigan Medicine study app that helps people with scleroderma manage fatigue. Participants set wellness goals, track how they're feeling, work through lessons, and talk with [Sprout](/work/sprout), an AI health coach. I took over development of the app and now handle its design, React Native frontend, backend, and releases.
 
 ## Redesign
 
-I redesigned the app and rebuilt its screens in React Native. Home is a new tab that opens with a daily check-in and a weekly mood trend. The goal composer asks one plain question per card, goals can repeat on chosen weekdays with a reminder, and goals have their own statistics screen. Long lessons have a table of contents and find. The chat screen, profile, and login were redesigned too.
+I redesigned the app around the things participants return to each day: checking in, working on goals, and finding a lesson. The new Home screen opens with a daily mood check-in and a weekly trend. I also rebuilt the chat, profile, and login screens.
 
-<VideoFigure src="/projects/renew/videos/renew-statistics-4x5.mp4" poster="/projects/renew/videos/renew-statistics-4x5.jpg" width={960} height={1200} caption="goal statistics [demonstration data, october 2026]" />
+Goals have their own statistics screen so participants can look back at their progress. Creating a goal takes one question at a time, with options for repeating weekdays, reminders, and notes.
+
+<VideoFigure src="/projects/renew/videos/renew-statistics-4x5.mp4" poster="/projects/renew/videos/renew-statistics-4x5.jpg" width={960} height={1200} caption="goal statistics" />
 
 <VideoFigure src="/projects/renew/videos/renew-new-goal-4x5.mp4" poster="/projects/renew/videos/renew-new-goal-4x5.jpg" width={960} height={1200} caption="setting a goal" />
 
+Long lessons have a table of contents and text search, so participants can return to a specific activity without scrolling through the whole module.
+
 <VideoFigure src="/projects/renew/videos/renew-modules-4x5.mp4" poster="/projects/renew/videos/renew-modules-4x5.jpg" width={960} height={1200} caption="finding a lesson and reading an activity" />
-
-## Upgrade
-
-I keep the app current and ship it. Three upgrades took RENEW from Expo SDK 50 to 57 between March and July 2026, and I raised the Android target to API level 36 (Android 16) for Google Play. Production deploys are scripted, and builds go out through TestFlight and the Play Store.
-
-Version 3.1.1 reached the App Store on October 10, 2026, with the new Home screen, the daily mood check-in, and goals with times, reminders, and notes.
-
-<Figure src="/projects/renew/stills/renew-release-figure.webp" alt="RENEW's App Store listing beside the release notes for version 3.1.1" width={1824} height={1080} caption="version 3.1.1 on the app store [october 2026]" />
 
 ## Backend
 
-I own RENEW's backend: a PHP and MySQL API on Michigan Medicine servers, with schema changes managed as Knex migrations. Sign-in uses one-time email codes, and every endpoint goes through the same authentication checks. In production, error responses hide internal details, and endpoints validate their input.
+I maintain a PHP and MySQL API on Michigan Medicine servers, with schema changes managed as Knex migrations. Sign-in uses one-time email codes, and endpoints share authentication and input validation.
 
-The backend is also where RENEW connects to Sprout. A participant's study group decides which parts of the coach they get: answers from the health library, their health background, memory of past conversations, and what they're doing in the app. Their access window decides when the chat opens and closes. With each message, the backend adds their active goals, with schedules and recent check-offs, and the modules they're enrolled in. Sprout knows each participant only by an ID the backend assigns, never by their RENEW account.
-
-<Figure src="/projects/renew/stills/renew-context-figure.webp" alt="An excerpt of the request RENEW's backend sends to Sprout: the message, then the participant's active goals and enrolled modules, filled with made-up values" width={1824} height={1080} caption="what the backend adds to a message [synthetic values]" />
+The backend also connects RENEW to Sprout. A participant's study group determines which coaching features are available and when they can use the chat. Each message includes their active goals, schedules, recent check-offs, and enrolled modules, giving the coach context for the conversation. Sprout identifies participants through a separate ID assigned by the backend.
 
 On the app side, TanStack Query caches server data and the tab screens load at startup, so switching tabs doesn't wait on the network. Lesson images and audio come from the RENEW WordPress site through a media proxy.
+
+## Upgrade
+
+Alongside the redesign, I brought the app through three Expo upgrades and updated Android compatibility for Google Play. I scripted production deployments and manage builds, testing, and releases through TestFlight and the app stores.

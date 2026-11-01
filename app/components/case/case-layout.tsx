@@ -86,16 +86,16 @@ export function CaseLayout({
             </ul>
           )}
           {sections.length > 0 && (
-            <details className="ascii-case-contents">
-              <summary>(sections)</summary>
-              <nav aria-label="Project sections">
+            <nav className="ascii-case-contents" aria-label="On this page">
+              <p>On this page</p>
+              <div>
                 {sections.map((section) => (
                   <a key={section.id} href={`#${section.id}`}>
-                    {section.text.toLowerCase()}
+                    {section.text}
                   </a>
                 ))}
-              </nav>
-            </details>
+              </div>
+            </nav>
           )}
         </div>
       </div>

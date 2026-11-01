@@ -36,3 +36,19 @@ test("rapid edge-to-edge strokes and delayed frames keep pigment finite and boun
   }
   for (const value of samples(fluid)) assert.ok(Number.isFinite(value) && value >= 0 && value <= 1);
 });
+
+test("ambient flow keeps open areas in short and tall viewports", () => {
+  for (const [width, height] of [[400, 300], [390, 844]]) {
+    const fluid = new AsciiFluid(width, height);
+    for (let frame = 0; frame < 600; frame++) fluid.step(1 / 60);
+    let open = 0, total = 0;
+    for (let y = 0; y < height; y += 15) {
+      for (let x = 0; x < width; x += 15) {
+        if (fluid.density(x, y) < 0.12) open++;
+        total++;
+      }
+    }
+    assert.ok(open / total >= 0.2, `${width}×${height} filled in after ten seconds`);
+    assert.ok(open / total < 0.95, `${width}×${height} lost its visible shapes`);
+  }
+});

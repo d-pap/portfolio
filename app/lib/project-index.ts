@@ -1,5 +1,6 @@
-import type { Entry } from "./entries";
+import type { Entry, ProjectTopic } from "./entries";
 import type { TileMedia } from "./tiles";
+import { stackLogos } from "./stack-logos.ts";
 
 export type IndexPreview = { image: string; video?: string };
 export type IndexRow = {
@@ -7,12 +8,12 @@ export type IndexRow = {
   href: string;
   title: string;
   period: string;
-  area: string;
-  role: string;
   summary: string;
+  description: string;
+  topics: ProjectTopic[];
+  logos: { name: string; path: string }[];
   preview?: IndexPreview;
 };
-export type IndexGroup = { title: string; rows: IndexRow[] };
 
 function preview(media: TileMedia | undefined): IndexPreview | undefined {
   if (media?.kind === "cover")
@@ -21,55 +22,21 @@ function preview(media: TileMedia | undefined): IndexPreview | undefined {
   if (media?.kind === "logo") return { image: media.src };
 }
 
-/** Original grouped index. Dates refer to when work on the parent project began. */
-export function projectIndex(main: Entry[], earlier: Entry[]): IndexGroup[] {
-  return [
-    {
-      title: "Selected work",
-      rows: main.map((entry) => ({
-        id: entry.slug,
-        href: `/work/${entry.slug}`,
-        title: entry.shortTitle,
-        period: entry.period.match(/\d{4}/)?.[0] ?? "",
-        area: entry.area,
-        role: entry.role,
-        summary: entry.summary,
-        preview:
-          preview(entry.tile?.media) ??
-          (entry.hero
-            ? { image: entry.hero.frames[0], video: entry.hero.recording }
-            : undefined),
-      })),
-    },
-    {
-      title: "Systems & features",
-      rows: main.flatMap((entry) =>
-        entry.sections.map((section) => ({
-          id: `${entry.slug}#${section.id}`,
-          href: `/work/${entry.slug}#${section.id}`,
-          title: section.title,
-          period: entry.period.match(/\d{4}/)?.[0] ?? "",
-          area: entry.shortTitle,
-          role: section.label,
-          summary: `${section.title} — ${section.label}.`,
-          preview: preview(section.media),
-        })),
-      ),
-    },
-    {
-      title: "Earlier",
-      rows: earlier.map((entry) => ({
-        id: entry.slug,
-        href: `/work/${entry.slug}`,
-        title: entry.shortTitle,
-        period: entry.period.match(/\d{4}/)?.[0] ?? "",
-        area: entry.area,
-        role: entry.role,
-        summary: entry.summary,
-        preview: entry.hero
-          ? { image: entry.hero.frames[0], video: entry.hero.recording }
-          : undefined,
-      })),
-    },
-  ].filter((group) => group.rows.length > 0);
+/** One row per project, including the analysis projects. */
+export function projectIndex(main: Entry[], earlier: Entry[]): IndexRow[] {
+  return [...main, ...earlier].map((entry) => ({
+    id: entry.slug,
+    href: `/work/${entry.slug}`,
+    title: entry.title,
+    period: entry.period,
+    summary: entry.summary,
+    description: entry.previewDescription ?? entry.summary,
+    topics: entry.topics,
+    logos: stackLogos(entry.stack ?? ""),
+    preview:
+      preview(entry.tile?.media) ??
+      (entry.hero
+        ? { image: entry.hero.frames[0], video: entry.hero.recording }
+        : undefined),
+  }));
 }

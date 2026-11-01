@@ -1,14 +1,15 @@
 ---
 title: Sprout
 shortTitle: Sprout
-summary: An AI health coach inside RENEW
+summary: An AI health coach API for research teams
+previewDescription: I built Sprout at Michigan Medicine as an AI health coach API for research teams. RENEW uses it to answer participants' questions and coach them with context from their goals and earlier conversations.
+topics: [System design, AI]
 area: AI health coach
 role: System design & AI engineering
-period: 2025 – present
+period: 2025 - present
 context: Michigan Medicine
 stack: Python, FastAPI, LangGraph, PostgreSQL, pgvector, DeepEval, promptfoo
 status: Ongoing research & development
-availability: code is private to Michigan Medicine
 publishedAt: "2026-07-15"
 index: main
 order: 2
@@ -18,7 +19,7 @@ hero:
   frames:
     - /projects/sprout/videos/sprout-conversation-4x5.jpg
   recording: /projects/sprout/videos/sprout-conversation-4x5.mp4
-  caption: a demonstration conversation with staged app data [october 2026]
+  caption: A conversation with Sprout
 tile:
   shape: "4:5"
   media: { kind: cover, src: /projects/sprout/loops/sprout-sources-loop-4x5.jpg, recording: /projects/sprout/loops/sprout-sources-loop-4x5.mp4, fit: contain }
@@ -40,36 +41,42 @@ sections:
     media: { kind: cover, src: /projects/sprout/loops/sprout-evaluation-study-16x9.jpg, recording: /projects/sprout/loops/sprout-evaluation-study-16x9.mp4, fit: contain }
 ---
 
-Sprout is an AI health coach inside [RENEW](/work/renew), a Michigan Medicine study app for people living with scleroderma. It helps them work through wellness goals and day-to-day challenges. I joined Michigan Medicine in June 2025 and designed the system behind it: the API, retrieval, long-term memory, and the evaluations that test them.
-
-## System design
-
-Sprout is a FastAPI service. A LangGraph graph runs each turn of a conversation, PostgreSQL with pgvector stores the corpus and the conversation memory, and every model call goes through the university's U-M GPT gateway. Each job in the graph has its own model setting with a fallback: classifying messages, reranking sources, writing background summaries, and periodic deep review. One job can move to a different model without changing the others.
-
-Every capability is a switch. A request lists the features it uses: retrieval, clinical context, memory, and app context. A study team turns on what its protocol calls for, and studies with different protocols share one service.
-
-<QuestionTrace />
+Sprout is an AI health coach API that research teams can connect to their own apps. [RENEW Scleroderma](/work/renew), a Michigan Medicine study app, uses it for participant coaching. It answers questions using a health library and draws on a participant's goals and past conversations to help them work through day-to-day challenges. I designed and built the API, retrieval pipeline, long-term memory, and evaluation system.
 
 ## RAG pipeline
 
-A classifier reads each message first. It decides whether the message needs evidence and, when it does, rewrites it into a search query. Conversational turns skip retrieval.
+A classifier decides whether a message needs information from the health library. When it does, the classifier rewrites it into a search query. Conversational turns go straight to a reply.
 
 Search is hybrid. Vector search matches the meaning of a question, keyword search matches clinical terms, and reciprocal rank fusion merges the two lists. A patient asking "what helps with cold hands?" and a clinician asking about first-line management of Raynaud's phenomenon reach the same passages. Each chunk is embedded with its document's title, because most of the corpus is journal articles with generic section headings.
 
-A small model then grades every candidate from 0 to 10 against the original question. This is the relevance gate. Fused rank scores can't be cut off at a meaningful threshold, and a grade can, so chunks below 4 are dropped. When nothing clears the gate, the coach says its sources don't cover the question and suggests asking the care team. The reranker runs on the same gateway as every other model, and its model is a setting, so a dedicated cross-encoder can take its place without code changes.
+A small model then grades each passage from 0 to 10 against the question, dropping anything below 4. I used these grades because the fused search scores describe rank, making them difficult to use as a relevance cutoff. When no passage clears the threshold, the coach explains that its library doesn't cover the question and suggests asking the care team.
 
 Replies cite their sources, and medical facts have to come from the retrieved text.
 
-<VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="retrieval [motion study]" />
+<QuestionTrace />
+
+<VideoFigure src="/projects/sprout/loops/sprout-retrieval-study-4x3.mp4" poster="/projects/sprout/loops/sprout-retrieval-study-4x3.jpg" width={1200} height={900} caption="finding relevant passages" />
 
 ## Long-term memory
 
-The coach keeps context between conversations in layers. Each conversation is condensed into a dated summary of what the person reported and what helped. Patterns the coach infers from those summaries go into a ledger that tracks each one's confidence and age, merges duplicates, and retires stale entries. A periodic deep review revisits the whole ledger. The clinical summary from the study's assessments is the baseline: self-reports describe how someone is doing now, and they don't override it.
+The coach keeps context between conversations in layers. Each conversation becomes a dated summary of what the person reported and what helped. Patterns inferred from those summaries go into a ledger that tracks confidence and age, merges duplicates, and retires stale entries. A periodic review revisits the whole ledger.
+
+I kept the clinical summary from study assessments separate from these conversation memories. That gives the coach both an established health background and a record of how the participant has been doing recently.
 
 ## Evals
 
-Each evaluation starts from a question, such as whether retrieval finds useful sources or whether a correction carries into the next conversation. The harness runs fixed conversation cases and scores them with a judge model that is separate from the chat model. Ablation arms turn off one source of context at a time, and memory designs are compared in a factorial setup, so each factor's effect can be read on its own. In memory bakeoffs, every arm replays the same canonical transcript, which removes the variance of generating a fresh conversation for each arm. Each run prints its estimated cost before it starts.
+I built evaluation suites around specific questions: does retrieval find useful sources, does a correction carry into the next conversation, and does the coach stop using an interpretation a participant rejected?
+
+The harness runs fixed conversation cases and scores them with a judge model separate from the chat model. Comparisons turn off one source of context at a time to measure its effect. Memory experiments replay the same transcript across designs so that the comparison comes from the memory system, rather than differences in the conversations.
 
 I read the saved responses alongside the scores, because an automated judge can miss problems. The suites run on DeepEval and promptfoo.
 
 <EvalCoverage />
+
+## System design
+
+Sprout runs as a FastAPI service. LangGraph coordinates each conversation turn, PostgreSQL with pgvector stores the health library and conversation memory, and model calls go through the university's UMGPT gateway.
+
+Each task has its own model setting and fallback, including message classification, reranking, summaries, and memory review. I can change the model for one task without changing the others.
+
+Retrieval, clinical context, memory, and app context can each be enabled per request. This lets study teams use the same service with different research protocols.

@@ -30,8 +30,9 @@ export function AsciiField() {
     const updateOpacity = () => {
       scrollFrame = 0;
       const projects = home ? document.getElementById("projects") : null;
+      // Fade as the list enters. A short page may never scroll its heading to the viewport top.
       const remaining = projects
-        ? clamp((projects.getBoundingClientRect().top - 105) / Math.max(1, height - 105))
+        ? clamp((projects.getBoundingClientRect().top - height * 0.55) / Math.max(1, height * 0.4))
         : 0;
       const eased = remaining * remaining * (3 - 2 * remaining);
       element.style.opacity = String(0.14 + eased * 0.64);

@@ -2,9 +2,11 @@
 title: Code Coach
 shortTitle: Code Coach
 summary: A coding practice platform for a university ACM chapter
+previewDescription: A coding practice app I built with two classmates for UM-Dearborn’s ACM chapter. I designed it and built most of the frontend and backend, including the workspace and AI coaching.
+topics: [Web development, AI, Product design]
 area: Coding practice platform
 role: Design & full-stack development
-period: 2024 – 2025
+period: 2025
 context: University of Michigan–Dearborn
 stack: React, JavaScript, Node.js, AWS, AWS Lambda, API Gateway, MongoDB, OpenAI
 status: Completed student project
@@ -19,7 +21,7 @@ hero:
     - /projects/codecoach/images/codecoach-development-loop-poster.webp
   recording: /projects/codecoach/videos/codecoach-development-loop.mp4
   aspectRatio: 1.3333333333333333
-  caption: Code Coach — ask for a hint, edit, and run
+  caption: Ask for a hint, edit, and run
 tile:
   shape: "3:2"
   media:
@@ -33,7 +35,7 @@ I built Code Coach with two classmates for the University of Michigan–Dearborn
 
 The idea was to keep the problem, code, and help in the same place. You could work through a solution, ask a question when you got stuck, and try the next idea without leaving the page.
 
-## The workspace
+## Coding workspace
 
 Students could browse ICPC problems by year and region, or interview questions by category. Once you picked a problem, the statement stayed beside the editor. You could switch languages and themes, enter a test case, and run your code right there.
 
@@ -45,7 +47,7 @@ Students could browse ICPC problems by year and region, or interview questions b
   caption="the problem and editor, side by side"
 />
 
-## Getting unstuck
+### Getting unstuck
 
 The assistant received the problem and the code in your editor along with your question. That meant you could ask about the part you were working on without copying everything into a separate chat. In this example, it explains how to update a sliding window instead of adding up the same values again.
 
@@ -57,9 +59,9 @@ The assistant received the problem and the code in your editor along with your q
   caption="asking for a hint without leaving the problem"
 />
 
-## Running and submitting code
+### Running and submitting code
 
-Run let you try an input and inspect the output. The clip below finishes the solution, runs the sample, then checks an all-negative input. That second case matters: starting the best sum at zero would give the wrong answer.
+Run let you try an input and inspect the output. The clip below finishes a maximum-sum solution, runs the problem's example, then checks an all-negative input. That second case catches a bug: starting the best sum at zero would give the wrong answer.
 
 <VideoFigure
   src="/projects/codecoach/videos/codecoach-execution.mp4"
@@ -73,7 +75,7 @@ Submit saved the code and its result to your account. The result panel showed th
 
 <Figure
   src="/projects/codecoach/images/codecoach-submission.webp"
-  alt="The submission result panel showing Accepted and output 13; performance measurements are unavailable in this local demo"
+  alt="The submission result panel showing Accepted and output 13"
   width={1920}
   height={1200}
   caption="the submission result in the workspace"
@@ -95,22 +97,22 @@ Each problem also had a discussion tab. Students could compare approaches, point
 
 <Figure
   src="/projects/codecoach/images/codecoach-discussions.webp"
-  alt="Sample discussion comments about sliding windows and negative inputs, with like counts and the code editor alongside"
+  alt="Discussion comments about sliding windows and negative inputs, with like counts and the code editor alongside"
   width={1920}
   height={1200}
-  caption="discussing a problem · sample conversation"
+  caption="discussing a problem"
 />
 
-## Beyond coding problems
+## Resume builder
 
-Interview preparation also included a résumé builder. You could enter your experience, education, projects, and skills, then add a job description to tailor the draft. The generated text could be copied and edited.
+Interview preparation also included a resume builder. You could enter your experience, education, projects, and skills, then add a job description to tailor the draft. The generated text could be copied and edited.
 
 <Figure
   src="/projects/codecoach/images/codecoach-resume-builder.webp"
-  alt="The résumé builder form with a sample professional summary and work experience"
+  alt="The resume builder form with a professional summary and work experience"
   width={1920}
   height={1200}
-  caption="the résumé builder"
+  caption="the resume builder"
 />
 
 ## Design and implementation
@@ -125,14 +127,12 @@ I handled the visual design, from the landing page to the coding workspace. I ma
   caption="the landing page"
 />
 
-The frontend is React, hosted on Netlify. Cognito handles sign-in, API Gateway routes requests to Node.js functions on Lambda, and MongoDB stores the users, problems, courses, discussions, and submissions. Code execution goes through Judge0. The assistant uses OpenAI through the university's U-M GPT service.
+The frontend is React, hosted on Netlify. Cognito handles sign-in, API Gateway routes requests to Node.js functions on Lambda, and MongoDB stores the users, problems, courses, discussions, and submissions. Code execution goes through Judge0. The assistant uses OpenAI through the university's UMGPT service.
 
 <Figure
   src="/projects/codecoach/images/codecoach-architecture.svg"
-  alt="React on Netlify connects to Cognito for authentication, API Gateway and Lambda for application data and AI requests, and directly to Judge0 for code execution. Lambda connects to MongoDB and U-M Maizey."
+  alt="React on Netlify connects to Cognito for authentication, API Gateway and Lambda for application data and AI requests, and directly to Judge0 for code execution. Lambda connects to MongoDB and UMGPT."
   width={1920}
   height={1080}
-  caption="how the original application fits together"
+  caption="how the application fits together"
 />
-
-These images and videos come from a local demo of the original app. The problems, conversations, and résumé details are sample content; coaching and code execution are simulated. The diagram shows the original cloud setup.

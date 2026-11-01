@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { IndexGroup, IndexRow } from "app/lib/project-index";
+import type { IndexRow } from "app/lib/project-index";
 import { mediaColor } from "app/lib/media-colors";
 import { mediaSize } from "app/lib/media-sizes";
 import { useMotion } from "./motion";
@@ -66,6 +66,7 @@ function Preview({
   }, [row.id, paused, inline]);
   const preview = row.preview;
   const size = preview && mediaSize(preview.image);
+  if (!preview) return null;
   return (
     <figure className={inline ? "index-preview is-inline" : "index-preview"}>
       {preview && (
@@ -136,12 +137,31 @@ function Preview({
           )}
         </a>
       )}
-      <figcaption>{row.summary}</figcaption>
+      <figcaption>
+        <p className="index-preview-description">{row.description}</p>
+        {row.topics.length > 0 && (
+          <ul className="index-topics" aria-label="Project topics">
+            {row.topics.map((topic) => <li key={topic}>{topic}</li>)}
+          </ul>
+        )}
+        {row.logos.length > 0 && (
+          <ul className="index-stack" aria-label="Technologies">
+            {row.logos.map((logo) => (
+              <li key={logo.name} title={logo.name}>
+                <svg viewBox="0 0 24 24" role="img" aria-label={logo.name}>
+                  <title>{logo.name}</title>
+                  <path d={logo.path} />
+                </svg>
+              </li>
+            ))}
+          </ul>
+        )}
+      </figcaption>
     </figure>
   );
 }
 
-export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
+export function ProjectIndex({ rows }: { rows: IndexRow[] }) {
   const [active, setActive] = useState<IndexRow | null>(null);
   const [finePointer, setFinePointer] = useState(false);
   // Once the page has loaded, inline previews stop waiting for the scroll: they're small, and fetching them all
@@ -181,57 +201,43 @@ export function ProjectIndex({ groups }: { groups: IndexGroup[] }) {
         if (!document.activeElement?.closest(".index-row")) setActive(null);
       }}
     >
-      <h2 id="projects-heading" className="visually-hidden">
+      <h2 id="projects-heading" className="index-heading">
         Projects
       </h2>
       <div
-        className="index-groups"
+        className="index-list"
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget))
             setActive(null);
         }}
       >
-        {groups.map((group) => (
-          <section
-            className="index-group"
-            key={group.title}
-            aria-label={group.title}
-          >
-            <h3>{group.title}</h3>
-            <ul>
-              {group.rows.map((row) => (
-                <li
-                  key={row.id}
-                  className={
-                    active?.id === row.id
-                      ? "index-item is-active"
-                      : "index-item"
-                  }
-                >
-                  <a
-                    className="index-row"
-                    href={row.href}
-                    onPointerEnter={(event) => {
-                      if (event.pointerType !== "touch" && finePointer)
-                        setActive(row);
-                    }}
-                    onFocus={() => {
-                      if (finePointer) setActive(row);
-                    }}
-                  >
-                    <span className="index-name">
-                      {row.title}
-                    </span>
-                    <span className="index-period"><span className="visually-hidden">Project started </span>{row.period}</span>
-                    <span className="index-area">{row.area}</span>
-                    <span className="index-role">{row.role}</span>
-                  </a>
-                  {!finePointer && <Preview row={row} inline warm={warm} />}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+        <ul>
+          {rows.map((row) => (
+            <li
+              key={row.id}
+              className={
+                active?.id === row.id ? "index-item is-active" : "index-item"
+              }
+            >
+              <a
+                className="index-row"
+                href={row.href}
+                onPointerEnter={(event) => {
+                  if (event.pointerType !== "touch" && finePointer)
+                    setActive(row);
+                }}
+                onFocus={() => {
+                  if (finePointer) setActive(row);
+                }}
+              >
+                <span className="index-name">{row.title}</span>
+                <span className="index-summary">{row.summary}</span>
+                <span className="index-period">{row.period}</span>
+              </a>
+              {!finePointer && <Preview row={row} inline warm={warm} />}
+            </li>
+          ))}
+        </ul>
       </div>
       <aside className="index-preview-column" aria-label="Project preview">
         {active && finePointer && <Preview row={active} key={active.id} />}

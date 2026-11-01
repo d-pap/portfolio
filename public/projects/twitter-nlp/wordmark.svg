@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640" role="img" aria-labelledby="title">
+  <title id="title">Gaming sentiment analysis</title>
+  <rect width="960" height="640" fill="#fff" />
+  <text x="480" y="280" fill="#20211f" font-family="'Courier New', monospace" font-size="64" letter-spacing="-3" text-anchor="middle" dominant-baseline="central">Gaming sentiment</text>
+  <text x="480" y="362" fill="#20211f" font-family="'Courier New', monospace" font-size="64" letter-spacing="-3" text-anchor="middle" dominant-baseline="central">analysis</text>
+</svg>
