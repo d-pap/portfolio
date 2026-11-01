@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { Arrow } from "app/components/arrow";
 import { CustomMDX } from "app/components/mdx";
 import { CaseHeroStage } from "app/components/case/case-hero-stage";
@@ -23,13 +22,11 @@ export function CaseLayout({
   const sections = listHeadings(entry.body);
 
   return (
-    <article
-      className="case page ascii-case"
-      style={{ "--vt": `entry-${entry.slug}` } as CSSProperties}
-    >
+    <article className="case page ascii-case">
       {entry.hero && (
         <figure className="case-hero" id="case-hero">
           <CaseHeroStage
+            slug={entry.slug}
             hasRecording={Boolean(entry.hero.recording)}
             composition={entry.hero.type === "composition"}
             aspectRatio={entry.hero.aspectRatio}

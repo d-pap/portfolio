@@ -14,7 +14,6 @@
   min-height: 0;
   overflow: hidden;
   background: #fff;
-  view-transition-name: var(--vt);
 }
 .case-body {
   display: grid;
@@ -43,11 +42,12 @@
 .case-facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr) minmax(0, 1.5fr); gap: 24px; margin-top: 28px; font-size: 14px; line-height: 1.5; }
 .case-facts dt { margin-bottom: 5px; font-size: 12px; color: var(--muted); }
 .case-period { display: block; margin-top: 4px; color: var(--muted); }
-.case-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 720px; margin-top: 24px; font-size: var(--case-read-size); }
-.case-links a { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--wash); font-weight: 600; transition: background 160ms, border-color 160ms; }
-.case-links .link-arrow { margin-left: auto; }
-.case-links a:hover { background: var(--paper); border-color: var(--muted); }
-.case-links-note { grid-column: 1 / -1; color: var(--muted); }
+.case-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px; margin-top: 24px; font-size: var(--case-read-size); }
+.case-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding-block: 8px; font-weight: 600; text-decoration: underline; text-decoration-color: var(--faint); text-underline-offset: 6px; text-decoration-thickness: 1px; transition: text-decoration-color 160ms; }
+.case-links .link-arrow { margin-left: 0; }
+.case-links .link-arrow path { stroke-width: 2px; }
+.case-links a:hover { text-decoration-color: var(--ink); }
+.case-links-note { flex-basis: 100%; color: var(--muted); }
 
 .case-flow { margin-top: 56px; }
 .case-flow > p { font-size: var(--case-read-size); line-height: 1.6; max-width: 68ch; }
@@ -76,7 +76,7 @@
 @media (max-width: 899px) {
   .case-hero-stage { height: clamp(260px, 55svh, 440px); }
   /* Phone compositions include white margins; enlarge that canvas while preserving the full phone. */
-  .case-hero-stage.is-composition:not(.has-aspect-ratio) .media-composition { width: 160%; max-width: none; left: -30%; }
+  .case-hero-stage.is-composition:not(.has-aspect-ratio) .media-composed { width: 160%; left: -30%; }
   .case-body { display: block; padding-top: 24px; }
   .case-sidebar { position: static; padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
   .case-sections { margin-top: 14px; }
@@ -87,7 +87,4 @@
   .case-flow { margin-top: 44px; }
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .case-fact-stack { grid-column: 1 / -1; }
-}
-@media (max-width: 599px) {
-  .case-links { grid-template-columns: minmax(0, 1fr); }
 }

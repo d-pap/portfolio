@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08",
+  "updated": "2026-11-01",
   "assets": [
     {
       "id": "renew-overview-video",
@@ -8,13 +8,14 @@
       "src": "/projects/renew/videos/renew-overview-4x3.mp4",
       "poster": "/projects/renew/videos/renew-overview-4x3.jpg",
       "duration_seconds": 12.0,
-      "width": 1440,
-      "height": 1080,
+      "width": 2880,
+      "height": 2160,
       "fps": 60,
       "has_audio": false,
-      "size_bytes": 368810,
+      "size_bytes": 953155,
       "description": "Home, goals, and the learning library.",
-      "source_revision": "v3"
+      "source_revision": "v3",
+      "quality_revision": "2026-11-01-retina"
     },
     {
       "id": "renew-statistics-video",
@@ -196,5 +197,6 @@
       "description": "Switch from week to month, let the chart settle, then return to week.",
       "source_revision": "loops"
     }
-  ]
+  ],
+  "retina_hero_source": "/Users/derek/.codex/visualizations/2026/11/01/01a19786-ca60-7ce3-a6a6-f40f3cd45abe/retina-heroes"
 }

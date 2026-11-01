@@ -12,6 +12,7 @@ export type IndexRow = {
   description: string;
   topics: ProjectTopic[];
   logos: { name: string; path: string }[];
+  hasHero: boolean;
   preview?: IndexPreview;
 };
 
@@ -33,6 +34,7 @@ export function projectIndex(main: Entry[], earlier: Entry[]): IndexRow[] {
     description: entry.previewDescription ?? entry.summary,
     topics: entry.topics,
     logos: stackLogos(entry.stack ?? ""),
+    hasHero: Boolean(entry.hero),
     preview:
       preview(entry.tile?.media) ??
       (entry.hero

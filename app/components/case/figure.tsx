@@ -24,7 +24,7 @@ export function Figure({ caption, src, alt = "", width, height, kind = "screen",
       <figcaption className="label fig-caption">{caption}</figcaption>
       <div className={screen ? "fig-stage" : "fig-stage stage"} style={screen ? { background: mediaColor(src!) } : undefined}>
         {src ? (
-          <Image className="arrive" suppressHydrationWarning src={src} alt={alt} width={width} height={height} sizes={kind === "phone" ? "(max-width: 899px) 70vw, 360px" : "(max-width: 899px) 100vw, 66vw"} />
+          <Image className="arrive" suppressHydrationWarning src={src} alt={alt} width={width} height={height} quality={90} sizes={kind === "phone" ? "(max-width: 599px) 260px, 320px" : "(max-width: 899px) calc(100vw - 32px), (max-width: 1199px) 75vw, 960px"} />
         ) : (
           children
         )}

@@ -1,7 +1,7 @@
 # RENEW portfolio media
 Prepared: 2026-10-08
 
-The 13 approved app MP4s and matching JPEG posters are preserved without re-encoding.
+The approved app films and their timing are preserved. The overview hero and its poster were re-exported at higher resolution on 2026-11-01; the other app exports remain unchanged.
 
 - `loops/`: three thumbnail loops, each under five seconds, with a dissolve back to its starting state.
 - `videos/`: all ten tighter v3 edits for project detail pages and other placements.
@@ -46,6 +46,9 @@ The site now uses visible-only silent autoplay with no playback controls. Reduce
 | A quiet app film | 28.75s | [renew-film-16x9.mp4](videos/renew-film-16x9.mp4) | [JPEG](videos/renew-film-16x9.jpg) |
 
 ## Production source
+
+The overview is now 2880×2160, rendered from the original 1170×2532 display recording with the approved phone frame at the same proportions. It remains 12 seconds, 720 frames, silent H.264, with fast-start metadata. The export is about 953 KB. The previous 1440×1080 version, source clips, plates, masks, render script, and validation are retained at:
+`/Users/derek/.codex/visualizations/2026/11/01/01a19786-ca60-7ce3-a6a6-f40f3cd45abe/retina-heroes/`.
 
 The original media workspace remains at:
 `/Users/derek/.codex/visualizations/2026/10/08/01a11d13-cd05-7d71-9e9c-c1fc51747fa2/renew-motion/`

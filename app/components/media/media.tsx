@@ -1,8 +1,8 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import type { Hero } from "app/lib/entries";
 import { mediaColor } from "app/lib/media-colors";
 import { mediaSize } from "app/lib/media-sizes";
-import { posterSrc } from "./poster";
 import "./media.css";
 
 type MediaProps = { hero: Hero; sizes: string; priority?: boolean; label?: string };
@@ -13,17 +13,19 @@ type DeviceProps = { kind: "phone" | "screen"; src: string; alt: string; recordi
 // A recording, when present, plays in the first device; its first frame is the poster.
 export function Media({ hero, sizes, priority = false, label }: MediaProps) {
   if (hero.type === "composition") {
-    return <div className="media" style={{ background: mediaColor(hero.frames[0]) }}>{hero.recording ? (
-      <video className="media-composition" src={hero.recording} poster={posterSrc(hero.frames[0], mediaSize(hero.frames[0]))} muted loop playsInline preload="none" aria-label={label || undefined} />
+    const size = mediaSize(hero.frames[0]);
+    return <div className="media media-composed" style={{ background: mediaColor(hero.frames[0]), "--media-aspect": size ? size[0] / size[1] : hero.aspectRatio ?? 4 / 3 } as CSSProperties}>{hero.recording ? (
+      <video suppressHydrationWarning className="media-composition" src={hero.recording} poster={hero.frames[0]} width={size?.[0]} height={size?.[1]} muted loop playsInline preload={priority ? "auto" : "none"} aria-label={label || undefined} />
     ) : (
-      <Image className={priority ? "media-composition" : "media-composition arrive"} suppressHydrationWarning src={hero.frames[0]} alt={label ?? ""} fill sizes={sizes} priority={priority} />
+      <Image className={priority ? "media-composition" : "media-composition arrive"} suppressHydrationWarning src={hero.frames[0]} alt={label ?? ""} width={size?.[0]} height={size?.[1]} sizes={sizes} priority={priority} quality={90} />
     )}</div>;
   }
   if (hero.type === "logo") {
     // SVGs skip the image optimizer, which would otherwise reject them.
+    const size = mediaSize(hero.frames[0]);
     return (
-      <div className="media">
-        <div className="media-logo"><Image src={hero.frames[0]} alt={label ?? ""} fill unoptimized priority={priority} /></div>
+      <div className="media media-mark" style={{ "--media-aspect": size ? size[0] / size[1] : 1 } as CSSProperties}>
+        <div className="media-logo" suppressHydrationWarning><Image src={hero.frames[0]} alt={label ?? ""} fill unoptimized priority={priority} /></div>
       </div>
     );
   }
@@ -47,9 +49,9 @@ function Device({ kind, src, alt, recording, sizes, priority, offset, aspectRati
   return (
     <div className={`device device-${kind}${offset ? " device-offset" : ""}`} style={{ background: mediaColor(src), ...(aspectRatio ? { aspectRatio, height: `min(82%, calc(90cqw / ${aspectRatio}))`, flexShrink: 0 } : {}) }}>
       {recording ? (
-        <video className="device-video" src={recording} poster={posterSrc(src, mediaSize(src))} muted loop playsInline preload="none" aria-label={alt || undefined} />
+        <video suppressHydrationWarning className="device-video" src={recording} poster={src} muted loop playsInline preload={priority ? "auto" : "none"} aria-label={alt || undefined} />
       ) : (
-        <Image className={priority ? "device-image" : "device-image arrive"} suppressHydrationWarning src={src} alt={alt} fill sizes={sizes} priority={priority} />
+        <Image className={priority ? "device-image" : "device-image arrive"} suppressHydrationWarning src={src} alt={alt} fill sizes={sizes} priority={priority} quality={90} />
       )}
     </div>
   );

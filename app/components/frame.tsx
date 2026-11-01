@@ -40,7 +40,7 @@ export function Frame({ plane }: { plane: "front" | "back" }) {
           <a href={away ? "/#projects" : "#projects"}>(projects)</a>
         </nav>
         <div className="frame-side">
-          {away && (
+          {away && !pathname.startsWith("/work/") && (
             <a href="/#projects" onClick={close}>
               (back)
             </a>

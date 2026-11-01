@@ -206,10 +206,12 @@ html:has(.info-panel:popover-open) {
   .index-preview-column .index-preview-media {
     height: var(--index-media-height);
     max-height: none;
+    container-type: size;
   }
   .index-preview-column .index-preview-media img,
   .index-preview-column .index-preview-media video {
-    height: 100%;
+    width: min(100%, calc(100cqh * var(--preview-aspect)));
+    height: auto;
     max-height: 100%;
   }
   .index-preview.is-inline {

@@ -2,6 +2,7 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import type { Metadata } from "next";
 import "./styles/ascii.css";
+import "./styles/project-transitions.css";
 import { AsciiField } from "./components/ascii/ascii-field";
 import { MotionProvider } from "./components/ascii/motion";
 import { SiteAnalytics } from "app/components/site-analytics";
